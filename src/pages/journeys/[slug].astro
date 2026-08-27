@@ -1,0 +1,236 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { journeys } from "../../data/journeys";
+
+export function getStaticPaths() {
+  return journeys.map((journey) => ({
+    params: { slug: journey.slug },
+    props: { journey },
+  }));
+}
+
+const { journey } = Astro.props;
+const related = journeys.filter((j) => j.slug !== journey.slug).slice(0, 3);
+const title = `${journey.title} — ${journey.days} Days | Atlas Safaris`;
+---
+
+<Layout title={title} description={journey.summary}>
+  <Navbar />
+  <main>
+    <!-- Cinematic hero -->
+    <section class="relative flex min-h-[85vh] w-full flex-col justify-end overflow-hidden bg-[#1A1A1A]">
+      <img
+        src={journey.image}
+        alt={journey.alt}
+        class="absolute inset-0 size-full object-cover"
+        fetchpriority="high"
+      />
+      <div
+        class="absolute inset-0"
+        style="background-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 40%, rgba(0,0,0,0.85) 100%);"
+      >
+      </div>
+
+      <nav
+        class="relative z-10 flex items-center gap-2 px-6 pt-28 font-body text-xs uppercase tracking-[0.16em] text-white/70 sm:px-10"
+        aria-label="Breadcrumb"
+      >
+        <a href="/" class="hover:text-white">Home</a>
+        <span>/</span>
+        <a href="/#itineraries" class="hover:text-white">Itineraries</a>
+        <span>/</span>
+        <span class="text-white/90">{journey.title}</span>
+      </nav>
+
+      <div class="relative z-10 flex flex-col gap-3 px-6 pb-16 sm:px-10 md:pb-20">
+        <span class="font-body text-xs uppercase tracking-[0.2em] text-white/80">
+          {journey.category}
+        </span>
+        <h1 class="font-display text-4xl leading-tight text-white md:text-6xl">
+          {journey.title}
+        </h1>
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-body text-sm text-white/85 md:text-base">
+          <span>{journey.nights} nights</span>
+          <span class="size-1 rounded-full bg-white/40"></span>
+          <span>{journey.region}</span>
+          <span class="size-1 rounded-full bg-white/40"></span>
+          <span>From {journey.priceFrom}</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Intro + stats -->
+    <section class="w-full max-w-5xl mx-auto mt-16 md:mt-24 flex flex-col items-center px-4 sm:px-8 text-center">
+      <p class="font-body text-xs uppercase tracking-[0.2em] text-text-muted mb-4">The Journey</p>
+      <p class="font-display text-2xl md:text-3xl leading-snug text-primary max-w-3xl">
+        {journey.summary}
+      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 mt-10">
+        <div class="flex flex-col items-center gap-1">
+          <span class="font-body text-xs uppercase tracking-[0.16em] text-text-muted">Duration</span>
+          <span class="font-body text-lg text-primary">{journey.days} days</span>
+        </div>
+        <span class="hidden sm:block w-px h-8 bg-border"></span>
+        <div class="flex flex-col items-center gap-1">
+          <span class="font-body text-xs uppercase tracking-[0.16em] text-text-muted">Route</span>
+          <span class="font-body text-lg text-primary">{journey.stops.length} stops</span>
+        </div>
+        <span class="hidden sm:block w-px h-8 bg-border"></span>
+        <div class="flex flex-col items-center gap-1">
+          <span class="font-body text-xs uppercase tracking-[0.16em] text-text-muted">{journey.priceUnit}</span>
+          <span class="font-body text-lg text-primary">From {journey.priceFrom}</span>
+        </div>
+      </div>
+
+      <a
+        href="/plan-my-trip"
+        class="mt-10 border border-primary bg-primary px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-white hover:text-primary"
+      >
+        Enquire About This Journey
+      </a>
+    </section>
+
+    <!-- Route strip -->
+    <section class="w-full max-w-5xl mx-auto mt-16 md:mt-24 px-4 sm:px-8">
+      <div class="flex flex-wrap items-center justify-center gap-x-3 gap-y-3">
+        {
+          journey.stops.map((stop, i) => (
+            <>
+              <span class="font-body text-sm md:text-base text-primary whitespace-nowrap">
+                {stop.place}
+              </span>
+              {i < journey.stops.length - 1 && (
+                <span class="font-body text-text-muted">&rarr;</span>
+              )}
+            </>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Day by day -->
+    <section class="w-full mt-16 md:mt-24">
+      <div class="max-w-5xl mx-auto px-4 sm:px-8 mb-10">
+        <p class="font-body text-xs uppercase tracking-[0.2em] text-text-muted mb-2">Day By Day</p>
+        <h2 class="font-display text-3xl md:text-4xl text-primary">The Route</h2>
+      </div>
+
+      {
+        journey.stops.map((stop, i) => (
+          <article class="relative h-80 md:h-[26rem] w-full overflow-hidden">
+            <img
+              src={stop.image}
+              alt={stop.place}
+              loading={i === 0 ? "eager" : "lazy"}
+              class="absolute inset-0 size-full object-cover"
+            />
+            <div
+              class="absolute inset-0"
+              style="background-image: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.8) 100%);"
+            />
+            <div class="relative z-10 flex h-full max-w-5xl mx-auto flex-col justify-end px-4 pb-8 sm:px-8">
+              <span class="font-display text-5xl md:text-6xl text-white/30 leading-none mb-2">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 class="font-display text-2xl md:text-3xl text-white mb-1">{stop.place}</h3>
+              <span class="font-body text-sm text-white/70 mb-3">
+                {stop.nights} {stop.nights === 1 ? "night" : "nights"}
+              </span>
+              <p class="font-body text-base md:text-lg text-white/90 max-w-2xl leading-relaxed">
+                {stop.note}
+              </p>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+
+    <!-- Pricing + inclusions -->
+    <section class="w-full bg-[#1A1A1A] mt-16 md:mt-24 py-16 md:py-24">
+      <div class="max-w-5xl mx-auto px-4 sm:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div>
+          <p class="font-body text-xs uppercase tracking-[0.2em] text-white/50 mb-4">Investment</p>
+          <ul class="flex flex-col gap-2 mb-6">
+            {
+              journey.priceLines.map((line) => (
+                <li class="flex items-baseline justify-between gap-4 font-body text-white border-b border-white/10 py-2">
+                  <span class="text-white/70 text-sm">{line.label}</span>
+                  <span class="text-lg">{line.amount}</span>
+                </li>
+              ))
+            }
+          </ul>
+          {
+            journey.priceNote && (
+              <p class="font-body text-sm text-white/50 leading-relaxed mb-8">{journey.priceNote}</p>
+            )
+          }
+          <a
+            href="/plan-my-trip"
+            class="inline-block border border-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-white hover:text-primary"
+          >
+            Enquire About This Journey
+          </a>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-10">
+          <div>
+            <h3 class="font-body text-sm font-semibold uppercase tracking-[0.1em] text-white/80 mb-4">
+              Included
+            </h3>
+            <ul class="flex flex-col gap-3">
+              {
+                journey.included.map((item) => (
+                  <li class="font-body text-sm text-white/60 leading-relaxed">{item}</li>
+                ))
+              }
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-body text-sm font-semibold uppercase tracking-[0.1em] text-white/80 mb-4">
+              Not Included
+            </h3>
+            <ul class="flex flex-col gap-3">
+              {
+                journey.excluded.map((item) => (
+                  <li class="font-body text-sm text-white/60 leading-relaxed">{item}</li>
+                ))
+              }
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Related journeys -->
+    <section class="w-full max-w-6xl mx-auto mt-16 md:mt-24 mb-16 md:mb-24 px-4 sm:px-8">
+      <h2 class="font-body font-bold text-2xl md:text-3xl text-primary mb-8">More Itineraries</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-8">
+        {
+          related.map((r) => (
+            <a href={`/journeys/${r.slug}`} class="group flex flex-col items-center gap-3 text-center">
+              <div class="w-full aspect-[5/6] overflow-hidden rounded-xl">
+                <img
+                  src={r.image}
+                  alt={r.alt}
+                  class="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+              </div>
+              <span class="font-body text-xs uppercase tracking-[0.2em] text-text-muted">
+                {r.category} · {r.days} Days
+              </span>
+              <h3 class="font-body text-xl font-semibold leading-tight text-primary">{r.title}</h3>
+              <span class="mt-1 font-body text-xs font-semibold uppercase tracking-[0.16em] text-primary border border-primary/40 rounded-full px-6 py-2.5 transition-colors group-hover:bg-primary group-hover:text-white">
+                View Itinerary
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,47 @@
+---
+const images = [
+  { src: "/images/category-safaris.avif", alt: "Safari vehicle crossing the savanna" },
+  { src: "/images/lodge-siringit-camp.jpg", alt: "Comfortable lodge tent interior" },
+  { src: "/images/why-travel-cheetah.jpg", alt: "Cheetah resting in golden grass" },
+  { src: "/images/destination-kenya.jpg", alt: "Wildlife roaming the Kenyan plains" },
+  { src: "/images/lodge-zuri-zanzibar.webp", alt: "Relaxed seating inside a safari vehicle" },
+  { src: "/images/destination-tanzania.avif", alt: "Zebras grazing across the Tanzanian savanna" },
+];
+---
+
+<section class="w-full max-w-5xl mx-auto mt-20 md:mt-32 flex flex-col items-center px-4 sm:px-8">
+  <h2 class="font-body font-bold text-2xl sm:text-3xl md:text-4xl text-center leading-tight text-primary">
+    How a Safari in East Africa with Atlas Safaris Works
+  </h2>
+  <div class="w-16 h-[3px] bg-primary mt-4 mb-8"></div>
+
+  <div class="flex flex-col gap-5 max-w-[820px]">
+    <p class="font-body text-base text-center leading-[162.5%] text-text">
+      We organize safaris in East Africa's national parks and reserves, where wildlife can be
+      observed in its natural habitat. Lions, leopards, elephants, giraffes, antelopes, and other
+      savanna wildlife can often be seen just a few meters away.
+    </p>
+    <p class="font-body text-base text-center leading-[162.5%] text-text">
+      By evening, your safari guide will take you to a comfortable lodge, where you can enjoy
+      dinner and relax. The next day, the journey continues with new animals and breathtaking
+      landscapes. Thanks to the cool morning temperatures, savanna animals are especially active
+      at dawn.
+    </p>
+    <p class="font-body text-base text-center leading-[162.5%] text-text">
+      Time on safari is not limited to game drives in a 4x4 vehicle. Your vacation can be
+      complemented with a hot-air balloon flight, visits to traditional tribes, or a guided walking
+      safari. This is one of the few places on Earth that has remained almost unchanged for
+      centuries.
+    </p>
+  </div>
+
+  <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 w-full mt-10">
+    {
+      images.map((image) => (
+        <div class="h-48 sm:h-56 md:h-64 rounded-lg overflow-clip">
+          <img src={image.src} alt={image.alt} class="size-full object-cover" />
+        </div>
+      ))
+    }
+  </div>
+</section>

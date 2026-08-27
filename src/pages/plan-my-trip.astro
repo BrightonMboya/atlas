@@ -1,0 +1,386 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+
+interface Option {
+  value: string;
+  label: string;
+}
+
+interface Step {
+  id: string;
+  kind: "single" | "multi";
+  title: string;
+  hint: string;
+  skip?: string;
+  options: Option[];
+}
+
+const steps: Step[] = [
+  {
+    id: "see",
+    kind: "multi",
+    title: "What would you like to see?",
+    hint: "Select one or more",
+    options: [
+      { value: "plains", label: "The Serengeti's endless plains" },
+      { value: "crater", label: "The Ngorongoro Crater" },
+      { value: "elephants", label: "Tarangire's elephant herds" },
+      { value: "beach", label: "Zanzibar's beaches" },
+      { value: "kilimanjaro", label: "Kilimanjaro's summit" },
+      { value: "culture", label: "Maasai culture" },
+    ],
+  },
+  {
+    id: "interests",
+    kind: "multi",
+    title: "What draws you?",
+    hint: "Select one or more",
+    options: [
+      { value: "migration", label: "The great migration" },
+      { value: "bigcats", label: "Big cats & predators" },
+      { value: "walking", label: "Walking safaris" },
+      { value: "culture", label: "Culture & community" },
+      { value: "romance", label: "Romance & seclusion" },
+      { value: "summit", label: "Reaching the summit" },
+      { value: "reef", label: "Beach & ocean" },
+    ],
+  },
+  {
+    id: "occasion",
+    kind: "single",
+    title: "Who's travelling?",
+    hint: "Select one",
+    options: [
+      { value: "couple", label: "Just the two of us" },
+      { value: "honeymoon", label: "A honeymoon" },
+      { value: "family", label: "With family" },
+      { value: "friends", label: "With friends" },
+      { value: "solo", label: "On my own" },
+    ],
+  },
+  {
+    id: "months",
+    kind: "multi",
+    title: "When would you like to travel?",
+    hint: "Select one or more",
+    skip: "I haven't decided yet",
+    options: [
+      { value: "1", label: "Jan" },
+      { value: "2", label: "Feb" },
+      { value: "3", label: "Mar" },
+      { value: "4", label: "Apr" },
+      { value: "5", label: "May" },
+      { value: "6", label: "Jun" },
+      { value: "7", label: "Jul" },
+      { value: "8", label: "Aug" },
+      { value: "9", label: "Sep" },
+      { value: "10", label: "Oct" },
+      { value: "11", label: "Nov" },
+      { value: "12", label: "Dec" },
+    ],
+  },
+];
+
+const totalSteps = steps.length;
+---
+
+<Layout
+  title="Plan My Trip | Atlas Safaris"
+  description="Tell us what you'd love from your next journey and Atlas Safaris will draw the routes that fit."
+>
+  <Navbar />
+  <main class="w-full bg-[#1A1A1A] text-white" data-planner>
+    <!-- Progress rail -->
+    <div class="sticky top-0 z-30 bg-[#1A1A1A]/90 backdrop-blur-sm border-b border-white/10 py-4" data-progress hidden>
+      <div class="max-w-3xl mx-auto px-6 flex items-center gap-5">
+        <span class="font-body text-xs tracking-[0.14em] text-white/70 whitespace-nowrap">
+          <span data-progress-current>1</span> / {totalSteps}
+        </span>
+        <div class="flex-1 h-0.5 bg-white/15 overflow-hidden">
+          <span class="block h-full bg-white transition-all duration-300" style="width: 0%" data-progress-bar></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <section class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-20 text-center" data-screen="intro">
+      <img src="/images/hero-bg.jpg" alt="" class="absolute inset-0 size-full object-cover" fetchpriority="high" />
+      <div class="absolute inset-0 bg-black/60"></div>
+      <div class="relative z-10 flex flex-col items-center gap-6 max-w-xl pt-24">
+        <span class="font-body text-xs uppercase tracking-[0.2em] text-white/70">Trip Planner</span>
+        <h1 class="font-display text-4xl md:text-6xl leading-tight text-white">
+          Find your East Africa in minutes
+        </h1>
+        <p class="font-body text-base md:text-lg text-white/75 leading-relaxed">
+          Tell us what you'd love from your next journey and we'll draw the routes that fit. Think
+          of it as a starting point for the conversation — not a checkout.
+        </p>
+        <button
+          type="button"
+          class="mt-2 border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white"
+          data-go-next
+        >
+          Let's Begin
+        </button>
+      </div>
+    </section>
+
+    <!-- Steps -->
+    {
+      steps.map((step, i) => (
+        <section
+          class="hidden min-h-screen flex-col items-center justify-center px-6 py-24 text-center"
+          data-screen="step"
+          data-step-id={step.id}
+          data-step-kind={step.kind}
+        >
+          <h2 class="font-display text-3xl md:text-5xl leading-tight text-white mb-3">{step.title}</h2>
+          <p class="font-body text-xs uppercase tracking-[0.14em] text-white/50 mb-10">{step.hint}</p>
+
+          <div class:list={["flex flex-wrap justify-center gap-3 max-w-3xl", { "max-w-xl": step.id === "months" }]}>
+            {step.options.map((opt) => (
+              <button
+                type="button"
+                class="inline-flex items-center gap-3 border border-white/25 px-5 py-3.5 font-body text-sm text-white transition-colors hover:border-white/60 data-[selected]:border-white data-[selected]:bg-white data-[selected]:text-primary"
+                data-option
+                data-step={step.id}
+                data-value={opt.value}
+                aria-pressed="false"
+              >
+                {opt.label}
+              </button>
+            ))}
+          </div>
+
+          {step.skip && (
+            <button type="button" class="mt-8 font-body text-sm text-white/60 underline underline-offset-4 hover:text-white" data-go-next data-skip>
+              {step.skip}
+            </button>
+          )}
+
+          <div class="flex items-center gap-6 mt-12">
+            <button type="button" class="font-body text-xs uppercase tracking-[0.12em] text-white/60 hover:text-white" data-go-back>
+              Previous
+            </button>
+            <button
+              type="button"
+              class="border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+              data-go-next
+              disabled
+            >
+              {i === totalSteps - 1 ? "Continue" : "Next Step"}
+            </button>
+          </div>
+        </section>
+      ))
+    }
+
+    <!-- Contact -->
+    <section class="hidden min-h-screen flex-col justify-center px-6 py-24" data-screen="contact">
+      <div class="max-w-xl mx-auto w-full">
+        <h2 class="font-display text-2xl md:text-4xl text-white mb-3">Where should we send your ideas?</h2>
+        <p class="font-body text-sm text-white/60 mb-10">
+          Leave your details and a guide — not a call centre — will come back with routes that fit.
+        </p>
+
+        <form class="flex flex-col gap-6" data-form novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <label class="flex flex-col gap-2">
+              <span class="font-body text-xs uppercase tracking-[0.14em] text-white/60">Your name</span>
+              <input type="text" name="name" autocomplete="name" required class="bg-white/5 border border-white/20 px-4 py-3 font-body text-white focus:outline-none focus:border-white/60" />
+            </label>
+            <label class="flex flex-col gap-2">
+              <span class="font-body text-xs uppercase tracking-[0.14em] text-white/60">Email</span>
+              <input type="email" name="email" autocomplete="email" required class="bg-white/5 border border-white/20 px-4 py-3 font-body text-white focus:outline-none focus:border-white/60" />
+            </label>
+          </div>
+          <label class="flex flex-col gap-2">
+            <span class="font-body text-xs uppercase tracking-[0.14em] text-white/60">Phone / WhatsApp (optional)</span>
+            <input type="tel" name="phone" autocomplete="tel" class="bg-white/5 border border-white/20 px-4 py-3 font-body text-white focus:outline-none focus:border-white/60" />
+          </label>
+          <label class="flex flex-col gap-2">
+            <span class="font-body text-xs uppercase tracking-[0.14em] text-white/60">Anything else we should know? (optional)</span>
+            <textarea name="note" rows="3" class="bg-white/5 border border-white/20 px-4 py-3 font-body text-white focus:outline-none focus:border-white/60 resize-y"></textarea>
+          </label>
+
+          <p class="font-body text-sm text-red-300 hidden" data-form-error></p>
+
+          <div class="flex items-center justify-between gap-6 mt-2">
+            <button type="button" class="font-body text-xs uppercase tracking-[0.12em] text-white/60 hover:text-white" data-go-back>
+              Previous
+            </button>
+            <button type="submit" class="border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white">
+              Send My Enquiry
+            </button>
+          </div>
+          <p class="font-body text-xs text-white/40 text-right">We reply within a day, and never share your details.</p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Thank you -->
+    <section class="hidden min-h-screen flex-col items-center justify-center px-6 py-24 text-center" data-screen="thanks">
+      <span class="font-body text-xs uppercase tracking-[0.2em] text-white/60 mb-4">Enquiry received</span>
+      <h2 class="font-display text-3xl md:text-5xl text-white mb-4 max-w-lg" data-thanks-title>
+        Thank you — it's on its way to us.
+      </h2>
+      <p class="font-body text-white/70 max-w-md leading-relaxed mb-8">
+        A guide will read what you've shared and reply personally, usually within a day.
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <a href="/" class="border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white">
+          Back To Home
+        </a>
+        <button type="button" class="border border-white/40 px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:border-white" data-restart>
+          Plan Another Trip
+        </button>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  const root = document.querySelector<HTMLElement>("[data-planner]");
+  if (root) {
+    const screens = Array.from(root.querySelectorAll<HTMLElement>("[data-screen]"));
+    const stepScreens = screens.filter((s) => s.dataset.screen === "step");
+    const progress = root.querySelector<HTMLElement>("[data-progress]");
+    const progressBar = root.querySelector<HTMLElement>("[data-progress-bar]");
+    const progressCurrent = root.querySelector<HTMLElement>("[data-progress-current]");
+    const form = root.querySelector<HTMLFormElement>("[data-form]");
+    const formError = root.querySelector<HTMLElement>("[data-form-error]");
+    const thanksTitle = root.querySelector<HTMLElement>("[data-thanks-title]");
+    const total = stepScreens.length;
+
+    const answers: Record<string, string[]> = { see: [], interests: [], occasion: [], months: [] };
+
+    const CONTACT = total + 1;
+    const THANKS = total + 2;
+    let index = 0;
+
+    function show(i: number) {
+      index = i;
+      const isIntro = i === 0;
+      const isContact = i === CONTACT;
+      const isThanks = i === THANKS;
+      const stepPos = i - 1;
+
+      screens.forEach((s) => {
+        s.classList.add("hidden");
+        s.classList.remove("flex");
+      });
+
+      let target: HTMLElement | null = null;
+      if (isIntro) target = root.querySelector('[data-screen="intro"]');
+      else if (isContact) target = root.querySelector('[data-screen="contact"]');
+      else if (isThanks) target = root.querySelector('[data-screen="thanks"]');
+      else {
+        target = stepScreens[stepPos];
+        syncNext(target);
+      }
+      target?.classList.remove("hidden");
+      target?.classList.add("flex");
+
+      const isStep = i >= 1 && i <= total;
+      if (progress) progress.hidden = !isStep;
+      if (isStep && progressCurrent && progressBar) {
+        progressCurrent.textContent = String(stepPos + 1);
+        progressBar.style.width = `${((stepPos + 1) / total) * 100}%`;
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    root.querySelectorAll<HTMLButtonElement>("[data-option]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const stepId = chip.dataset.step!;
+        const value = chip.dataset.value!;
+        const screen = chip.closest<HTMLElement>('[data-screen="step"]')!;
+        const kind = screen.dataset.stepKind;
+
+        if (kind === "single") {
+          answers[stepId] = [value];
+          screen.querySelectorAll<HTMLButtonElement>("[data-option]").forEach((c) => {
+            const on = c === chip;
+            c.setAttribute("aria-pressed", on ? "true" : "false");
+            c.toggleAttribute("data-selected", on);
+          });
+          setTimeout(() => go(1), 180);
+          return;
+        }
+
+        const set = new Set(answers[stepId]);
+        if (set.has(value)) set.delete(value);
+        else set.add(value);
+        answers[stepId] = Array.from(set);
+        const on = set.has(value);
+        chip.setAttribute("aria-pressed", on ? "true" : "false");
+        chip.toggleAttribute("data-selected", on);
+        syncNext(screen);
+      });
+    });
+
+    function syncNext(screen: HTMLElement | null) {
+      if (!screen) return;
+      const next = screen.querySelector<HTMLButtonElement>("[data-go-next]:not([data-skip])");
+      if (!next) return;
+      const stepId = screen.dataset.stepId!;
+      const hasAny = (answers[stepId] ?? []).length > 0;
+      next.disabled = stepId === "months" ? false : !hasAny;
+    }
+
+    function go(dir: number) {
+      const target = index + dir;
+      if (target < 0 || target > THANKS) return;
+      show(target);
+    }
+
+    root.querySelectorAll<HTMLButtonElement>("[data-go-next]").forEach((b) =>
+      b.addEventListener("click", () => {
+        if (b.dataset.skip !== undefined) answers.months = [];
+        go(1);
+      }),
+    );
+    root.querySelectorAll<HTMLButtonElement>("[data-go-back]").forEach((b) => b.addEventListener("click", () => go(-1)));
+    root.querySelectorAll<HTMLButtonElement>("[data-restart]").forEach((b) =>
+      b.addEventListener("click", () => {
+        answers.see = [];
+        answers.interests = [];
+        answers.occasion = [];
+        answers.months = [];
+        root.querySelectorAll<HTMLButtonElement>("[data-option]").forEach((c) => {
+          c.removeAttribute("data-selected");
+          c.setAttribute("aria-pressed", "false");
+        });
+        form?.reset();
+        stepScreens.forEach((s) => syncNext(s));
+        show(0);
+      }),
+    );
+
+    if (form) {
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        const name = (data.get("name") ?? "").toString().trim();
+        const email = (data.get("email") ?? "").toString().trim();
+
+        if (formError) formError.classList.add("hidden");
+        if (!name || !email) {
+          if (formError) {
+            formError.textContent = "Please add your name and email so we can reply.";
+            formError.classList.remove("hidden");
+          }
+          return;
+        }
+
+        if (thanksTitle) thanksTitle.textContent = `Thank you, ${name.split(" ")[0]} — it's on its way to us.`;
+        show(THANKS);
+      });
+    }
+
+    show(0);
+  }
+</script>
