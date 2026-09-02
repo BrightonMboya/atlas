@@ -1,54 +1,12 @@
 ---
-interface LinkCol {
-  title: string;
-  links: { label: string; href: string }[];
-}
+import { journeys } from "../data/journeys";
 
-const columns: LinkCol[] = [
-  {
-    title: "Safaris",
-    links: [
-      { label: "HoneyMoon Safaris", href: "/safaris/honeymooners" },
-      { label: "Family Safaris", href: "/safaris/family-safaris" },
-      { label: "Wildlife and Nature", href: "/safaris/wildlife-adventures" },
-      { label: "Adventure Seekers", href: "/safaris/adventure-seekers" },
-      { label: "Classic Safaris", href: "/safaris/classic-safaris" },
-      { label: "Offbeaten Path", href: "/safaris/off-beaten-path" },
-      { label: "Best of Tanzania", href: "/safaris/arushaNationalPark" },
-      { label: "Migration Safaris", href: "/safaris/migration-safaris" },
-      { label: "Beach Holiday", href: "/zanzibar" },
-    ],
-  },
-  {
-    title: "Mount Kilimanjaro",
-    links: [
-      { label: "Climbing Mount Kilimanjaro", href: "/kilimanjaro" },
-      { label: "Our Kilimanjaro Itineraries", href: "/kilimanjaro/itineraries" },
-      { label: "Kilimanjaro Routes", href: "/kilimanjaro/routes" },
-      { label: "Lemosho Route", href: "/kilimanjaro/routes/lemosho" },
-      { label: "Machame Route", href: "/kilimanjaro/routes/machame" },
-      { label: "Marangu Route", href: "/kilimanjaro/routes/marangu" },
-    ],
-  },
-  {
-    title: "East Africa",
-    links: [
-      { label: "Tanzania", href: "/east-africa/tanzania" },
-      { label: "Kenya", href: "/east-africa/kenya" },
-      { label: "Rwanda", href: "/east-africa/rwanda" },
-      { label: "Uganda", href: "/east-africa/uganda" },
-    ],
-  },
-  {
-    title: "Other Links",
-    links: [
-      { label: "Our Itineraries", href: "/lodges" },
-      { label: "Lodges", href: "/lodges" },
-      { label: "Partners", href: "/partners" },
-      { label: "Sustainability", href: "/sustainability" },
-    ],
-  },
-];
+// The six itinerary pages, straight from the data file so a new journey appears
+// here without a second edit.
+const journeyLinks = journeys.map((journey) => ({
+  label: journey.title,
+  href: `/journeys/${journey.slug}`,
+}));
 
 const socials = [
   {
@@ -93,21 +51,36 @@ const year = new Date().getFullYear();
 
 <footer class="w-full border-t border-border">
   <div class="max-w-6xl mx-auto px-6 md:px-8 pt-20 pb-10">
-    <div class="flex flex-wrap justify-between gap-x-6 gap-y-10">
-      {columns.map((col) => (
-        <div>
-          <h3 class="font-body text-primary text-xl font-medium mb-4">{col.title}</h3>
-          <ul class="grid gap-1">
-            {col.links.map((link) => (
-              <li>
-                <a href={link.href} class="font-body text-text hover:underline hover:underline-offset-2">
-                  {link.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+    <div class="flex flex-col justify-between gap-12 md:flex-row">
+      <div>
+        <h3 class="font-body text-primary text-xl font-medium mb-4">Plan Your Trip</h3>
+        <p class="font-body text-text-muted leading-relaxed mb-6 max-w-xs">
+          Every Atlas journey is private and built around you. Tell us what you have in mind and
+          we will shape an itinerary around it.
+        </p>
+        <a
+          href="/plan-my-trip"
+          class="inline-block border border-primary bg-primary px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-white hover:text-primary"
+        >
+          Plan My Trip
+        </a>
+      </div>
+
+      <div>
+        <h3 class="font-body text-primary text-xl font-medium mb-4">Our Journeys</h3>
+        <ul class="grid gap-1">
+          {journeyLinks.map((link) => (
+            <li>
+              <a
+                href={link.href}
+                class="font-body text-text hover:underline hover:underline-offset-2"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
 
     <div class="flex flex-col items-center justify-between gap-y-4 pt-8 lg:flex-row border-t border-border">
@@ -116,25 +89,33 @@ const year = new Date().getFullYear();
           <p class="text-text-muted">All rights reserved &copy; {year} Atlas Safaris</p>
         </li>
         <li class="text-text-muted hover:underline">
-          <a href="/terms">Terms &amp; Conditions</a>
-        </li>
-        <li class="text-text-muted hover:underline">
-          <a href="/contact">Contact</a>
+          <a href="/plan-my-trip">Contact</a>
         </li>
       </ul>
       <div class="flex w-fit gap-x-4">
-        {socials.map((social) => (
-          <a href={social.href} target="_blank" rel="noopener noreferrer" aria-label={social.label}>
-            <svg
-              viewBox={social.viewBox}
-              fill={social.color}
-              class="cursor-pointer size-6"
-              xmlns="http://www.w3.org/2000/svg"
+        {socials.map((social) => {
+          const Tag = social.href ? "a" : "span";
+          return (
+            <Tag
+              href={social.href || undefined}
+              target={social.href ? "_blank" : undefined}
+              rel={social.href ? "noopener noreferrer" : undefined}
+              aria-label={social.label}
+              title={social.label}
             >
-              <path d={social.path}></path>
-            </svg>
-          </a>
-        ))}
+              <svg
+                viewBox={social.viewBox}
+                fill={social.color}
+                class:list={["size-6", social.href && "cursor-pointer"]}
+                role="img"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d={social.path} />
+              </svg>
+            </Tag>
+          );
+        })}
       </div>
     </div>
   </div>

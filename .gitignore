@@ -22,3 +22,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Vendored from node_modules by scripts/vendor-maplibre.mjs
+public/vendor/
