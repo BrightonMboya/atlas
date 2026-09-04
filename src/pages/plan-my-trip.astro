@@ -10,11 +10,12 @@ interface Option {
 
 interface Step {
   id: string;
-  kind: "single" | "multi";
+  kind: "single" | "multi" | "date";
   title: string;
   hint: string;
   skip?: string;
-  options: Option[];
+  /** Omitted on "date" steps, which render a picker instead of chips. */
+  options?: Option[];
 }
 
 const steps: Step[] = [
@@ -61,29 +62,18 @@ const steps: Step[] = [
     ],
   },
   {
-    id: "months",
-    kind: "multi",
+    id: "arrival",
+    kind: "date",
     title: "When would you like to travel?",
-    hint: "Select one or more",
+    hint: "An approximate date is fine — we can move it later",
     skip: "I haven't decided yet",
-    options: [
-      { value: "1", label: "Jan" },
-      { value: "2", label: "Feb" },
-      { value: "3", label: "Mar" },
-      { value: "4", label: "Apr" },
-      { value: "5", label: "May" },
-      { value: "6", label: "Jun" },
-      { value: "7", label: "Jul" },
-      { value: "8", label: "Aug" },
-      { value: "9", label: "Sep" },
-      { value: "10", label: "Oct" },
-      { value: "11", label: "Nov" },
-      { value: "12", label: "Dec" },
-    ],
   },
 ];
 
 const totalSteps = steps.length;
+
+// Never offer a date in the past.
+const minDate = new Date().toISOString().slice(0, 10);
 ---
 
 <Layout
@@ -91,35 +81,29 @@ const totalSteps = steps.length;
   description="Tell us what you'd love from your next journey and Atlas Safaris will draw the routes that fit."
 >
   <Navbar />
-  <main class="w-full bg-[#1A1A1A] text-white" data-planner>
-    <!-- Progress rail -->
-    <div class="sticky top-0 z-30 bg-[#1A1A1A]/90 backdrop-blur-sm border-b border-white/10 py-4" data-progress hidden>
-      <div class="max-w-3xl mx-auto px-6 flex items-center gap-5">
-        <span class="font-body text-xs tracking-[0.14em] text-white/70 whitespace-nowrap">
-          <span data-progress-current>1</span> / {totalSteps}
-        </span>
-        <div class="flex-1 h-0.5 bg-white/15 overflow-hidden">
-          <span class="block h-full bg-white transition-all duration-300" style="width: 0%" data-progress-bar></span>
-        </div>
-      </div>
-    </div>
-
+  <main class="w-full bg-white text-text" data-planner>
     <!-- Intro -->
-    <section class="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 py-20 text-center" data-screen="intro">
-      <img src="/images/hero-bg.jpg" alt="" class="absolute inset-0 size-full object-cover" fetchpriority="high" />
-      <div class="absolute inset-0 bg-black/60"></div>
-      <div class="relative z-10 flex flex-col items-center gap-6 max-w-xl pt-24">
-        <span class="font-body text-xs uppercase tracking-[0.2em] text-white/70">Trip Planner</span>
+    <section class="relative flex min-h-screen flex-col items-center overflow-hidden px-6 text-center" data-screen="intro">
+      <img
+        src="/images/trip-planner.jpg"
+        alt="Two elephants crossing the open grassland on the horizon under a wide pale sky"
+        class="absolute inset-0 size-full object-cover"
+        width="1672"
+        height="941"
+        fetchpriority="high"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/50 to-black/5"></div>
+      <div class="relative z-10 flex max-w-xl flex-col items-center gap-5 pt-[18vh] pb-[52vh]">
         <h1 class="font-display text-4xl md:text-6xl leading-tight text-white">
-          Find your East Africa in minutes
+          Shape your Tanzania in minutes
         </h1>
-        <p class="font-body text-base md:text-lg text-white/75 leading-relaxed">
-          Tell us what you'd love from your next journey and we'll draw the routes that fit. Think
-          of it as a starting point for the conversation — not a checkout.
+        <p class="font-body text-base md:text-lg text-white/80 leading-relaxed">
+          Answer {totalSteps} questions about who's coming and what you'd love to see — then
+          private routes that fit, not a checkout.
         </p>
         <button
           type="button"
-          class="mt-2 border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white"
+          class="mt-1 border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white"
           data-go-next
         >
           Let's Begin
@@ -136,37 +120,63 @@ const totalSteps = steps.length;
           data-step-id={step.id}
           data-step-kind={step.kind}
         >
-          <h2 class="font-display text-3xl md:text-5xl leading-tight text-white mb-3">{step.title}</h2>
-          <p class="font-body text-xs uppercase tracking-[0.14em] text-white/50 mb-10">{step.hint}</p>
-
-          <div class:list={["flex flex-wrap justify-center gap-3 max-w-3xl", { "max-w-xl": step.id === "months" }]}>
-            {step.options.map((opt) => (
-              <button
-                type="button"
-                class="inline-flex items-center gap-3 border border-white/25 px-5 py-3.5 font-body text-sm text-white transition-colors hover:border-white/60 data-[selected]:border-white data-[selected]:bg-white data-[selected]:text-primary"
-                data-option
-                data-step={step.id}
-                data-value={opt.value}
-                aria-pressed="false"
-              >
-                {opt.label}
-              </button>
-            ))}
+          <div class="mb-3 flex items-baseline justify-center gap-4 md:gap-5">
+            <span class="font-body text-xs tracking-[0.22em] text-text-muted whitespace-nowrap">
+              <span class="text-accent">{i + 1}</span> / {totalSteps}
+            </span>
+            <h2 class="font-display text-3xl md:text-5xl leading-tight text-primary">{step.title}</h2>
           </div>
+          <p class="font-body text-xs uppercase tracking-[0.14em] text-text-muted mb-10">{step.hint}</p>
+
+          {step.kind === "date" ? (
+            <div class="flex w-full max-w-sm flex-col items-center gap-5">
+              <label class="relative block w-full">
+                <span class="sr-only">Arrival date</span>
+                <input
+                  type="date"
+                  min={minDate}
+                  class="planner-date w-full border border-border bg-white px-5 py-4 pr-14 text-center font-body text-lg text-text transition-colors hover:border-accent/60 focus:border-accent focus:outline-none"
+                  data-date-field
+                />
+                <span aria-hidden="true" class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-accent">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="5" width="18" height="16" rx="2" />
+                    <path d="M8 3v4M16 3v4M3 10h18" />
+                  </svg>
+                </span>
+              </label>
+              <p class="min-h-8 font-display text-xl italic text-accent-dark" data-date-pretty />
+            </div>
+          ) : (
+            <div class="flex flex-wrap justify-center gap-3 max-w-3xl">
+              {step.options?.map((opt) => (
+                <button
+                  type="button"
+                  class="inline-flex items-center gap-3 border border-border px-5 py-3.5 font-body text-sm text-text transition-colors hover:border-accent data-[selected]:border-accent data-[selected]:bg-accent data-[selected]:text-white"
+                  data-option
+                  data-step={step.id}
+                  data-value={opt.value}
+                  aria-pressed="false"
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          )}
 
           {step.skip && (
-            <button type="button" class="mt-8 font-body text-sm text-white/60 underline underline-offset-4 hover:text-white" data-go-next data-skip>
+            <button type="button" class="mt-8 font-body text-sm text-text-muted underline underline-offset-4 hover:text-accent-dark" data-go-next data-skip>
               {step.skip}
             </button>
           )}
 
           <div class="flex items-center gap-6 mt-12">
-            <button type="button" class="font-body text-xs uppercase tracking-[0.12em] text-white/60 hover:text-white" data-go-back>
+            <button type="button" class="font-body text-xs uppercase tracking-[0.12em] text-text-muted hover:text-text" data-go-back>
               Previous
             </button>
             <button
               type="button"
-              class="border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+              class="border border-accent bg-accent px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-transparent hover:text-accent-dark disabled:opacity-30 disabled:cursor-not-allowed"
               data-go-next
               disabled
             >
@@ -180,60 +190,65 @@ const totalSteps = steps.length;
     <!-- Contact -->
     <section class="hidden min-h-screen flex-col justify-center px-6 py-24" data-screen="contact">
       <div class="max-w-xl mx-auto w-full">
-        <h2 class="font-display text-2xl md:text-4xl text-white mb-3">Where should we send your ideas?</h2>
-        <p class="font-body text-sm text-white/60 mb-10">
+        <h2 class="font-display text-2xl md:text-4xl text-primary mb-3">Where should we send your ideas?</h2>
+        <p class="font-body text-sm text-text-muted mb-10">
           Leave your details and a guide — not a call centre — will come back with routes that fit.
         </p>
 
+        <p class="font-body text-sm text-text-muted border border-border px-4 py-3 mb-8 hidden" data-party-summary></p>
+
         <form class="flex flex-col gap-6" data-form novalidate>
+          <input type="hidden" name="adults" data-party-field="adults" />
+          <input type="hidden" name="children" data-party-field="children" />
+          <input type="hidden" name="arrival" data-party-field="arrival" />
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <label class="flex flex-col gap-2">
-              <span class="font-body text-xs uppercase tracking-[0.14em] text-white/60">Your name</span>
-              <input type="text" name="name" autocomplete="name" required class="bg-white/5 border border-white/20 px-4 py-3 font-body text-white focus:outline-none focus:border-white/60" />
+              <span class="font-body text-xs uppercase tracking-[0.14em] text-text-muted">Your name</span>
+              <input type="text" name="name" autocomplete="name" required class="bg-white border border-border px-4 py-3 font-body text-text focus:outline-none focus:border-accent" />
             </label>
             <label class="flex flex-col gap-2">
-              <span class="font-body text-xs uppercase tracking-[0.14em] text-white/60">Email</span>
-              <input type="email" name="email" autocomplete="email" required class="bg-white/5 border border-white/20 px-4 py-3 font-body text-white focus:outline-none focus:border-white/60" />
+              <span class="font-body text-xs uppercase tracking-[0.14em] text-text-muted">Email</span>
+              <input type="email" name="email" autocomplete="email" required class="bg-white border border-border px-4 py-3 font-body text-text focus:outline-none focus:border-accent" />
             </label>
           </div>
           <label class="flex flex-col gap-2">
-            <span class="font-body text-xs uppercase tracking-[0.14em] text-white/60">Phone / WhatsApp (optional)</span>
-            <input type="tel" name="phone" autocomplete="tel" class="bg-white/5 border border-white/20 px-4 py-3 font-body text-white focus:outline-none focus:border-white/60" />
+            <span class="font-body text-xs uppercase tracking-[0.14em] text-text-muted">Phone / WhatsApp (optional)</span>
+            <input type="tel" name="phone" autocomplete="tel" class="bg-white border border-border px-4 py-3 font-body text-text focus:outline-none focus:border-accent" />
           </label>
           <label class="flex flex-col gap-2">
-            <span class="font-body text-xs uppercase tracking-[0.14em] text-white/60">Anything else we should know? (optional)</span>
-            <textarea name="note" rows="3" class="bg-white/5 border border-white/20 px-4 py-3 font-body text-white focus:outline-none focus:border-white/60 resize-y"></textarea>
+            <span class="font-body text-xs uppercase tracking-[0.14em] text-text-muted">Anything else we should know? (optional)</span>
+            <textarea name="note" rows="3" class="bg-white border border-border px-4 py-3 font-body text-text focus:outline-none focus:border-accent resize-y"></textarea>
           </label>
 
-          <p class="font-body text-sm text-red-300 hidden" data-form-error></p>
+          <p class="font-body text-sm text-red-700 hidden" data-form-error></p>
 
           <div class="flex items-center justify-between gap-6 mt-2">
-            <button type="button" class="font-body text-xs uppercase tracking-[0.12em] text-white/60 hover:text-white" data-go-back>
+            <button type="button" class="font-body text-xs uppercase tracking-[0.12em] text-text-muted hover:text-text" data-go-back>
               Previous
             </button>
-            <button type="submit" class="border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white">
+            <button type="submit" class="border border-accent bg-accent px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-transparent hover:text-accent-dark">
               Send My Enquiry
             </button>
           </div>
-          <p class="font-body text-xs text-white/40 text-right">We reply within a day, and never share your details.</p>
+          <p class="font-body text-xs text-text-muted text-right">We reply within a day, and never share your details.</p>
         </form>
       </div>
     </section>
 
     <!-- Thank you -->
     <section class="hidden min-h-screen flex-col items-center justify-center px-6 py-24 text-center" data-screen="thanks">
-      <span class="font-body text-xs uppercase tracking-[0.2em] text-white/60 mb-4">Enquiry received</span>
-      <h2 class="font-display text-3xl md:text-5xl text-white mb-4 max-w-lg" data-thanks-title>
+      <span class="font-body text-xs uppercase tracking-[0.2em] text-text-muted mb-4">Enquiry received</span>
+      <h2 class="font-display text-3xl md:text-5xl text-primary mb-4 max-w-lg" data-thanks-title>
         Thank you — it's on its way to us.
       </h2>
-      <p class="font-body text-white/70 max-w-md leading-relaxed mb-8">
+      <p class="font-body text-text-muted max-w-md leading-relaxed mb-8">
         A guide will read what you've shared and reply personally, usually within a day.
       </p>
       <div class="flex flex-wrap items-center justify-center gap-4">
-        <a href="/" class="border border-white bg-white px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-primary transition-colors hover:bg-transparent hover:text-white">
+        <a href="/" class="border border-accent bg-accent px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:bg-transparent hover:text-accent-dark">
           Back To Home
         </a>
-        <button type="button" class="border border-white/40 px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-white transition-colors hover:border-white" data-restart>
+        <button type="button" class="border border-border px-8 py-4 font-body text-sm font-semibold uppercase tracking-[0.15em] text-text transition-colors hover:border-accent hover:text-accent-dark" data-restart>
           Plan Another Trip
         </button>
       </div>
@@ -243,19 +258,73 @@ const totalSteps = steps.length;
 </Layout>
 
 <script>
-  const root = document.querySelector<HTMLElement>("[data-planner]");
-  if (root) {
+  const plannerRoot = document.querySelector<HTMLElement>("[data-planner]");
+  if (plannerRoot) {
+    // Re-bound so the narrowing survives into the nested handlers below.
+    const root: HTMLElement = plannerRoot;
     const screens = Array.from(root.querySelectorAll<HTMLElement>("[data-screen]"));
     const stepScreens = screens.filter((s) => s.dataset.screen === "step");
-    const progress = root.querySelector<HTMLElement>("[data-progress]");
-    const progressBar = root.querySelector<HTMLElement>("[data-progress-bar]");
-    const progressCurrent = root.querySelector<HTMLElement>("[data-progress-current]");
     const form = root.querySelector<HTMLFormElement>("[data-form]");
     const formError = root.querySelector<HTMLElement>("[data-form-error]");
     const thanksTitle = root.querySelector<HTMLElement>("[data-thanks-title]");
+    // The intro sits on a photograph; every screen after it is on white, where
+    // the light logo would disappear.
+    const siteLogo = document.querySelector<HTMLImageElement>("[data-site-logo]");
     const total = stepScreens.length;
 
-    const answers: Record<string, string[]> = { see: [], interests: [], occasion: [], months: [] };
+    const answers: Record<string, string[]> = { see: [], interests: [], occasion: [], arrival: [] };
+
+    // The hero form on the home page hands off adults / children / arrival date.
+    const params = new URLSearchParams(window.location.search);
+    const party = {
+      adults: params.get("adults") ?? "",
+      children: params.get("children") ?? "",
+      arrival: params.get("arrival") ?? "",
+    };
+    const hasParty = party.adults !== "" || party.arrival !== "";
+
+    root.querySelectorAll<HTMLInputElement>("[data-party-field]").forEach((input) => {
+      input.value = party[input.dataset.partyField as keyof typeof party] ?? "";
+    });
+
+    const summary = root.querySelector<HTMLElement>("[data-party-summary]");
+
+    /** "12 June 2026", or "" if the value isn't a real date. */
+    function longDate(iso: string, withWeekday = false) {
+      if (!iso) return "";
+      const when = new Date(`${iso}T00:00:00`);
+      if (Number.isNaN(when.getTime())) return "";
+      return when.toLocaleDateString("en-GB", {
+        ...(withWeekday ? { weekday: "long" } : {}),
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+    }
+
+    if (party.arrival) answers.arrival = [party.arrival];
+
+    /** The arrival date as it currently stands, or "" if none has been given. */
+    function currentArrival() {
+      return answers.arrival[0] ?? "";
+    }
+
+    function renderSummary() {
+      if (!summary) return;
+      const adults = Number(party.adults) || 0;
+      const children = Number(party.children) || 0;
+      const parts: string[] = [];
+      if (adults) parts.push(`${adults} adult${adults === 1 ? "" : "s"}`);
+      if (children) parts.push(`${children} child${children === 1 ? "" : "ren"}`);
+      const arriving = longDate(currentArrival());
+      if (arriving) parts.push(`arriving around ${arriving}`);
+      if (parts.length) {
+        summary.textContent = `You told us: ${parts.join(" · ")}.`;
+        summary.classList.remove("hidden");
+      } else {
+        summary.classList.add("hidden");
+      }
+    }
 
     const CONTACT = total + 1;
     const THANKS = total + 2;
@@ -284,12 +353,11 @@ const totalSteps = steps.length;
       target?.classList.remove("hidden");
       target?.classList.add("flex");
 
-      const isStep = i >= 1 && i <= total;
-      if (progress) progress.hidden = !isStep;
-      if (isStep && progressCurrent && progressBar) {
-        progressCurrent.textContent = String(stepPos + 1);
-        progressBar.style.width = `${((stepPos + 1) / total) * 100}%`;
+      if (siteLogo) {
+        siteLogo.src = isIntro ? "/images/logo-light.png" : "/images/logo-dark.png";
+        siteLogo.style.filter = isIntro ? "" : "none";
       }
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -322,13 +390,33 @@ const totalSteps = steps.length;
       });
     });
 
+    const dateField = root.querySelector<HTMLInputElement>("[data-date-field]");
+    const datePretty = root.querySelector<HTMLElement>("[data-date-pretty]");
+
+    function syncArrival() {
+      const iso = currentArrival();
+      if (dateField) dateField.value = iso;
+      if (datePretty) datePretty.textContent = longDate(iso, true);
+      root
+        .querySelectorAll<HTMLInputElement>('[data-party-field="arrival"]')
+        .forEach((input) => (input.value = iso));
+      renderSummary();
+    }
+
+    dateField?.addEventListener("change", () => {
+      answers.arrival = dateField.value ? [dateField.value] : [];
+      syncArrival();
+    });
+
+    syncArrival();
+
     function syncNext(screen: HTMLElement | null) {
       if (!screen) return;
       const next = screen.querySelector<HTMLButtonElement>("[data-go-next]:not([data-skip])");
       if (!next) return;
       const stepId = screen.dataset.stepId!;
       const hasAny = (answers[stepId] ?? []).length > 0;
-      next.disabled = stepId === "months" ? false : !hasAny;
+      next.disabled = stepId === "arrival" ? false : !hasAny;
     }
 
     function go(dir: number) {
@@ -339,7 +427,10 @@ const totalSteps = steps.length;
 
     root.querySelectorAll<HTMLButtonElement>("[data-go-next]").forEach((b) =>
       b.addEventListener("click", () => {
-        if (b.dataset.skip !== undefined) answers.months = [];
+        if (b.dataset.skip !== undefined) {
+          answers.arrival = [];
+          syncArrival();
+        }
         go(1);
       }),
     );
@@ -349,12 +440,16 @@ const totalSteps = steps.length;
         answers.see = [];
         answers.interests = [];
         answers.occasion = [];
-        answers.months = [];
+        answers.arrival = party.arrival ? [party.arrival] : [];
         root.querySelectorAll<HTMLButtonElement>("[data-option]").forEach((c) => {
           c.removeAttribute("data-selected");
           c.setAttribute("aria-pressed", "false");
         });
         form?.reset();
+        root.querySelectorAll<HTMLInputElement>("[data-party-field]").forEach((input) => {
+          input.value = party[input.dataset.partyField as keyof typeof party] ?? "";
+        });
+        syncArrival();
         stepScreens.forEach((s) => syncNext(s));
         show(0);
       }),
@@ -381,6 +476,34 @@ const totalSteps = steps.length;
       });
     }
 
-    show(0);
+    show(hasParty ? 1 : 0);
   }
 </script>
+
+<style>
+  /* Dark picker chrome, and a blank field reads as a prompt rather than "mm/dd/yyyy" noise. */
+  .planner-date {
+    color-scheme: light;
+  }
+
+  .planner-date::-webkit-datetime-edit {
+    color: var(--color-text);
+  }
+
+  .planner-date:not(:focus):invalid::-webkit-datetime-edit,
+  .planner-date[value=""]:not(:focus)::-webkit-datetime-edit {
+    color: var(--color-text-muted);
+  }
+
+  /* Stretch the invisible picker trigger over the calendar icon block. */
+  .planner-date::-webkit-calendar-picker-indicator {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+</style>
