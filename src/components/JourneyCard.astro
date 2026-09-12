@@ -1,0 +1,42 @@
+---
+import type { Journey } from "../data/journeys";
+
+interface Props {
+  journey: Journey;
+}
+
+const { journey } = Astro.props;
+---
+
+<a href={`/journeys/${journey.slug}`} class="group relative min-h-[440px] rounded-xl overflow-hidden block">
+  <img
+    src={journey.image}
+    alt={journey.alt}
+    loading="lazy"
+    class="absolute inset-0 h-full w-full object-cover brightness-75 transition-transform duration-700 group-hover:scale-105"
+  />
+  <div
+    class="absolute inset-x-0 top-0 p-4"
+    style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);"
+  >
+    <h3 class="font-display text-2xl font-medium leading-7 text-white">
+      {journey.title}
+    </h3>
+    <p class="font-body text-sm mt-0.5 leading-[1.125] text-white">
+      {journey.days} days {journey.activity}
+    </p>
+  </div>
+  <div
+    class="absolute inset-x-0 bottom-0 p-4 flex flex-wrap items-end justify-between gap-3"
+    style="background-image: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);"
+  >
+    <div>
+      {journey.priceSummary.length > 0 ? journey.priceSummary.map((line) => <p class="font-body text-sm leading-relaxed text-white">{line}</p>) : <p class="font-body text-sm text-white">Enquire about pricing</p>}
+    </div>
+    <span
+      class="font-body text-sm font-semibold leading-[1.125] text-text rounded-full bg-white py-2.5 px-6 shrink-0 transition-colors"
+    >
+      View Trip
+    </span>
+  </div>
+</a>

@@ -1,41 +1,59 @@
 ---
+// Real Tripadvisor reviews for the Arusha listing, which still carries Ndonya
+// Travel — the company's previous name. Quoted verbatim, spelling and all; the
+// only text removed is the consultant's signature block a reviewer pasted at
+// the end of hers. Three are highlighted here, the rest are behind the link.
+const REVIEWS_URL =
+  "https://www.tripadvisor.com/Attraction_Review-g297913-d28254977-Reviews-Ndonya_Travel-Arusha_Arusha_Region.html";
+const RATING = "5.0";
+const REVIEW_COUNT = 6;
+
 const testimonials = [
   {
-    name: "Essenia B",
-    contributions: "1 contribution",
-    avatar: "/images/avatar-essenia-b.jpg",
-    title: "A once-in-a-lifetime experience!",
-    meta: "Oct 2025 • Couples",
-    review:
-      "We did a five-day safari with Atlas Safaris – and it was absolutely incredible. The entire trip was perfectly tailored to us, every little detail was just right. From the very beginning, we felt comfortable and truly welcomed. We're beyond happy to have found a family in Tanzania. Our guide was amazing – warm, professional, and so passionate about sharing his country and its wildlife with us. We can genuinely recommend booking with Atlas Safaris.",
+    name: "Barbara W",
+    contributions: "7 contributions",
+    title: "Ivanna - Ndonya Travel Unforgettable Service & Fantastic Holiday - Thanks Ndonya Travel!",
+    meta: "Nov 2025",
+    review: `Looking for a stress-free, relaxing holiday? Look no further!
+
+This is the second year I've been with Ivanna from Ndonya Travel, and she's handled everything from airport pickup to excursions and check-ins. Her service is top-notch, professional, and super friendly.
+Thanks, Ivanna - we'll be back next year!`,
   },
   {
-    name: "kristincoellesmith",
+    name: "WikusBotha",
+    contributions: "Bloemfontein, South Africa • 32 contributions",
+    title: "Unforgettable Holiday in Zanzibar!",
+    meta: "Dec 2024 • Couples",
+    review:
+      "Exceptional service! We couldn't be happier with our decision to book our Zanzibar trip through Ivanna at Ndonya Travel Agency. She took care of every detail, ensuring we had nothing to worry about, which made our entire trip so much more relaxing and enjoyable. From the very beginning, their warm, friendly, and genuine approach left a lasting impression on our holiday experience. I highly recommend booking your next getaway with Ndonya Travel Agency!",
+  },
+  {
+    name: "Ophely B",
     contributions: "3 contributions",
-    avatar: "/images/avatar-kristincoellesmith.jpg",
-    title: "Huge gratitude to Atlas Safaris – My Dream Team!",
-    meta: "Oct 2025 • Friends",
+    title: "safari excursion",
+    meta: "Jan 2026 • Friends",
     review:
-      "The strength, dedication, and heart from the Atlas Safaris Team was second to none! The team was knowledgeable beyond belief, professional while also being personal and caring; all leading to an experience exceeding all of my expectations. If you are looking for a climbing tour, nature and wildlife tour, or beach vacation I can't imagine that you would find any better.",
-  },
-  {
-    name: "Steph C",
-    contributions: "1 contribution",
-    avatar: "/images/avatar-steph-c.jpg",
-    title: "Epic journey of climbing Mount Kilimanjaro",
-    meta: "Oct 2025 • Friends",
-    review:
-      "Atlas Safaris organised us a journey of a life time. Something has shifted in my soul from this experience. It wouldn't be possible with each and everyone involved.",
+      "it was a great experience with a great guide! we had a great time. we did other activities with ndoyatravel that went great! she is a very accommodating person and attentive to our needs!",
   },
 ];
+
+/** Tripadvisor's own avatars aren't ours to host, so the reviewer's initials
+ *  stand in. "WikusBotha" is one word and gets one letter. */
+function initials(name: string): string {
+  return name
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
 
 const tripadvisorIconPath =
   "M528.91,178.82,576,127.58H471.66a326.11,326.11,0,0,0-367,0H0l47.09,51.24A143.911,143.911,0,0,0,241.86,390.73L288,440.93l46.11-50.17A143.94,143.94,0,0,0,575.88,285.18h-.03A143.56,143.56,0,0,0,528.91,178.82ZM144.06,382.57a97.39,97.39,0,1,1,97.39-97.39A97.39,97.39,0,0,1,144.06,382.57ZM288,282.37c0-64.09-46.62-119.08-108.09-142.59a281,281,0,0,1,216.17,0C334.61,163.3,288,218.29,288,282.37Zm143.88,100.2h-.01a97.405,97.405,0,1,1,.01,0ZM144.06,234.12h-.01a51.06,51.06,0,1,0,51.06,51.06v-.11A51,51,0,0,0,144.06,234.12Zm287.82,0a51.06,51.06,0,1,0,51.06,51.06A51.06,51.06,0,0,0,431.88,234.12Z";
 ---
 
-<section class="w-full max-w-256 mx-auto mt-20 md:mt-28 flex flex-col items-center px-4 sm:px-8">
-  <div class="flex items-center mb-8 gap-2">
-    <div class="flex items-center justify-center rounded-full shrink-0 bg-tripadvisor size-10">
+<section class="mx-auto mt-20 flex w-full max-w-256 flex-col items-center px-4 sm:px-8 md:mt-28">
+  <div class="mb-3 flex items-center gap-2">
+    <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-tripadvisor">
       <svg
         width="20"
         height="20"
@@ -52,20 +70,21 @@ const tripadvisorIconPath =
     </h2>
   </div>
 
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+  <p class="mb-8 text-center font-body text-sm leading-relaxed text-text-muted">
+    {RATING} out of 5 from {REVIEW_COUNT} reviews on Tripadvisor, where we are still listed under
+    Ndonya Travel — our previous name.
+  </p>
+
+  <div class="grid w-full grid-cols-1 gap-4 md:grid-cols-3">
     {
       testimonials.map((testimonial) => (
-        <div class="flex flex-col p-4 rounded-2xl gap-4 border border-solid border-border">
+        <div class="flex flex-col gap-4 rounded-2xl border border-solid border-border p-4">
           <div class="flex items-center gap-2">
-            <div class="rounded-full overflow-clip shrink-0 bg-tripadvisor-dark size-10">
-              <img
-                src={testimonial.avatar}
-                alt={`${testimonial.name}'s profile photo`}
-                class="size-full object-cover"
-              />
+            <div class="flex size-10 shrink-0 items-center justify-center rounded-full bg-tripadvisor-dark font-body text-sm font-bold text-white">
+              {initials(testimonial.name)}
             </div>
             <div>
-              <div class="font-body text-sm font-bold leading-4.5 text-tripadvisor-dark">
+              <div class="font-body text-sm leading-4.5 font-bold text-tripadvisor-dark">
                 {testimonial.name}
               </div>
               <div class="font-body text-xs leading-4 text-tripadvisor-dark">
@@ -81,7 +100,7 @@ const tripadvisorIconPath =
                 height="20"
                 viewBox="0 0 24 24"
                 fill="currentColor"
-                class="text-tripadvisor shrink-0"
+                class="shrink-0 text-tripadvisor"
                 aria-hidden="true"
               >
                 <path d="M12 2.5l2.95 6.28 6.93.7-5.2 4.67 1.5 6.85L12 17.77l-6.18 3.23 1.5-6.85-5.2-4.67 6.93-.7z" />
@@ -90,15 +109,13 @@ const tripadvisorIconPath =
           </div>
 
           <div>
-            <div class="font-body text-sm font-semibold leading-4.5 text-tripadvisor-dark">
+            <div class="font-body text-sm leading-4.5 font-semibold text-tripadvisor-dark">
               {testimonial.title}
             </div>
-            <div class="font-body text-sm leading-4.5 text-tripadvisor-dark">
-              {testimonial.meta}
-            </div>
+            <div class="font-body text-sm leading-4.5 text-tripadvisor-dark">{testimonial.meta}</div>
           </div>
 
-          <p class="font-body text-sm leading-[150%] text-text-muted">
+          <p class="font-body text-sm leading-[150%] whitespace-pre-line text-text-muted">
             {testimonial.review}
           </p>
         </div>
@@ -107,8 +124,10 @@ const tripadvisorIconPath =
   </div>
 
   <a
-    href="#"
-    class="flex items-center mt-8 py-2 px-6 rounded-full gap-3 border-2 border-solid border-tripadvisor text-text transition-colors hover:bg-tripadvisor/10"
+    href={REVIEWS_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="mt-8 flex items-center gap-3 rounded-full border-2 border-solid border-tripadvisor px-6 py-2 text-text transition-colors hover:bg-tripadvisor/10"
   >
     <svg
       width="24"
@@ -116,11 +135,11 @@ const tripadvisorIconPath =
       viewBox="0 0 576 512"
       xmlns="http://www.w3.org/2000/svg"
       fill="currentColor"
-      class="text-tripadvisor shrink-0"
+      class="shrink-0 text-tripadvisor"
       aria-hidden="true"
     >
       <path d={tripadvisorIconPath} />
     </svg>
-    <span class="font-body text-base leading-5">See more of our reviews</span>
+    <span class="font-body text-base leading-5">Read all Reviews on Trip Advisor</span>
   </a>
 </section>

@@ -267,9 +267,6 @@ const minDate = new Date().toISOString().slice(0, 10);
     const form = root.querySelector<HTMLFormElement>("[data-form]");
     const formError = root.querySelector<HTMLElement>("[data-form-error]");
     const thanksTitle = root.querySelector<HTMLElement>("[data-thanks-title]");
-    // The intro sits on a photograph; every screen after it is on white, where
-    // the light logo would disappear.
-    const siteLogo = document.querySelector<HTMLImageElement>("[data-site-logo]");
     const total = stepScreens.length;
 
     const answers: Record<string, string[]> = { see: [], interests: [], occasion: [], arrival: [] };
@@ -352,11 +349,6 @@ const minDate = new Date().toISOString().slice(0, 10);
       }
       target?.classList.remove("hidden");
       target?.classList.add("flex");
-
-      if (siteLogo) {
-        siteLogo.src = isIntro ? "/images/logo-light.png" : "/images/logo-dark.png";
-        siteLogo.style.filter = isIntro ? "" : "none";
-      }
 
       window.scrollTo({ top: 0, behavior: "smooth" });
     }

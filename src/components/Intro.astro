@@ -1,9 +1,18 @@
 ---
 import { journeys } from "../data/journeys";
+import JourneyCard from "./JourneyCard.astro";
+
+// Six hand-picked journeys spanning the catalogue; the rest live on /journeys.
+const featured = journeys.filter((journey) => journey.featured);
 ---
 
-<section id="itineraries" class="w-full max-w-6xl mx-auto mt-16 md:mt-28 flex flex-col items-center px-4 sm:px-8 scroll-mt-24">
-  <h2 class="font-display text-[38px] sm:text-[46px] md:text-[54px] text-center leading-tight md:leading-14.5 text-primary">
+<section
+  id="itineraries"
+  class="w-full max-w-6xl mx-auto mt-16 md:mt-28 flex flex-col items-center px-4 sm:px-8 scroll-mt-24"
+>
+  <h2
+    class="font-display text-[38px] sm:text-[46px] md:text-[54px] text-center leading-tight md:leading-14.5 text-primary"
+  >
     Ways Into Tanzania
   </h2>
   <p class="font-display text-lg italic text-center mt-2 mb-8 md:mb-12 text-text-muted">
@@ -11,46 +20,13 @@ import { journeys } from "../data/journeys";
   </p>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-    {
-      journeys.map((journey) => (
-        <a href={`/journeys/${journey.slug}`} class="relative h-96 rounded-xl overflow-hidden block">
-          <img
-            src={journey.image}
-            alt={journey.alt}
-            class="absolute inset-0 h-full w-full object-cover brightness-75"
-          />
-          <div
-            class="absolute inset-x-0 top-0 p-4"
-            style="background-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);"
-          >
-            <h3 class="font-display text-2xl font-medium leading-7 text-white">
-              {journey.title}
-            </h3>
-            <p class="font-body text-sm mt-0.5 leading-[1.125] text-white">
-              {journey.days} days {journey.category === "Kilimanjaro Trek" ? "hike" : "safari"}
-            </p>
-          </div>
-          <div
-            class="absolute inset-x-0 bottom-0 p-4 flex items-end justify-between"
-            style="background-image: linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);"
-          >
-            <div>
-              <p class="font-body text-sm leading-[1.125] text-white">
-                Starts from
-              </p>
-              <p class="font-body text-2xl font-bold leading-tight text-white">
-                {journey.priceFrom}
-              </p>
-              <p class="font-body text-sm leading-[1.125] text-white">
-                {journey.priceUnit}
-              </p>
-            </div>
-            <span class="font-body text-sm font-semibold leading-[1.125] text-text rounded-full bg-white py-2.5 px-6 shrink-0 transition-colors">
-              View Trip
-            </span>
-          </div>
-        </a>
-      ))
-    }
+    {featured.map((journey) => <JourneyCard journey={journey} />)}
   </div>
+
+  <a
+    href="/journeys"
+    class="font-body text-sm font-semibold mt-10 md:mt-14 rounded-full border border-primary/25 text-primary py-3.5 px-9 transition-colors hover:bg-primary hover:text-white"
+  >
+    All Itineraries
+  </a>
 </section>

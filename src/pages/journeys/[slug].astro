@@ -3,27 +3,57 @@ import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import RouteMap from "../../components/journey/RouteMap.astro";
-import { journeys, resolveAddOns } from "../../data/journeys";
+import {
+  catalogue,
+  journeys,
+  lowestRate,
+  parseItinerary,
+  routeFor,
+  type DocumentEntry,
+  type Section,
+} from "../../data/journeys";
 
 export function getStaticPaths() {
-  return journeys.map((journey) => ({
-    params: { slug: journey.slug },
-    props: { journey },
-  }));
+  return catalogue.map((journey) => ({ params: { slug: journey.slug }, props: { journey } }));
+}
+
+interface Props {
+  journey: DocumentEntry;
 }
 
 const { journey } = Astro.props;
-const related = journeys.filter((j) => j.slug !== journey.slug).slice(0, 3);
-const title = `${journey.title} — ${journey.days} Days | Atlas Safaris`;
+const itinerary = parseItinerary(journey);
+const route = routeFor(itinerary);
+const rate = lowestRate(itinerary);
+const related = journeys
+  .filter((entry) => entry.slug !== journey.slug && entry.activity === journey.activity)
+  .slice(0, 3);
 
-const chain = [
-  ...(journey.route.start ? [journey.route.start] : []),
-  ...journey.route.points,
-  ...(journey.route.end ? [journey.route.end] : []),
-];
-const routeLabel =
-  chain.length > 1 ? `${chain[0].name} → ${chain[chain.length - 1].name}` : chain[0]?.name;
-const addOns = resolveAddOns(journey.addOns);
+const title = journey.days
+  ? `${journey.title} — ${journey.days} Days | Atlas Safaris`
+  : `${journey.title} | Atlas Safaris`;
+
+const chain = route ? [route.start, ...route.points, route.end].filter((p) => p != null) : [];
+const routeLabel = chain.length > 1 ? `${chain[0].name} → ${chain[chain.length - 1].name}` : undefined;
+
+// The guides (Mount Kilimanjaro, Zanzibar excursions) have no day list; their
+// body is the run of sections, filed under the document's own ALL-CAPS headings.
+const isGuide = itinerary.days.length === 0;
+const groupedSections = itinerary.sections.reduce<{ group?: string; sections: Section[] }[]>(
+  (groups, section) => {
+    const last = groups[groups.length - 1];
+    if (last && last.group === section.group) last.sections.push(section);
+    else groups.push({ group: section.group, sections: [section] });
+    return groups;
+  },
+  [],
+);
+
+/** "2 Pax – From $4,467 per person" reads better as a row than a sentence. */
+function splitRate(text: string): { label?: string; amount: string } {
+  const match = text.match(/^(.*?)\s+[–—]\s+(\$.*)$/);
+  return match ? { label: match[1], amount: match[2] } : { amount: text };
+}
 ---
 
 <Layout title={title} description={journey.summary}>
@@ -38,24 +68,19 @@ const addOns = resolveAddOns(journey.addOns);
         fetchpriority="high"
       />
       <div class="absolute inset-0 bg-black/30"></div>
-      <div
-        class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
-      >
-      </div>
+      <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 
       <nav
-        class="absolute inset-x-0 top-0 z-10 flex items-center gap-2 px-6 pt-24 text-xs tracking-[0.16em] text-white/70 uppercase sm:px-10"
+        class="absolute inset-x-0 top-0 z-10 flex items-center gap-2 px-6 pt-8 text-xs tracking-[0.16em] text-white/70 uppercase sm:px-10"
         aria-label="Breadcrumb"
       >
         <a href="/" class="transition-colors hover:text-white">Home</a>
         <span>/</span>
-        <a href="/#itineraries" class="transition-colors hover:text-white">Itineraries</a>
+        <a href="/journeys" class="transition-colors hover:text-white">Journeys</a>
       </nav>
 
       <div class="relative flex h-full flex-col items-center justify-center px-6 text-center">
-        <span
-          class="animate-fade-in-up mb-4 text-xs tracking-[0.3em] text-white/80 uppercase"
-        >
+        <span class="animate-fade-in-up mb-4 text-xs tracking-[0.3em] text-white/80 uppercase">
           {journey.category}
         </span>
         <h1
@@ -66,8 +91,8 @@ const addOns = resolveAddOns(journey.addOns);
         <div
           class="animate-fade-in-up flex items-center gap-8 text-sm tracking-widest text-white/90 uppercase [animation-delay:400ms]"
         >
-          <span>{journey.days} Days / {journey.nights} Nights</span>
-          <span class="h-8 w-px bg-white/30"></span>
+          {journey.days && <span>{journey.days} Days</span>}
+          {journey.days && <span class="h-8 w-px bg-white/30"></span>}
           <span>{journey.region}</span>
         </div>
       </div>
@@ -78,217 +103,275 @@ const addOns = resolveAddOns(journey.addOns);
     </section>
 
     <!-- Trip at a glance -->
-    <section class="border-b border-stone-100 bg-white">
-      <div class="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
-        <h2
-          class="mb-10 text-center text-xs font-medium tracking-[0.3em] text-stone-400 uppercase"
-        >
-          Your Destinations
-        </h2>
+    {
+      itinerary.destinations.length > 0 && (
+        <section class="border-b border-stone-100 bg-white">
+          <div class="mx-auto max-w-screen-xl px-6 py-16 md:py-20">
+            <h2 class="mb-10 text-center text-xs font-medium tracking-[0.3em] text-stone-400 uppercase">
+              Your Destinations
+            </h2>
 
-        <div class="mb-12 flex flex-wrap items-center justify-center gap-3 md:gap-4">
-          {
-            journey.destinations.map((dest, idx) => (
-              <>
-                <span class="font-display text-xl text-stone-700 italic md:text-2xl">{dest}</span>
-                {idx < journey.destinations.length - 1 && <span class="text-stone-300">—</span>}
-              </>
-            ))
-          }
-        </div>
+            <div class="mb-12 flex flex-wrap items-center justify-center gap-3 md:gap-4">
+              {itinerary.destinations.map((dest, idx) => (
+                <>
+                  <span class="font-display text-xl text-stone-700 italic md:text-2xl">{dest}</span>
+                  {idx < itinerary.destinations.length - 1 && <span class="text-stone-300">—</span>}
+                </>
+              ))}
+            </div>
 
-        <div
-          class="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-8 text-center md:gap-12"
-        >
-          <div>
-            <span
-              class="mb-1 block text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase"
-            >
-              Duration
-            </span>
-            <span class="text-sm text-stone-600">{journey.days} days, {journey.nights} nights</span>
-          </div>
+            <div class="mx-auto flex max-w-3xl flex-wrap items-center justify-center gap-8 text-center md:gap-12">
+              {journey.days && (
+                <div>
+                  <span class="mb-1 block text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
+                    Duration
+                  </span>
+                  <span class="text-sm text-stone-600">{journey.days} days</span>
+                </div>
+              )}
 
-          {
-            routeLabel && (
+              {routeLabel && (
+                <div>
+                  <span class="mb-1 block text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
+                    Route
+                  </span>
+                  <span class="text-sm text-stone-600">{routeLabel}</span>
+                </div>
+              )}
+
               <div>
                 <span class="mb-1 block text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
-                  Route
+                  Experience
                 </span>
-                <span class="text-sm text-stone-600">{routeLabel}</span>
+                <span class="text-sm text-stone-600">{journey.category}</span>
               </div>
-            )
-          }
 
-          <div>
-            <span
-              class="mb-1 block text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase"
-            >
-              Experience
-            </span>
-            <span class="text-sm text-stone-600">{journey.category}</span>
+              {rate && (
+                <div>
+                  <span class="mb-1 block text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
+                    {rate.basis ?? "Price"}
+                  </span>
+                  <span class="text-sm text-stone-600">From ${rate.amount.toLocaleString("en-US")}</span>
+                </div>
+              )}
+            </div>
           </div>
-
-          <div>
-            <span
-              class="mb-1 block text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase"
-            >
-              {journey.priceUnit}
-            </span>
-            <span class="text-sm text-stone-600">From {journey.priceFrom}</span>
-          </div>
-        </div>
-      </div>
-    </section>
+        </section>
+      )
+    }
 
     <!-- Main content -->
     <main class="mx-auto max-w-screen-xl px-6 py-24 md:py-32">
       <div class="grid grid-cols-1 gap-24 lg:grid-cols-[1fr_400px]">
         <!-- Left column: the day by day -->
         <div class="space-y-32">
-          <div>
-            <h2 class="mb-12 text-sm tracking-[0.2em] text-stone-400 uppercase">The Journey</h2>
+          {
+            (itinerary.meta.length > 0 || itinerary.intro.length > 0) && (
+              <div class="space-y-4">
+                {itinerary.meta.map((line) => (
+                  <p class="text-xs tracking-[0.2em] text-stone-400 uppercase">{line}</p>
+                ))}
+                {itinerary.intro.map((paragraph) => (
+                  <p class="text-lg leading-relaxed text-stone-600">{paragraph}</p>
+                ))}
+              </div>
+            )
+          }
 
-            <div class="space-y-24">
-              {
-                journey.itinerary.map((day, dayIndex) => {
-                  const previousDay = dayIndex > 0 ? journey.itinerary[dayIndex - 1] : null;
-                  // Consecutive nights in one place are marked "(Cont.)" rather
-                  // than restating the region as if it were a new stay.
-                  const isSameStay =
-                    previousDay != null && previousDay.overnight === day.overnight;
+          {
+            !isGuide && (
+              <div>
+                <h2 class="mb-12 text-sm tracking-[0.2em] text-stone-400 uppercase">The Journey</h2>
 
-                  return (
-                    <div class="group">
-                      <div class="flex flex-col gap-8 md:flex-row md:gap-16">
-                        <div class="shrink-0 md:w-32">
-                          <span class="font-display text-5xl text-stone-200 italic transition-colors group-hover:text-stone-300">
-                            {day.n < 10 ? `0${day.n}` : day.n}
-                          </span>
-                          <p class="mt-2 text-xs tracking-widest text-stone-500 uppercase">
-                            {day.label}
-                          </p>
-                        </div>
+                <div class="space-y-24">
+                  {itinerary.days.map((day, dayIndex) => {
+                    const previousDay = dayIndex > 0 ? itinerary.days[dayIndex - 1] : null;
+                    // Consecutive nights in one place are marked "(Cont.)" rather
+                    // than restating the region as if it were a new stay.
+                    const isSameStay =
+                      previousDay != null &&
+                      previousDay.overnight != null &&
+                      previousDay.overnight === day.overnight;
 
-                        <div class="flex-1 space-y-12">
-                          <h3 class="font-display text-3xl leading-tight text-stone-800 md:text-4xl">
-                            {day.title}
-                          </h3>
+                    return (
+                      <div class="group scroll-mt-24" id={day.id}>
+                        <div class="flex flex-col gap-8 md:flex-row md:gap-16">
+                          <div class="shrink-0 md:w-32">
+                            <span class="font-display text-5xl text-stone-200 italic transition-colors group-hover:text-stone-300">
+                              {day.n < 10 ? `0${day.n}` : day.n}
+                            </span>
+                            <p class="mt-2 text-xs tracking-widest text-stone-500 uppercase">
+                              {day.label}
+                            </p>
+                          </div>
 
-                          {day.paragraphs.length > 0 && (
-                            <div class="space-y-4">
-                              {day.paragraphs.map((p) => (
-                                <p class="text-lg leading-relaxed text-stone-600">{p}</p>
-                              ))}
+                          <div class="flex-1 space-y-12">
+                            <div>
+                              <h3 class="font-display text-3xl leading-tight text-stone-800 md:text-4xl">
+                                {day.title}
+                              </h3>
+                              {day.subtitle && (
+                                <p class="mt-3 font-display text-xl text-stone-500 italic">
+                                  {day.subtitle}
+                                </p>
+                              )}
                             </div>
-                          )}
 
-                          {day.highlight && (
-                            <div class="space-y-8">
-                              <div class="flex items-center gap-4">
-                                <span class="text-xs font-medium tracking-[0.2em] text-stone-400 uppercase">
-                                  Today's Highlight
-                                </span>
-                                <div class="h-px flex-1 bg-stone-200" />
-                              </div>
-                              <div class="relative border-l border-stone-200 pl-8">
-                                <div class="absolute top-2 -left-[5px] size-2.5 rounded-full bg-stone-400 outline outline-4 outline-[#FDFCFB]" />
-                                <p class="text-lg font-medium text-stone-800">{day.highlight}</p>
-                              </div>
-                            </div>
-                          )}
-
-                          {day.stats && day.stats.length > 0 && (
-                            <div class="space-y-8">
-                              <div class="flex items-center gap-4">
-                                <span class="text-xs font-medium tracking-[0.2em] text-stone-400 uppercase">
-                                  On The Trail
-                                </span>
-                                <div class="h-px flex-1 bg-stone-200" />
-                              </div>
-                              <dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-                                {day.stats.map((stat) => (
-                                  <div class="relative border-l border-stone-200 pl-8">
-                                    <div class="absolute top-1.5 -left-[5px] size-2.5 rounded-full bg-stone-300 outline outline-4 outline-[#FDFCFB]" />
-                                    <dt class="text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
-                                      {stat.label}
-                                    </dt>
-                                    <dd class="mt-1 text-sm text-stone-700">{stat.value}</dd>
-                                  </div>
+                            {day.paragraphs.length > 0 && (
+                              <div class="space-y-4">
+                                {day.paragraphs.map((p) => (
+                                  <p class="text-lg leading-relaxed text-stone-600">{p}</p>
                                 ))}
-                              </dl>
-                            </div>
-                          )}
+                              </div>
+                            )}
 
-                          {(day.overnight || day.meals) && (
-                            <div class="flex flex-col justify-between gap-8 rounded-2xl bg-stone-50 p-8 md:flex-row">
-                              {day.overnight && (
-                                <div>
-                                  <span class="mb-2 block text-[10px] tracking-[0.2em] text-stone-400 uppercase">
-                                    Overnight
+                            {day.facts.length > 0 && (
+                              <div class="space-y-8">
+                                <div class="flex items-center gap-4">
+                                  <span class="text-xs font-medium tracking-[0.2em] text-stone-400 uppercase">
+                                    On The Trail
                                   </span>
-                                  <span
-                                    class:list={[
-                                      "font-display text-lg text-stone-700 italic",
-                                      isSameStay && "opacity-50",
-                                    ]}
-                                  >
-                                    {day.overnight}
-                                    {isSameStay && (
-                                      <span class="ml-2 text-xs text-stone-400 not-italic">
-                                        (Cont.)
-                                      </span>
-                                    )}
-                                  </span>
+                                  <div class="h-px flex-1 bg-stone-200" />
                                 </div>
-                              )}
-                              {day.meals && (
-                                <div class="md:text-right">
-                                  <span class="mb-2 block text-[10px] tracking-[0.2em] text-stone-400 uppercase">
-                                    Dining
-                                  </span>
-                                  <span class="text-sm text-stone-600 italic">{day.meals}</span>
-                                </div>
-                              )}
-                            </div>
-                          )}
+                                <dl class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                                  {day.facts.map((fact) => (
+                                    <div class="relative border-l border-stone-200 pl-8">
+                                      <div class="absolute top-1.5 -left-[5px] size-2.5 rounded-full bg-stone-300 outline outline-4 outline-[#FDFCFB]" />
+                                      <dt class="text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
+                                        {fact.label}
+                                      </dt>
+                                      <dd class="mt-1 text-sm text-stone-700">{fact.value}</dd>
+                                    </div>
+                                  ))}
+                                </dl>
+                              </div>
+                            )}
+
+                            {(day.overnight || day.meals) && (
+                              <div class="flex flex-col justify-between gap-8 rounded-2xl bg-stone-50 p-8 md:flex-row">
+                                {day.overnight && (
+                                  <div>
+                                    <span class="mb-2 block text-[10px] tracking-[0.2em] text-stone-400 uppercase">
+                                      {day.stayLabel ?? "Overnight"}
+                                    </span>
+                                    <span
+                                      class:list={[
+                                        "font-display text-lg text-stone-700 italic",
+                                        isSameStay && "opacity-50",
+                                      ]}
+                                    >
+                                      {day.overnight}
+                                      {isSameStay && (
+                                        <span class="ml-2 text-xs text-stone-400 not-italic">
+                                          (Cont.)
+                                        </span>
+                                      )}
+                                    </span>
+                                  </div>
+                                )}
+                                {day.meals && (
+                                  <div class="md:text-right">
+                                    <span class="mb-2 block text-[10px] tracking-[0.2em] text-stone-400 uppercase">
+                                      {day.mealsLabel ?? "Meals"}
+                                    </span>
+                                    <span class="text-sm text-stone-600 italic">{day.meals}</span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
+                          </div>
                         </div>
                       </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )
+          }
+
+          {
+            groupedSections.map(({ group, sections }) => (
+              <div>
+                {group && (
+                  <h2 class="mb-12 text-sm tracking-[0.2em] text-stone-400 uppercase">{group}</h2>
+                )}
+                <div class="space-y-16">
+                  {sections.map((section) => (
+                    <div id={section.id} class="scroll-mt-24">
+                      <h3 class="font-display text-3xl leading-tight text-stone-800 md:text-4xl">
+                        {section.title}
+                      </h3>
+                      {section.subtitle && (
+                        <p class="mt-3 font-display text-xl text-stone-500 italic">
+                          {section.subtitle}
+                        </p>
+                      )}
+                      <div class="mt-8 space-y-4">
+                        {section.paragraphs.map((p) => (
+                          <p class="text-lg leading-relaxed text-stone-600">{p}</p>
+                        ))}
+                      </div>
+                      {section.items.length > 0 && (
+                        <ul class="mt-8 space-y-3">
+                          {section.items.map((item) => (
+                            <li class="flex items-start gap-3 leading-relaxed text-stone-600">
+                              <span class="font-bold text-stone-400">+</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                      {section.facts.length > 0 && (
+                        <dl class="mt-8 space-y-2">
+                          {section.facts.map((fact) => (
+                            <div class="flex flex-wrap items-baseline gap-2 text-sm">
+                              <dt class="text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
+                                {fact.label}
+                              </dt>
+                              <dd class="text-stone-600">{fact.value}</dd>
+                            </div>
+                          ))}
+                        </dl>
+                      )}
                     </div>
-                  );
-                })
-              }
-            </div>
-          </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          }
         </div>
 
         <!-- Right column: details & CTA -->
         <aside class="space-y-16">
           <div class="sticky top-24 space-y-16">
             <div class="rounded-3xl border border-stone-100 bg-white p-8 shadow-sm md:p-10">
-              <div class="mb-10">
-                <RouteMap route={journey.route} />
-              </div>
+              {route && <div class="mb-10"><RouteMap route={route} /></div>}
 
               <div class="mb-8 border-b border-stone-100 pb-8">
-                <h3
-                  class="mb-6 text-sm font-medium tracking-[0.2em] text-stone-400 uppercase"
-                >
+                <h3 class="mb-6 text-sm font-medium tracking-[0.2em] text-stone-400 uppercase">
                   Trip Summary
                 </h3>
                 <div class="space-y-4">
-                  <div class="flex items-center justify-between gap-4 text-sm">
-                    <span class="text-stone-400">Duration</span>
-                    <span class="font-medium">{journey.days} days</span>
-                  </div>
+                  {
+                    journey.days && (
+                      <div class="flex items-center justify-between gap-4 text-sm">
+                        <span class="text-stone-400">Duration</span>
+                        <span class="font-medium">{journey.days} days</span>
+                      </div>
+                    )
+                  }
                   <div class="flex items-center justify-between gap-4 text-sm">
                     <span class="text-stone-400">Destination</span>
                     <span class="text-right font-medium italic">{journey.region}</span>
                   </div>
-                  <div class="flex items-center justify-between gap-4 text-sm">
-                    <span class="text-stone-400">Stops</span>
-                    <span class="font-medium">{journey.destinations.length}</span>
-                  </div>
+                  {
+                    itinerary.destinations.length > 0 && (
+                      <div class="flex items-center justify-between gap-4 text-sm">
+                        <span class="text-stone-400">Stops</span>
+                        <span class="font-medium">{itinerary.destinations.length}</span>
+                      </div>
+                    )
+                  }
                   <div class="flex items-center justify-between gap-4 text-sm">
                     <span class="text-stone-400">Experience</span>
                     <span class="text-right font-medium">{journey.category}</span>
@@ -296,110 +379,116 @@ const addOns = resolveAddOns(journey.addOns);
                 </div>
               </div>
 
-              <div class="mb-8 border-b border-stone-100 pb-8">
-                <h3
-                  class="mb-6 text-sm font-medium tracking-[0.2em] text-stone-400 uppercase"
-                >
-                  Pricing
-                </h3>
-                <div class="mb-6 space-y-2">
-                  <div class="flex items-baseline justify-between gap-4">
-                    <span class="text-xs text-stone-400">From</span>
-                    <span class="font-display text-2xl text-stone-800">{journey.priceFrom}</span>
-                  </div>
-                  <div
-                    class="flex items-center justify-between gap-4 text-[10px] font-bold tracking-widest text-stone-400 uppercase"
-                  >
-                    <span>{journey.priceUnit}</span>
-                  </div>
-                </div>
+              {
+                itinerary.prices.length > 0 && (
+                  <div class="mb-8 border-b border-stone-100 pb-8">
+                    <h3 class="mb-6 text-sm font-medium tracking-[0.2em] text-stone-400 uppercase">
+                      Pricing
+                    </h3>
 
-                <ul class="space-y-3 border-t border-stone-100 pt-6">
-                  {
-                    journey.priceLines.map((line) => (
-                      <li class="flex items-baseline justify-between gap-4 text-sm text-stone-600">
-                        <span>{line.label}</span>
-                        <span class="text-right whitespace-nowrap text-stone-500">
-                          {line.amount}
-                        </span>
-                      </li>
-                    ))
-                  }
-                </ul>
+                    {rate && (
+                      <div class="mb-6 space-y-2">
+                        <div class="flex items-baseline justify-between gap-4">
+                          <span class="text-xs text-stone-400">From</span>
+                          <span class="font-display text-2xl text-stone-800">
+                            ${rate.amount.toLocaleString("en-US")}
+                          </span>
+                        </div>
+                        {(rate.basis || rate.season) && (
+                          <div class="flex items-center justify-between gap-4 text-[10px] font-bold tracking-widest text-stone-400 uppercase">
+                            <span>{rate.basis}</span>
+                            <span>{rate.season}</span>
+                          </div>
+                        )}
+                      </div>
+                    )}
 
-                {
-                  journey.priceNote && (
-                    <p class="mt-6 text-xs leading-relaxed text-stone-400">{journey.priceNote}</p>
-                  )
-                }
-
-                {
-                  addOns.length > 0 && (
-                    <div class="mt-6 border-t border-stone-100 pt-6">
-                      <h4 class="mb-4 text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">
-                        Optional Experiences
-                      </h4>
-                      <ul class="space-y-2">
-                        {addOns.map((addOn) => (
-                          <li class="text-sm text-stone-600">{addOn.title}</li>
-                        ))}
-                      </ul>
-                      <a
-                        href="#optional-experiences"
-                        class="mt-4 inline-block text-[11px] tracking-[0.15em] text-stone-500 uppercase underline underline-offset-4 transition-colors hover:text-stone-800"
-                      >
-                        Read more
-                      </a>
+                    <div class="space-y-6 border-t border-stone-100 pt-6">
+                      {itinerary.prices.map((group) => (
+                        <div>
+                          {group.season && (
+                            <h4 class="mb-3 text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">
+                              {group.season}
+                            </h4>
+                          )}
+                          <ul class="space-y-3">
+                            {group.lines.map((line) => {
+                              const { label, amount } = splitRate(line);
+                              return (
+                                <li class="flex items-baseline justify-between gap-4 text-sm text-stone-600">
+                                  {label && <span>{label}</span>}
+                                  <span
+                                    class:list={[
+                                      "text-right text-stone-500",
+                                      label && "whitespace-nowrap",
+                                    ]}
+                                  >
+                                    {amount}
+                                  </span>
+                                </li>
+                              );
+                            })}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
-                  )
-                }
-              </div>
 
-              <div class="mb-10 space-y-8">
-                <div>
-                  <h4
-                    class="mb-4 flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-stone-500 uppercase"
-                  >
-                    <span class="size-1.5 rounded-full bg-stone-500"></span>
-                    Inclusions
-                  </h4>
-                  <ul class="space-y-3">
-                    {
-                      journey.included.map((item) => (
-                        <li class="flex items-start gap-3 text-sm leading-relaxed text-stone-600">
-                          <span class="font-bold text-stone-400">+</span>
-                          {item}
-                        </li>
-                      ))
-                    }
-                  </ul>
-                </div>
-
-                {
-                  journey.excluded.length > 0 && (
-                    <div class="border-t border-stone-100 pt-8">
-                      <h4 class="mb-4 flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-stone-500 uppercase">
-                        <span class="size-1.5 rounded-full bg-stone-300" />
-                        Exclusions
-                      </h4>
-                      <ul class="space-y-3">
-                        {journey.excluded.map((item) => (
-                          <li class="flex items-start gap-3 text-sm leading-relaxed text-stone-600">
-                            <span class="font-bold text-stone-300">-</span>
-                            {item}
-                          </li>
+                    {itinerary.priceNotes.length > 0 && (
+                      <div class="mt-6 space-y-2">
+                        {itinerary.priceNotes.map((note) => (
+                          <p class="text-xs leading-relaxed text-stone-400">{note}</p>
                         ))}
-                      </ul>
-                    </div>
-                  )
-                }
-              </div>
+                      </div>
+                    )}
+                  </div>
+                )
+              }
+
+              {
+                (itinerary.inclusions.length > 0 || itinerary.exclusions.length > 0) && (
+                  <div class="mb-10 space-y-8">
+                    {itinerary.inclusions.length > 0 && (
+                      <div>
+                        <h4 class="mb-4 flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-stone-500 uppercase">
+                          <span class="size-1.5 rounded-full bg-stone-500" />
+                          Inclusions
+                        </h4>
+                        <ul class="space-y-3">
+                          {itinerary.inclusions.map((item) => (
+                            <li class="flex items-start gap-3 text-sm leading-relaxed text-stone-600">
+                              <span class="font-bold text-stone-400">+</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {itinerary.exclusions.length > 0 && (
+                      <div class:list={[itinerary.inclusions.length > 0 && "border-t border-stone-100 pt-8"]}>
+                        <h4 class="mb-4 flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-stone-500 uppercase">
+                          <span class="size-1.5 rounded-full bg-stone-300" />
+                          Exclusions
+                        </h4>
+                        <ul class="space-y-3">
+                          {itinerary.exclusions.map((item) => (
+                            <li class="flex items-start gap-3 text-sm leading-relaxed text-stone-600">
+                              <span class="font-bold text-stone-300">-</span>
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                )
+              }
 
               <a
                 href="/plan-my-trip"
                 class="block w-full rounded-xl bg-accent px-8 py-5 text-center text-sm font-medium tracking-[0.2em] text-white uppercase transition-colors hover:bg-accent-dark"
               >
-                Enquire About This Journey
+                {isGuide ? "Plan My Trip" : "Enquire About This Journey"}
               </a>
             </div>
 
@@ -421,101 +510,37 @@ const addOns = resolveAddOns(journey.addOns);
       </div>
     </main>
 
-    <!-- Optional experiences -->
+    <!-- Related journeys -->
     {
-      addOns.length > 0 && (
-        <section id="optional-experiences" class="scroll-mt-24 border-t border-stone-100 bg-white">
+      related.length > 0 && (
+        <section class="border-t border-stone-100">
           <div class="mx-auto max-w-screen-xl px-6 py-20 md:py-24">
-            <h2 class="mb-3 text-sm tracking-[0.2em] text-stone-400 uppercase">
-              Optional Experiences
-            </h2>
-            <p class="mb-4 font-display text-3xl text-stone-800 md:text-4xl">Add to your journey</p>
-            <p class="mb-12 max-w-2xl text-lg leading-relaxed text-stone-600">
-              Every Atlas journey is private, so any of these can be woven into your itinerary
-              wherever they fit best. Tell us which appeal and we will build them into your quote.
-            </p>
-
-            <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-              {addOns.map((addOn) => (
-                <article
-                  class:list={[
-                    "flex flex-col rounded-2xl border border-stone-200/70 bg-[#FDFCFB] p-8 md:p-10",
-                    // The availability table needs the full width to stay readable.
-                    addOn.availability && "md:col-span-2",
-                  ]}
-                >
-                  <span class="text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
-                    {addOn.tagline}
-                  </span>
-                  <h3 class="mt-2 mb-6 font-display text-2xl text-stone-800 md:text-3xl">
-                    {addOn.title}
-                  </h3>
-
-                  <div class="space-y-4">
-                    {addOn.paragraphs.map((p) => (
-                      <p class="leading-relaxed text-stone-600">{p}</p>
-                    ))}
+            <h2 class="mb-12 text-sm tracking-[0.2em] text-stone-400 uppercase">More Itineraries</h2>
+            <div class="grid grid-cols-1 gap-10 sm:grid-cols-3">
+              {related.map((entry) => (
+                <a href={`/journeys/${entry.slug}`} class="group flex flex-col gap-4">
+                  <div class="aspect-[5/6] w-full overflow-hidden rounded-2xl">
+                    <img
+                      src={entry.image}
+                      alt={entry.alt}
+                      loading="lazy"
+                      class="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    />
                   </div>
-
-                  {addOn.availability && (
-                    <div class="mt-8 border-t border-stone-200/70 pt-6">
-                      <h4 class="mb-4 text-[10px] font-bold tracking-[0.2em] text-stone-400 uppercase">
-                        Where & When
-                      </h4>
-                      <dl class="grid grid-cols-1 gap-x-12 gap-y-3 sm:grid-cols-2">
-                        {addOn.availability.map((slot) => (
-                          <div class="flex items-baseline justify-between gap-4 border-b border-stone-200/50 pb-2 text-sm">
-                            <dt class="text-stone-700">{slot.place}</dt>
-                            <dd class="text-right text-stone-500">{slot.when}</dd>
-                          </div>
-                        ))}
-                      </dl>
-                    </div>
-                  )}
-                </article>
+                  <span class="text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
+                    {entry.category} · {entry.days} Days
+                  </span>
+                  <h3 class="font-display text-2xl leading-tight text-stone-800">{entry.title}</h3>
+                  <span class="text-xs tracking-widest text-stone-500 uppercase transition-colors group-hover:text-stone-800">
+                    View Itinerary →
+                  </span>
+                </a>
               ))}
             </div>
-
-            <a
-              href="/plan-my-trip"
-              class="mt-12 inline-block rounded-xl bg-accent px-8 py-5 text-center text-sm font-medium tracking-[0.2em] text-white uppercase transition-colors hover:bg-accent-dark"
-            >
-              Add These To My Journey
-            </a>
           </div>
         </section>
       )
     }
-
-    <!-- Related journeys -->
-    <section class="border-t border-stone-100">
-      <div class="mx-auto max-w-screen-xl px-6 py-20 md:py-24">
-        <h2 class="mb-12 text-sm tracking-[0.2em] text-stone-400 uppercase">More Itineraries</h2>
-        <div class="grid grid-cols-1 gap-10 sm:grid-cols-3">
-          {
-            related.map((r) => (
-              <a href={`/journeys/${r.slug}`} class="group flex flex-col gap-4">
-                <div class="w-full aspect-[5/6] overflow-hidden rounded-2xl">
-                  <img
-                    src={r.image}
-                    alt={r.alt}
-                    loading="lazy"
-                    class="size-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
-                </div>
-                <span class="text-[10px] font-medium tracking-[0.2em] text-stone-400 uppercase">
-                  {r.category} · {r.days} Days
-                </span>
-                <h3 class="font-display text-2xl leading-tight text-stone-800">{r.title}</h3>
-                <span class="text-xs tracking-widest text-stone-500 uppercase transition-colors group-hover:text-stone-800">
-                  View Itinerary →
-                </span>
-              </a>
-            ))
-          }
-        </div>
-      </div>
-    </section>
   </div>
   <Footer />
 </Layout>
