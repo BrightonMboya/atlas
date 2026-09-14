@@ -23,7 +23,7 @@ const links = [
       />
     </a>
 
-    <div class="flex items-center gap-3 sm:gap-5 md:gap-10">
+    <div class="flex items-center gap-6 md:gap-10">
       <div class="hidden items-center gap-6 md:flex lg:gap-10">
         {
           links.map((link) => (
@@ -38,7 +38,7 @@ const links = [
       </div>
       <a
         href="/plan-my-trip"
-        class="bg-accent px-4 py-3 font-body text-[11px] font-semibold tracking-[0.14em] whitespace-nowrap text-white uppercase transition-colors hover:bg-accent-dark sm:px-6 sm:text-xs sm:tracking-[0.18em] md:px-9 md:py-3.5"
+        class="hidden bg-accent px-6 py-3.5 font-body text-xs font-semibold tracking-[0.18em] whitespace-nowrap text-white uppercase transition-colors hover:bg-accent-dark md:inline-block md:px-9"
       >
         Plan My Trip
       </a>
@@ -77,6 +77,13 @@ const links = [
           </a>
         ))
       }
+
+      <a
+        href="/plan-my-trip"
+        class="mt-4 mb-2 bg-accent px-6 py-4 text-center font-body text-xs font-semibold tracking-[0.18em] text-white uppercase transition-colors hover:bg-accent-dark"
+      >
+        Plan My Trip
+      </a>
     </div>
   </div>
 </nav>
