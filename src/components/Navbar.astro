@@ -1,13 +1,16 @@
 ---
 // One bar for the whole site: a white header that sits above the page, so a
-// full-bleed hero starts cleanly beneath it.
+// full-bleed hero starts cleanly beneath it. Below md the links collapse into
+// a panel behind the hamburger; the CTA stays visible at every width.
 const links = [
-  { label: "Safaris", href: "/journeys" },
+  { label: "About Us", href: "/about" },
+  { label: "Safaris", href: "/journeys#safaris" },
   { label: "Trekking", href: "/journeys#trekking" },
+  { label: "Zanzibar", href: "/journeys#safari-zanzibar" },
 ];
 ---
 
-<nav class="relative z-50 w-full border-b border-border/60 bg-white py-5">
+<nav class="relative z-50 w-full border-b border-border/60 bg-white py-5" data-navbar>
   <div class="mx-auto flex w-full max-w-[1400px] items-center justify-between px-6 md:px-10">
     <a href="/" class="flex shrink-0 items-center" aria-label="Atlas Tanzania home">
       <img
@@ -20,13 +23,13 @@ const links = [
       />
     </a>
 
-    <div class="flex items-center gap-8 md:gap-12">
-      <div class="hidden items-center gap-8 md:flex lg:gap-12">
+    <div class="flex items-center gap-3 sm:gap-5 md:gap-10">
+      <div class="hidden items-center gap-6 md:flex lg:gap-10">
         {
           links.map((link) => (
             <a
               href={link.href}
-              class="font-body text-xs font-medium tracking-[0.18em] text-primary uppercase transition-colors hover:text-accent"
+              class="font-body text-xs font-medium tracking-[0.18em] whitespace-nowrap text-primary uppercase transition-colors hover:text-accent"
             >
               {link.label}
             </a>
@@ -35,10 +38,73 @@ const links = [
       </div>
       <a
         href="/plan-my-trip"
-        class="bg-accent px-6 py-3.5 font-body text-xs font-semibold tracking-[0.18em] text-white uppercase transition-colors hover:bg-accent-dark md:px-9"
+        class="bg-accent px-4 py-3 font-body text-[11px] font-semibold tracking-[0.14em] whitespace-nowrap text-white uppercase transition-colors hover:bg-accent-dark sm:px-6 sm:text-xs sm:tracking-[0.18em] md:px-9 md:py-3.5"
       >
         Plan My Trip
       </a>
+
+      <button
+        type="button"
+        class="-mr-2 flex size-10 shrink-0 items-center justify-center text-primary md:hidden"
+        aria-label="Open menu"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-menu-toggle
+      >
+        <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" data-menu-icon="open">
+          <path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"></path>
+        </svg>
+        <svg class="hidden size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true" data-menu-icon="close">
+          <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    id="mobile-menu"
+    class="hidden border-t border-border/60 bg-white md:hidden"
+    data-menu-panel
+  >
+    <div class="flex flex-col px-6 py-2">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="border-b border-border/60 py-4 font-body text-xs font-medium tracking-[0.18em] text-primary uppercase transition-colors last:border-b-0 hover:text-accent"
+          >
+            {link.label}
+          </a>
+        ))
+      }
     </div>
   </div>
 </nav>
+
+<script>
+  const nav = document.querySelector("[data-navbar]");
+  const toggle = nav?.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const panel = nav?.querySelector<HTMLElement>("[data-menu-panel]");
+  const openIcon = nav?.querySelector<SVGElement>('[data-menu-icon="open"]');
+  const closeIcon = nav?.querySelector<SVGElement>('[data-menu-icon="close"]');
+
+  function setOpen(open: boolean) {
+    if (!toggle || !panel || !openIcon || !closeIcon) return;
+    panel.classList.toggle("hidden", !open);
+    openIcon.classList.toggle("hidden", open);
+    closeIcon.classList.toggle("hidden", !open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+  }
+
+  toggle?.addEventListener("click", () => {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  // Anchor links inside the panel navigate without a reload, so close manually.
+  panel?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setOpen(false);
+  });
+</script>

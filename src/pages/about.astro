@@ -1,0 +1,167 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import FinalCTA from "../components/FinalCTA.astro";
+import Footer from "../components/Footer.astro";
+
+// Copy transcribed from Pages.docx (client-supplied, 14 September 2026).
+// Keep the original wording — the Swahili name and the "Leave a Footprint
+// That Matters." line are the client's own phrasing.
+const pillars = [
+  {
+    title: "Designed Around You",
+    body: "No two travellers are the same, and neither should their journeys be. We create private, tailor-made experiences around your interests, travel style, pace and dreams, giving you the freedom to experience Tanzania your way.",
+  },
+  {
+    title: "Local Knowledge, Personal Service",
+    body: "Tanzania is our home. As a Tanzanian-owned and locally based tour company, we know Tanzania not only as a destination, but as a place we call home. Our local knowledge helps us create experiences that go beyond the well-known highlights, while our personal approach means you have a team that genuinely cares about your journey from the first conversation to the moment you return home.",
+  },
+  {
+    title: "Private. Personal. Yours.",
+    body: "Your journey should move at your pace. With private safaris and personalized experiences, you travel with your own vehicle and guide, giving you the freedom to spend more time where it matters, adjust your pace and enjoy Tanzania without having to follow someone else's itinerary.",
+  },
+  {
+    title: "Every Detail Matters",
+    body: "A memorable journey is made up of more than the big moments. From carefully selecting accommodations and planning activities to arranging transfers and anticipating the little details, we take care of the journey behind the journey — so you can focus on experiencing Tanzania.",
+  },
+];
+---
+
+<Layout
+  title="About Us | Atlas Tanzania Adventures"
+  description="Atlas Tanzania Adventures is a Tanzanian-owned tour company creating private, tailor-made safaris, Kilimanjaro treks, Zanzibar escapes and cultural journeys designed around you."
+>
+  <Navbar />
+
+  <main class="bg-white">
+    <!-- Intro: copy on the left, full-bleed image on the right -->
+    <header class="grid w-full grid-cols-1 lg:grid-cols-2">
+      <div
+        class="order-2 flex flex-col justify-center px-6 py-16 sm:px-10 lg:order-1 lg:px-16 lg:py-24 xl:px-24"
+      >
+        <div class="mx-auto w-full max-w-[560px]">
+          <span class="block font-body text-xs tracking-[0.3em] text-text-muted uppercase">
+            Welcome to Atlas Tanzania Adventures
+          </span>
+          <h1 class="mt-5 font-display text-[38px] leading-[1.1] text-primary sm:text-[46px] xl:text-[56px]">
+            Where Every Journey Tells a Story.
+          </h1>
+
+          <div class="mt-7 flex flex-col gap-4">
+            <p class="font-body text-[15px] leading-[170%] text-text">
+              Tanzania is more than a destination — it is a place of extraordinary landscapes,
+              unforgettable wildlife, vibrant cultures and moments that stay with you long after
+              you leave.
+            </p>
+            <p class="font-body text-[15px] leading-[170%] text-text">
+              At Atlas Tanzania Adventures, we create private, tailor-made journeys that allow you
+              to experience Tanzania your way. From the endless plains of the Serengeti and the
+              slopes of Kilimanjaro to the white sands of Zanzibar, we carefully design each
+              journey around your interests, pace and dreams.
+            </p>
+            <p class="font-body text-[15px] leading-[170%] text-text">
+              With local knowledge, personal service and a genuine passion for Tanzania, we are
+              here to make your journey more than a holiday — we are here to help you create a
+              story worth telling.
+            </p>
+          </div>
+
+          <a
+            href="/plan-my-trip"
+            class="mt-9 inline-block border border-primary/25 px-8 py-3.5 font-body text-xs font-semibold tracking-[0.18em] text-primary uppercase transition-colors hover:bg-primary hover:text-white"
+          >
+            Start Planning
+          </a>
+        </div>
+      </div>
+
+      <div class="order-1 h-72 sm:h-96 lg:order-2 lg:h-auto lg:min-h-[640px]">
+        <img
+          src="/images/about-cultural-visit.webp"
+          alt="Travellers sitting and talking with a Maasai family outside their homestead"
+          class="size-full object-cover"
+          width="1920"
+          height="1080"
+        />
+      </div>
+    </header>
+
+    <!-- Why travel with Atlas -->
+    <section class="mx-auto mt-20 w-full max-w-5xl px-4 sm:px-8 md:mt-32">
+      <h2 class="text-center font-display text-[38px] leading-tight text-primary md:text-[54px]">
+        Why Travel With Atlas?
+      </h2>
+      <p class="mx-auto mt-3 max-w-2xl text-center font-display text-lg italic text-text-muted">
+        Because where you travel matters — but how you experience it matters even more.
+      </p>
+
+      <div class="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-x-14 md:gap-y-12">
+        {
+          pillars.map((pillar) => (
+            <div class="border-t border-border pt-6">
+              <h3 class="font-body text-xs font-semibold tracking-[0.2em] text-primary uppercase">
+                {pillar.title}
+              </h3>
+              <p class="mt-4 font-body text-base leading-[162.5%] text-text">{pillar.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Ongeza Hatua Zangu -->
+    <section class="mt-20 w-full bg-[#FDFCFB] py-16 md:mt-32 md:py-24">
+      <div class="mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-10 px-4 sm:px-8 lg:grid-cols-[1fr_1.05fr] lg:gap-16">
+        <div class="h-80 overflow-clip rounded-lg md:h-[480px]">
+          <img
+            src="/images/ongeza-hatua-zangu.webp"
+            alt="Young Tanzanians supported by the Ongeza Hatua Zangu initiative"
+            class="size-full object-cover"
+          />
+        </div>
+        <div>
+          <span class="block font-body text-xs tracking-[0.3em] text-text-muted uppercase">
+            Beyond the Journey
+          </span>
+          <h2 class="mt-4 font-display text-[34px] leading-tight text-primary md:text-[46px]">
+            Ongeza Hatua Zangu
+          </h2>
+          <p class="mt-3 font-display text-lg italic text-text-muted">
+            Helping young people take their next step toward a brighter future
+          </p>
+
+          <div class="mt-6 flex flex-col gap-4">
+            <p class="font-body text-base leading-[162.5%] text-text">
+              We believe that a journey should do more than create beautiful memories. It should
+              have the power to create opportunities and make a difference in the lives of others.
+            </p>
+            <p class="font-body text-base leading-[162.5%] text-text">
+              Ongeza Hatua Zangu, meaning “Enhance My Steps,” is an initiative close to the heart of
+              Atlas Tanzania Adventures, created to support underprivileged children and teenagers
+              in Tanzania and help them take meaningful steps towards a brighter future.
+            </p>
+            <p class="font-body text-base leading-[162.5%] text-text">
+              Through education, personal support and opportunities for growth, we aim to give young
+              people the encouragement and resources they need to continue their journey — whether
+              that means staying in school, pursuing their dreams or simply having the chance to
+              build a better life.
+            </p>
+            <p class="font-body text-base leading-[162.5%] text-text">
+              Because every child deserves the opportunity to move forward. And while our guests
+              travel across Tanzania creating memories of their own, we hope their journeys can also
+              contribute to something bigger: helping another young person take their next step.
+            </p>
+          </div>
+
+          <p class="mt-8 font-display text-2xl text-primary md:text-[28px]">
+            Leave a Footprint That Matters.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <FinalCTA />
+  </main>
+
+  <Footer />
+</Layout>
