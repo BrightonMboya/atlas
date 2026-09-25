@@ -1,0 +1,552 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import FinalCTA from "../components/FinalCTA.astro";
+import Footer from "../components/Footer.astro";
+
+// Copy transcribed from FAQs.docx (client-supplied). Keep the original wording.
+const sections = [
+  {
+    title: "Safari & Wildlife",
+    items: [
+      {
+        q: "Are your safaris private or shared?",
+        a: "Our safaris are private, meaning you travel with your own safari vehicle and professional driver-guide. You won’t be sharing the vehicle with other travelers.",
+      },
+      {
+        q: "What type of safari vehicle do you use?",
+        a: "We use comfortable 4x4 safari vehicles with pop-up roofs, specially designed for wildlife viewing and Tanzania’s safari roads.",
+      },
+      {
+        q: "Will we have our own driver-guide?",
+        a: "Yes. On a private safari, you will have your own professional driver-guide who will accompany you throughout your safari.",
+      },
+      {
+        q: "Which national parks do you visit?",
+        a: "We organize safaris to destinations including Serengeti National Park, Ngorongoro Conservation Area, Tarangire National Park, Nyerere National Park and Mikumi National Park, as well as other destinations depending on your itinerary.",
+      },
+      {
+        q: "When is the best time to visit Tanzania?",
+        a: "Tanzania is a year-round destination. The best time depends on what you want to experience, such as the Great Migration, calving season, general wildlife viewing or a beach holiday. Tell us your travel dates and interests, and we’ll help you choose the right time and itinerary.",
+      },
+      {
+        q: "When is the Great Migration?",
+        a: "The Great Migration moves throughout the year between Tanzania and Kenya. The exact location changes with the season and rainfall, so we plan your itinerary according to the time of year you are travelling.",
+      },
+      {
+        q: "When is the Ndutu calving season?",
+        a: "The calving season is generally around January to March, with Ndutu and the surrounding southern Serengeti area being particularly well known for this period. Exact wildlife movements can vary from year to year.",
+      },
+      {
+        q: "How many days do I need for a safari?",
+        a: "This depends on the parks you want to visit and how much time you have. A safari can be as short as a few days, while longer trips allow you to explore several areas without rushing.",
+      },
+      {
+        q: "Can I choose which parks I visit?",
+        a: "Absolutely. We can build your itinerary around the parks and experiences that interest you.",
+      },
+      {
+        q: "Can you create a tailor-made safari?",
+        a: "Yes. We specialize in tailor-made private journeys. Your itinerary can be designed around your travel dates, interests, preferred accommodation and budget.",
+      },
+      {
+        q: "Can I book a safari as a solo traveler?",
+        a: "Yes. We organize private safaris for solo travelers, couples, families and groups of friends.",
+      },
+    ],
+  },
+  {
+    title: "Planning Your Trip",
+    items: [
+      {
+        q: "How do I start planning my Tanzania trip?",
+        a: "Simply send us your travel dates, number of travelers, and what you would like to experience. If you already have a budget or preferred accommodation style, you can share that too. We’ll then help you build your itinerary.",
+      },
+      {
+        q: "How far in advance should I book?",
+        a: "We recommend booking as early as possible, particularly for peak seasons and popular lodges and camps. This gives us more accommodation and vehicle options to choose from.",
+      },
+      {
+        q: "Can I change my itinerary?",
+        a: "Yes, your itinerary can usually be adjusted before the booking is finalized. Once reservations have been made, changes may depend on the cancellation and amendment policies of the individual hotels, lodges, camps and airlines.",
+      },
+      {
+        q: "What should I pack for a safari?",
+        a: "We recommend comfortable, lightweight clothing, a warm layer for cool mornings and evenings, comfortable shoes, sunglasses, sunscreen, insect repellent, a hat and a camera. We’ll also provide packing guidance before your trip.",
+      },
+      {
+        q: "What should I wear on safari?",
+        a: "Comfortable and practical clothing is best. Neutral and earthy colours are popular for safari, but there is no strict dress code.",
+      },
+      {
+        q: "What currency should I bring?",
+        a: "Tanzanian Shillings are the local currency, while US Dollars are widely used in tourism. We recommend carrying some USD in good condition, particularly for tips and small purchases.",
+      },
+      {
+        q: "Do I need travel insurance?",
+        a: "Yes. We strongly recommend comprehensive travel insurance covering medical expenses, trip cancellation or interruption, baggage and other unexpected travel situations.",
+      },
+      {
+        q: "Is Tanzania suitable for first-time safari travelers?",
+        a: "Yes. We welcome many first-time safari travelers and will guide you through the planning process from your first enquiry until the end of your trip.",
+      },
+      {
+        q: "Is Tanzania safe for tourists?",
+        a: "Tanzania is a popular tourism destination. During your safari, you will travel with experienced local professionals who know the destinations and will guide you throughout your journey. We also provide practical travel information before you arrive.",
+      },
+      {
+        q: "What language is spoken in Tanzania?",
+        a: "Swahili and English are the main languages. We can also arrange French-speaking driver-guides for private safaris.",
+      },
+      {
+        q: "What is the weather like in Tanzania?",
+        a: "Tanzania has different weather patterns depending on the region and time of year. Temperatures can also vary between the coast, highlands and safari areas. We’ll advise you on what to expect for your travel dates.",
+      },
+    ],
+  },
+  {
+    title: "Prices & Payments",
+    items: [
+      {
+        q: "What is included in my safari price?",
+        a: "Depending on your package, your safari may include accommodation, meals, private 4x4 safari vehicle, professional driver-guide, park and conservation fees, bottled drinking water, selected soft drinks and snacks, and domestic flights where required. Your quotation will clearly show what is included.",
+      },
+      {
+        q: "What is not included?",
+        a: "Items such as international flights, visa fees, travel insurance, personal expenses and tips are generally not included unless specifically stated in your quotation.",
+      },
+      {
+        q: "How much deposit is required?",
+        a: "We normally require a 30% deposit to confirm your booking. The remaining balance is paid according to the payment schedule provided with your booking.",
+      },
+      {
+        q: "When is the remaining balance due?",
+        a: "The balance is normally due before arrival according to the payment terms stated in your booking confirmation. Accommodation suppliers generally require full payment before arrival, so we’ll give you the exact deadline for your trip.",
+      },
+      {
+        q: "How can I pay?",
+        a: "We offer payment options including bank transfer and secure card payment options. We’ll provide the available payment details when you are ready to book.",
+      },
+      {
+        q: "Can I pay in USD, EUR or Tanzanian Shillings?",
+        a: "Our payment options and accepted currencies can vary depending on the payment method. We’ll confirm the available options when preparing your booking.",
+      },
+      {
+        q: "Are there additional costs I should know about?",
+        a: "We provide a clear quotation showing the services included and excluded. If you request additional services or make changes after booking, we’ll explain any additional costs before proceeding.",
+      },
+      {
+        q: "Are tips included?",
+        a: "Tips are generally not included in the safari price. Tipping is at your discretion and is normally given at the end of the safari.",
+      },
+      {
+        q: "How much should I tip my driver-guide?",
+        a: "Tipping is a personal choice and depends on the service you receive. We’ll provide general tipping guidance before your trip.",
+      },
+    ],
+  },
+  {
+    title: "Accommodation",
+    items: [
+      {
+        q: "What type of accommodation do you use?",
+        a: "We work with a range of lodges, hotels, tented camps and resorts, depending on your itinerary and budget.",
+      },
+      {
+        q: "Can I choose my accommodation?",
+        a: "Yes. You can tell us your preferred hotels or accommodation style, and we’ll include them where availability allows.",
+      },
+      {
+        q: "Do you offer budget, mid-range and luxury options?",
+        a: "Yes. We can design your trip around different accommodation levels and budgets.",
+      },
+      {
+        q: "Can you arrange honeymoon accommodation?",
+        a: "Yes. We can arrange romantic safari and Zanzibar experiences, including suitable accommodation and special arrangements where available.",
+      },
+      {
+        q: "Do the lodges provide meals?",
+        a: "Most safari lodges and camps include meals according to their meal plan. Your itinerary will specify the meals included.",
+      },
+      {
+        q: "Can you accommodate dietary requirements?",
+        a: "Yes. Please tell us about any dietary requirements, allergies or food preferences when booking so we can communicate them to your accommodation providers in advance.",
+      },
+    ],
+  },
+  {
+    title: "Flights & Transfers",
+    items: [
+      {
+        q: "Can you arrange airport transfers?",
+        a: "Yes. We can arrange airport transfers as part of your trip.",
+      },
+      {
+        q: "Can you arrange domestic flights?",
+        a: "Yes. We can arrange domestic flights between destinations such as the safari circuit and Zanzibar when required.",
+      },
+      {
+        q: "What is the baggage allowance on domestic flights?",
+        a: "Domestic flight baggage allowances can vary by airline and route. As a general guideline, many safari flights allow around 20 kg per person plus hand luggage. We’ll confirm the exact allowance for your booking.",
+      },
+      {
+        q: "Can you arrange transfers between hotels?",
+        a: "Yes. We can arrange private transfers between hotels and destinations. Any additional transfer costs will be shown in your quotation.",
+      },
+      {
+        q: "What happens if my international flight arrives very late?",
+        a: "Let us know your flight details when booking. We can arrange the appropriate airport transfer and accommodation, including an additional night where necessary.",
+      },
+      {
+        q: "Can you arrange an airport hotel for a late-night arrival?",
+        a: "Yes. If your flight arrives very late or early in the morning, we can recommend and arrange suitable accommodation depending on your itinerary.",
+      },
+    ],
+  },
+  {
+    title: "Visa & Entry",
+    items: [
+      {
+        q: "Do I need a visa to enter Tanzania?",
+        a: "Visa requirements depend on your nationality. Many travelers can apply for a Tanzania visa online before travelling, while some nationalities have different requirements.",
+      },
+      {
+        q: "How do I apply for a Tanzania visa?",
+        a: "Eligible travelers can apply through Tanzania’s official online visa system. We recommend checking the current requirements for your nationality before travelling.",
+      },
+      {
+        q: "How long can I stay in Tanzania?",
+        a: "The permitted length of stay depends on the type of visa issued and your nationality. Check your visa conditions before travelling.",
+      },
+      {
+        q: "Do I need a yellow fever vaccination certificate?",
+        a: "Requirements can depend on where you are travelling from and the countries you have recently visited. Check the current Tanzanian entry requirements before your trip.",
+      },
+      {
+        q: "Do I need a passport?",
+        a: "Yes. You need a valid passport for international travel. Make sure it meets Tanzania’s entry requirements before travelling.",
+      },
+      {
+        q: "Can Atlas Tanzania Adventures arrange my visa?",
+        a: "We can provide general guidance about the visa process, but travelers are responsible for obtaining the appropriate visa and ensuring their travel documents are valid.",
+      },
+    ],
+  },
+  {
+    title: "Zanzibar",
+    items: [
+      {
+        q: "Can I combine my safari with Zanzibar?",
+        a: "Absolutely! A Tanzania safari followed by a Zanzibar beach holiday is one of our most popular combinations.",
+      },
+      {
+        q: "Can you arrange my entire Safari + Zanzibar trip?",
+        a: "Yes. We can arrange your safari, domestic flights, Zanzibar accommodation, airport transfers and selected excursions as one complete itinerary.",
+      },
+      {
+        q: "Which area of Zanzibar should I stay in?",
+        a: "It depends on what you are looking for. We can recommend different areas based on your preferences, such as beaches, swimming, water activities, nightlife, relaxation or exploring local culture.",
+      },
+      {
+        q: "What activities can I do in Zanzibar?",
+        a: "Popular experiences include Stone Town, Spice Farm visits, Mnemba snorkeling, Safari Blue, Nakupenda Sandbank, Jozani Forest and swimming with turtles, depending on availability and weather conditions.",
+      },
+      {
+        q: "Can you arrange Zanzibar excursions?",
+        a: "Yes. We can arrange a variety of excursions and activities during your stay.",
+      },
+      {
+        q: "Can you arrange Zanzibar airport transfers?",
+        a: "Yes. We can arrange airport or ferry terminal transfers to your hotel.",
+      },
+      {
+        q: "Can you arrange a Zanzibar honeymoon?",
+        a: "Yes. We can create a romantic Zanzibar experience with suitable accommodation, private transfers and selected activities.",
+      },
+      {
+        q: "Can I visit Zanzibar without doing a safari?",
+        a: "Of course. We also arrange Zanzibar-only holidays.",
+      },
+    ],
+  },
+  {
+    title: "Families & Special Requirements",
+    items: [
+      {
+        q: "Is Tanzania suitable for families with children?",
+        a: "Yes. Tanzania can be a wonderful family destination. We can recommend suitable itineraries, accommodation and activities based on your children’s ages.",
+      },
+      {
+        q: "Can you arrange private family safaris?",
+        a: "Yes. Private safaris are particularly convenient for families because the itinerary can be adjusted to suit your family’s pace.",
+      },
+      {
+        q: "Are there age restrictions for safari activities?",
+        a: "Some activities and accommodation providers have age restrictions. We’ll advise you when planning your itinerary.",
+      },
+      {
+        q: "Can you arrange special dietary requirements for children?",
+        a: "Yes. Please tell us about any dietary requirements when booking so we can communicate them to the relevant accommodation providers.",
+      },
+      {
+        q: "Can you arrange trips for elderly travelers?",
+        a: "Yes. We can adjust the itinerary, accommodation and daily activities according to your needs.",
+      },
+      {
+        q: "Can you arrange special celebrations?",
+        a: "Yes. If you are celebrating a birthday, anniversary, honeymoon or another special occasion, let us know and we’ll help arrange something memorable.",
+      },
+    ],
+  },
+  {
+    title: "French-Speaking Travelers",
+    items: [
+      {
+        q: "Do you provide French-speaking driver-guides?",
+        a: "Yes. We can arrange French-speaking driver-guides for private safaris.",
+      },
+      {
+        q: "Can you arrange French-speaking guides in Zanzibar?",
+        a: "Yes. French-speaking guides can be arranged for selected Zanzibar activities, subject to availability.",
+      },
+      {
+        q: "Can I communicate with your team in French?",
+        a: "Yes. We can assist French-speaking travelers with trip planning and communication.",
+      },
+      {
+        q: "Can my itinerary be provided in French?",
+        a: "Yes. We can provide your itinerary and important travel information in French when requested.",
+      },
+    ],
+  },
+  {
+    title: "Booking & Cancellation",
+    items: [
+      {
+        q: "How do I make a booking?",
+        a: "Start by sending us an enquiry with your travel dates, number of travelers and your preferred itinerary or experiences. We’ll prepare a quotation and itinerary for you.",
+      },
+      {
+        q: "How long does it take to receive a quotation?",
+        a: "We aim to respond as quickly as possible. The exact time depends on the complexity of your itinerary and accommodation availability.",
+      },
+      {
+        q: "How do I confirm my booking?",
+        a: "Once you approve your itinerary and quotation, we’ll provide the payment details for the required deposit. Your booking is confirmed once the deposit has been received and the necessary reservations have been secured.",
+      },
+      {
+        q: "What happens after I pay my deposit?",
+        a: "We’ll proceed with the relevant reservations and send you your booking confirmation and travel information.",
+      },
+      {
+        q: "Can I change my itinerary after booking?",
+        a: "Changes may be possible depending on availability and the cancellation policies of the suppliers involved. We’ll always discuss any additional costs with you before making changes.",
+      },
+      {
+        q: "What is your cancellation policy?",
+        a: "Cancellation terms depend on the services booked and the policies of the accommodation providers, airlines and other suppliers. Your specific cancellation terms will be provided with your booking.",
+      },
+      {
+        q: "What happens if my flight is cancelled or delayed?",
+        a: "Please inform us as soon as possible. We’ll assist with adjusting transfers and other arrangements where possible. Any additional costs charged by suppliers may apply.",
+      },
+      {
+        q: "Do you provide booking confirmation?",
+        a: "Yes. Once your trip is confirmed, we’ll provide the relevant booking confirmation and travel information.",
+      },
+    ],
+  },
+  {
+    title: "About Atlas Tanzania Adventures",
+    items: [
+      {
+        q: "Who is Atlas Tanzania Adventures?",
+        a: "Atlas Tanzania Adventures is a Tanzania-based tour company creating private, personalized safari and holiday experiences for travelers visiting Tanzania.",
+      },
+      {
+        q: "Where are you based?",
+        a: "We are based in Arusha, Tanzania, the gateway to some of Tanzania’s most famous safari destinations.",
+      },
+      {
+        q: "Why book with a local Tanzania tour company?",
+        a: "Booking with a local operator gives you a team on the ground who understands the destinations, local logistics and travel conditions. We are here to assist you before and throughout your journey.",
+      },
+      {
+        q: "Do you work with international travelers?",
+        a: "Yes. We welcome travelers from around the world and create personalized trips based on their needs, interests and travel style.",
+      },
+      {
+        q: "Can I speak with someone before booking?",
+        a: "Absolutely. We encourage you to contact us with any questions before making your booking. We’re happy to discuss your plans and help you understand what to expect.",
+      },
+      {
+        q: "How can I contact Atlas Tanzania Adventures?",
+        a: "You can contact us through the enquiry form on our website, email, WhatsApp or our social media channels.",
+      },
+    ],
+  },
+];
+
+// Official government portals referenced in the source document.
+const usefulLinks = [
+  { label: "Tanzania visa application", href: "https://visa.immigration.go.tz/" },
+  {
+    label: "Zanzibar mandatory inbound insurance",
+    href: "https://inbound.visitzanzibar.go.tz/",
+  },
+];
+
+const slugify = (value: string) =>
+  value
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+
+// Rich result markup: every question on the page, in source order.
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: sections.flatMap((section) =>
+    section.items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  ),
+};
+---
+
+<Layout
+  title="FAQs | Atlas Tanzania Adventures"
+  description="Answers to the most common questions about planning a Tanzania safari or Zanzibar holiday with Atlas Tanzania Adventures — trip planning, prices, accommodation, flights, visas and booking."
+>
+  <Navbar />
+
+  <main class="bg-white">
+    <header class="border-b border-border/60 bg-[#FDFCFB]">
+      <div class="mx-auto w-full max-w-[1400px] px-6 py-16 sm:px-10 md:py-24 lg:px-16">
+        <div class="max-w-3xl">
+          <span class="block font-body text-xs tracking-[0.3em] text-text-muted uppercase">
+            Frequently Asked Questions
+          </span>
+          <h1 class="mt-5 font-display text-[38px] leading-[1.1] text-primary sm:text-[46px] xl:text-[56px]">
+            Everything You Wanted to Ask.
+          </h1>
+          <p class="mt-6 font-body text-[15px] leading-[170%] text-text sm:text-base">
+            Welcome to our FAQ. Here you’ll find answers to the most common questions about
+            planning a safari, Zanzibar holiday, and your journey with Atlas Tanzania Adventures.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <div
+      class="mx-auto grid w-full max-w-[1400px] grid-cols-1 gap-12 px-6 py-16 sm:px-10 md:py-24 lg:grid-cols-[260px_1fr] lg:gap-20 lg:px-16"
+    >
+      <!-- Jump nav: a sticky index on desktop, a scannable list on mobile -->
+      <nav class="lg:sticky lg:top-10 lg:self-start" aria-labelledby="faq-contents">
+        <h2
+          id="faq-contents"
+          class="font-body text-xs font-semibold tracking-[0.2em] text-primary uppercase"
+        >
+          Contents
+        </h2>
+        <ul class="mt-5 flex flex-col gap-3 border-t border-border pt-5">
+          {
+            sections.map((section) => (
+              <li>
+                <a
+                  href={`#${slugify(section.title)}`}
+                  class="font-body text-sm leading-snug text-text-muted transition-colors hover:text-accent"
+                >
+                  {section.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <div class="flex flex-col gap-16 md:gap-20">
+        {
+          sections.map((section) => (
+            <section id={slugify(section.title)} class="scroll-mt-10">
+              <h2 class="font-display text-[30px] leading-tight text-primary md:text-[38px]">
+                {section.title}
+              </h2>
+
+              <div class="mt-7 border-t border-border">
+                {section.items.map((item) => (
+                  <details class="group border-b border-border">
+                    <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-5 font-body text-base font-medium text-primary transition-colors hover:text-accent [&::-webkit-details-marker]:hidden">
+                      <span>{item.q}</span>
+                      <svg
+                        class="mt-1 size-4 shrink-0 text-accent transition-transform duration-200 group-open:rotate-45"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        aria-hidden="true"
+                      >
+                        <path stroke-linecap="round" d="M12 5v14M5 12h14" />
+                      </svg>
+                    </summary>
+                    <p class="pr-10 pb-6 font-body text-[15px] leading-[170%] text-text">
+                      {item.a}
+                    </p>
+                  </details>
+                ))}
+              </div>
+
+              {slugify(section.title) === "visa-and-entry" && (
+                <div class="mt-8 border border-border bg-[#FDFCFB] p-6">
+                  <h3 class="font-body text-xs font-semibold tracking-[0.2em] text-primary uppercase">
+                    Useful links
+                  </h3>
+                  <ul class="mt-4 flex flex-col gap-2">
+                    {usefulLinks.map((link) => (
+                      <li>
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="font-body text-[15px] text-accent underline underline-offset-4 transition-colors hover:text-accent-dark"
+                        >
+                          {link.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          ))
+        }
+
+        <!-- Closing prompt from the source document -->
+        <section class="border-t border-border pt-10">
+          <h2 class="font-display text-[30px] leading-tight text-primary md:text-[38px]">
+            Still have a question?
+          </h2>
+          <p class="mt-4 max-w-xl font-body text-[15px] leading-[170%] text-text">
+            Contact Atlas Tanzania Adventures and let’s start planning your Tanzania experience.
+            Your journey starts here.
+          </p>
+          <a
+            href="/plan-my-trip"
+            class="mt-7 inline-block border border-primary/25 px-8 py-3.5 font-body text-xs font-semibold tracking-[0.18em] text-primary uppercase transition-colors hover:bg-primary hover:text-white"
+          >
+            Ask Us Anything
+          </a>
+        </section>
+      </div>
+    </div>
+
+    <FinalCTA />
+  </main>
+
+  <Footer />
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} is:inline />
+</Layout>
