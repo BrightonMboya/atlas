@@ -2,8 +2,8 @@
 //
 // The document files every property under a region and one of three comfort
 // levels, which is also how a quotation is built: the traveller picks a level,
-// and the whole trip is costed at it. So the itinerary pages read the same way
-// — pick a level, see every night of your trip at that level.
+// and the whole trip is costed at it. The accommodations page lists them the
+// same way; the itineraries deliberately name no lodges.
 //
 // Photography is supplied per property as a gallery. Ten properties have none
 // yet; their cards fall back to a placeholder, so the grid never breaks.
@@ -758,70 +758,3 @@ export const regions: Region[] = [
     },
   },
 ];
-
-const byId = new Map(regions.map((region) => [region.id, region]));
-
-export interface StayOption {
-  tier: Tier;
-  lodge: Lodge;
-}
-
-/** The two levels quoted against a night, in the order they are shown. */
-const SHOWN: TierId[] = ["comfort", "premium"];
-
-/**
- * The two properties shown against a night, so a traveller sees the range a
- * region offers without leaving the day.
- *
- * Prefers a lodge we hold photography for, since these cards lead with a
- * picture; falls back to the region's first listing when none has any.
- */
-export function stayOptions(region: Region): StayOption[] {
-  return tiers
-    .filter((tier) => SHOWN.includes(tier.id))
-    .flatMap((tier) => {
-      const { lodges } = region.tiers[tier.id];
-      const lodge = lodges.find((entry) => entry.images.length > 0) ?? lodges[0];
-      return lodge ? [{ tier, lodge }] : [];
-    });
-}
-
-/** Longest pattern wins, so "North Serengeti" never matches as plain Serengeti. */
-const MATCHERS: { pattern: RegExp; region: string }[] = [
-  { pattern: /\bndutu\b/i, region: "ndutu" },
-  { pattern: /\b(north(ern)?\s+serengeti|kogatende|lamai|mara\s+river)\b/i, region: "serengeti-north" },
-  { pattern: /\bserengeti\b/i, region: "serengeti-central" },
-  { pattern: /\bngorongoro\b/i, region: "ngorongoro" },
-  { pattern: /\bkaratu\b/i, region: "karatu" },
-  { pattern: /\btarangire\b/i, region: "tarangire" },
-  { pattern: /\b(arusha|lake\s+duluti)\b/i, region: "arusha" },
-];
-
-/** The region a night in `place` belongs to, or null where we hold no list. */
-export function regionFor(place: string): Region | null {
-  for (const { pattern, region } of MATCHERS) {
-    if (pattern.test(place)) return byId.get(region) ?? null;
-  }
-  return null;
-}
-
-/**
- * The regions an itinerary actually sleeps in, in the order it reaches them.
- *
- * Driven by each day's own "Overnight" line rather than a hand-kept list, so
- * the lodges shown can never drift from the itinerary printed above them.
- * Places the document has no lodges for — Zanzibar, West Kilimanjaro, the
- * mountain huts — simply drop out.
- */
-export function stayRegions(overnights: (string | undefined)[]): Region[] {
-  const seen = new Set<string>();
-  const result: Region[] = [];
-  for (const place of overnights) {
-    if (!place) continue;
-    const region = regionFor(place);
-    if (!region || seen.has(region.id)) continue;
-    seen.add(region.id);
-    result.push(region);
-  }
-  return result;
-}

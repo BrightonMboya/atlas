@@ -1,0 +1,23 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import AccommodationDirectory from "../../components/AccommodationDirectory.astro";
+import FinalCTA from "../../components/FinalCTA.astro";
+import Footer from "../../components/Footer.astro";
+import { zanzibarRegions } from "../../data/zanzibar-accommodation";
+---
+
+<Layout
+  title="Zanzibar Accommodations | Atlas Safaris"
+  description="The hotels and beach resorts Atlas Safaris works with in Stone Town and along Zanzibar's coast — at Comfort, Premium and Luxury levels."
+>
+  <Navbar />
+  <AccommodationDirectory
+    eyebrow="Zanzibar Accommodations"
+    title="Where You Could Stay on Zanzibar."
+    intro="From the old lanes of Stone Town to the beaches of the north and southeast coasts, these are the hotels and resorts we work with, at Comfort, Premium and Luxury levels. Tell us the kind of stay you have in mind and we’ll suggest the right place."
+    regions={zanzibarRegions}
+  />
+  <FinalCTA />
+  <Footer />
+</Layout>

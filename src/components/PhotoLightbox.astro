@@ -1,12 +1,17 @@
 ---
-// One dialog for the whole page. Every [data-gallery] trigger on the page opens
-// it, so the markup and the listener exist once however many lodges are shown.
+// One dialog for the whole page, so the markup and the listener exist once
+// however many triggers are shown. Two kinds of trigger open it:
+//
+//   [data-gallery]        one property: its own JSON list of photos, from photo 1.
+//   [data-gallery-group]  one photo in a set: every trigger sharing the group
+//                         name, in page order, opened at this one. Each carries
+//                         its full-size file in data-full and caption in data-name.
 ---
 
 <dialog
   data-lightbox
   class="m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 backdrop:bg-stone-950/90"
-  aria-label="Property photos"
+  aria-label="Photos"
 >
   <div class="flex h-full flex-col items-center justify-center gap-4 px-4 py-6 sm:px-14">
     <img
@@ -56,37 +61,66 @@
 </dialog>
 
 <script>
+  interface Photo {
+    src: string;
+    caption: string;
+  }
+
   const dialog = document.querySelector<HTMLDialogElement>("[data-lightbox]");
   const image = dialog?.querySelector<HTMLImageElement>("[data-lightbox-image]");
   const caption = dialog?.querySelector<HTMLElement>("[data-lightbox-caption]");
   const counter = dialog?.querySelector<HTMLElement>("[data-lightbox-count]");
 
   if (dialog && image && caption && counter) {
-    let gallery: string[] = [];
-    let property = "";
+    let gallery: Photo[] = [];
     let index = 0;
 
     function show(next: number) {
       if (gallery.length === 0) return;
       index = (next + gallery.length) % gallery.length;
-      image!.src = gallery[index];
-      image!.alt = `${property}, photo ${index + 1} of ${gallery.length}`;
+      const photo = gallery[index];
+      image!.src = photo.src;
+      image!.alt = `${photo.caption}, photo ${index + 1} of ${gallery.length}`;
+      caption!.textContent = photo.caption;
       counter!.textContent = `${index + 1} / ${gallery.length}`;
+      // Warm the next photo so stepping forward feels instant.
+      if (gallery.length > 1) new Image().src = gallery[(index + 1) % gallery.length].src;
     }
 
-    document.querySelectorAll<HTMLButtonElement>("[data-gallery]").forEach((trigger) => {
-      trigger.addEventListener("click", () => {
-        try {
-          gallery = JSON.parse(trigger.dataset.gallery ?? "[]");
-        } catch {
-          gallery = [];
-        }
-        if (gallery.length === 0) return;
-        property = trigger.dataset.name ?? "";
-        caption!.textContent = property;
-        show(0);
-        dialog.showModal();
-      });
+    function open(photos: Photo[], start: number) {
+      if (photos.length === 0) return;
+      gallery = photos;
+      show(start);
+      dialog!.showModal();
+    }
+
+    // Delegated, so triggers revealed later (filters, lazy sections) still work.
+    document.addEventListener("click", (event) => {
+      const trigger = (event.target as Element | null)?.closest<HTMLElement>(
+        "[data-gallery], [data-gallery-group]",
+      );
+      if (!trigger) return;
+
+      const group = trigger.dataset.galleryGroup;
+      if (group) {
+        const members = [
+          ...document.querySelectorAll<HTMLElement>(`[data-gallery-group="${CSS.escape(group)}"]`),
+        ].filter((member) => !member.closest("[hidden]"));
+        open(
+          members.map((member) => ({ src: member.dataset.full ?? "", caption: member.dataset.name ?? "" })),
+          Math.max(0, members.indexOf(trigger)),
+        );
+        return;
+      }
+
+      let sources: string[] = [];
+      try {
+        sources = JSON.parse(trigger.dataset.gallery ?? "[]");
+      } catch {
+        sources = [];
+      }
+      const name = trigger.dataset.name ?? "";
+      open(sources.map((src) => ({ src, caption: name })), 0);
     });
 
     dialog.querySelector("[data-lightbox-prev]")?.addEventListener("click", () => show(index - 1));
@@ -108,9 +142,19 @@
       }
     });
 
+    // Swipe on touch screens.
+    let touchX: number | null = null;
+    dialog.addEventListener("touchstart", (event) => (touchX = event.touches[0].clientX), { passive: true });
+    dialog.addEventListener("touchend", (event) => {
+      if (touchX === null) return;
+      const delta = event.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(delta) > 50) show(delta < 0 ? index + 1 : index - 1);
+    });
+
     // Release the photo when the dialog closes so it is not held in memory.
     dialog.addEventListener("close", () => {
-      image!.src = "";
+      image!.removeAttribute("src");
       gallery = [];
     });
   }

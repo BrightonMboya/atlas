@@ -25,7 +25,7 @@ const year = new Date().getFullYear();
       </div>
       <nav aria-labelledby="footer-safaris"><h3 id="footer-safaris"><a href="/journeys#safaris">Safaris</a></h3><ul>{safariCategories.map((category) => <li><a href={`/journeys#${categoryAnchor(category)}`}>{category}</a></li>)}</ul></nav>
       <nav aria-labelledby="footer-trekking"><h3 id="footer-trekking"><a href="/journeys#trekking">Mountain treks</a></h3><ul class="trek-routes">{trekRoutes.map((route) => <li><span>{route.label}</span><div>{route.items.map((journey) => <a href={`/journeys/${journey.slug}`} aria-label={`${route.label}, ${journey.days} days`}>{journey.days} days</a>)}</div></li>)}</ul></nav>
-      <nav aria-labelledby="footer-atlas"><h3 id="footer-atlas">Your trip with Atlas</h3><ul><li><a href="/plan-my-trip">Plan my trip</a></li><li><a href="/plan-my-trip">Contact us</a></li></ul></nav>
+      <nav aria-labelledby="footer-atlas"><h3 id="footer-atlas">Your trip with Atlas</h3><ul><li><a href="/plan-my-trip">Plan my trip</a></li><li><a href="/gallery">Gallery</a></li><li><a href="/plan-my-trip">Contact us</a></li></ul></nav>
     </div>
     <div class="footer-bottom"><p>&copy; {year} Atlas Safaris. All rights reserved.</p><span>Tanzania & Zanzibar</span></div>
   </div>

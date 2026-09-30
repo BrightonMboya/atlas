@@ -2,13 +2,42 @@
 // One bar for the whole site: a white header that sits above the page, so a
 // full-bleed hero starts cleanly beneath it. Below md the links collapse into
 // a panel behind the hamburger; the CTA stays visible at every width.
-const links = [
+//
+// An entry with `items` is a dropdown: on desktop it opens on hover, focus or
+// click; in the mobile panel its items are listed beneath its label.
+interface NavLink {
+  label: string;
+  href: string;
+}
+
+interface NavEntry {
+  label: string;
+  href?: string;
+  items?: NavLink[];
+}
+
+const links: NavEntry[] = [
   { label: "About Us", href: "/about" },
-  { label: "Safaris", href: "/journeys#safaris" },
+  {
+    label: "Safaris",
+    items: [
+      { label: "Safaris", href: "/journeys#safaris" },
+      { label: "Accommodations", href: "/accommodations" },
+    ],
+  },
   { label: "Trekking", href: "/journeys#trekking" },
-  { label: "Zanzibar", href: "/journeys#safari-zanzibar" },
+  {
+    label: "Zanzibar",
+    items: [
+      { label: "Zanzibar", href: "/journeys#safari-zanzibar" },
+      { label: "Accommodations", href: "/accommodations/zanzibar" },
+    ],
+  },
   { label: "FAQ", href: "/faq" },
 ];
+
+const linkClass =
+  "font-body text-xs font-medium tracking-[0.18em] whitespace-nowrap text-primary uppercase transition-colors hover:text-accent";
 ---
 
 <nav class="relative z-50 w-full border-b border-border/60 bg-white py-5" data-navbar>
@@ -27,14 +56,47 @@ const links = [
     <div class="flex items-center gap-6 md:gap-10">
       <div class="hidden items-center gap-6 md:flex lg:gap-10">
         {
-          links.map((link) => (
-            <a
-              href={link.href}
-              class="font-body text-xs font-medium tracking-[0.18em] whitespace-nowrap text-primary uppercase transition-colors hover:text-accent"
-            >
-              {link.label}
-            </a>
-          ))
+          links.map((link) =>
+            link.items ? (
+              <div class="group relative" data-dropdown>
+                <button
+                  type="button"
+                  class:list={[linkClass, "flex cursor-pointer items-center gap-1.5"]}
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  data-dropdown-toggle
+                >
+                  {link.label}
+                  <svg
+                    class="size-3 transition-transform group-hover:rotate-180 group-[.is-open]:rotate-180"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    aria-hidden="true"
+                  >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                {/* pt-4 bridges the gap to the button so hovering across it keeps the menu open. */}
+                <div class="invisible absolute top-full left-1/2 z-50 -translate-x-1/2 pt-4 opacity-0 transition-opacity duration-150 group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100 group-[.is-open]:visible group-[.is-open]:opacity-100">
+                  <ul class="min-w-52 border border-border/60 bg-white py-2 shadow-lg">
+                    {link.items.map((item) => (
+                      <li>
+                        <a href={item.href} class:list={[linkClass, "block px-5 py-3 hover:bg-stone-50"]}>
+                          {item.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <a href={link.href} class={linkClass}>
+                {link.label}
+              </a>
+            ),
+          )
         }
       </div>
       <a
@@ -69,14 +131,32 @@ const links = [
   >
     <div class="flex flex-col px-6 py-2">
       {
-        links.map((link) => (
-          <a
-            href={link.href}
-            class="border-b border-border/60 py-4 font-body text-xs font-medium tracking-[0.18em] text-primary uppercase transition-colors last:border-b-0 hover:text-accent"
-          >
-            {link.label}
-          </a>
-        ))
+        links.map((link) =>
+          link.items ? (
+            <div class="border-b border-border/60 py-4">
+              <span class="block font-body text-xs font-medium tracking-[0.18em] text-text-muted uppercase">
+                {link.label}
+              </span>
+              <div class="mt-1 flex flex-col border-l border-border/60 pl-4">
+                {link.items.map((item) => (
+                  <a
+                    href={item.href}
+                    class="py-3 font-body text-xs font-medium tracking-[0.18em] text-primary uppercase transition-colors hover:text-accent"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <a
+              href={link.href}
+              class="border-b border-border/60 py-4 font-body text-xs font-medium tracking-[0.18em] text-primary uppercase transition-colors hover:text-accent"
+            >
+              {link.label}
+            </a>
+          ),
+        )
       }
 
       <a
@@ -112,7 +192,34 @@ const links = [
   // Anchor links inside the panel navigate without a reload, so close manually.
   panel?.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => setOpen(false)));
 
+  // Desktop dropdowns open on hover and focus in CSS; a click pins one open,
+  // which is what a touch screen at tablet width needs.
+  const dropdowns = [...(nav?.querySelectorAll<HTMLElement>("[data-dropdown]") ?? [])];
+
+  function setDropdown(dropdown: HTMLElement, open: boolean) {
+    dropdown.classList.toggle("is-open", open);
+    dropdown.querySelector("[data-dropdown-toggle]")?.setAttribute("aria-expanded", String(open));
+  }
+
+  dropdowns.forEach((dropdown) => {
+    dropdown.querySelector("[data-dropdown-toggle]")?.addEventListener("click", () => {
+      const open = !dropdown.classList.contains("is-open");
+      dropdowns.forEach((other) => setDropdown(other, other === dropdown && open));
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    dropdowns.forEach((dropdown) => {
+      if (!dropdown.contains(event.target as Node)) setDropdown(dropdown, false);
+    });
+  });
+
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setOpen(false);
+    if (event.key !== "Escape") return;
+    setOpen(false);
+    dropdowns.forEach((dropdown) => {
+      if (dropdown.contains(document.activeElement)) (document.activeElement as HTMLElement).blur();
+      setDropdown(dropdown, false);
+    });
   });
 </script>

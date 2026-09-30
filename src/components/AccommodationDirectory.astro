@@ -1,0 +1,111 @@
+---
+// A whole accommodation list — every area, each property labelled with the comfort
+// level a quotation is built on. Shared by the safari and Zanzibar pages.
+//
+// A property we hold photography for leads with its hero photo, which opens
+// the rest of its gallery in PhotoLightbox; one without is listed by name, so
+// an area with no photography still reads as a clean list, not a wall of
+// empty frames.
+import PhotoLightbox from "./PhotoLightbox.astro";
+import { tiers, type Region } from "../data/accommodation";
+// Local 600px copies of each hero, from scripts/build-lodge-thumbs.mjs. A lodge
+// added since the script last ran falls back to its original.
+import thumbs from "../data/lodge-thumbs.json";
+
+const thumb = (url: string) => (thumbs as Record<string, string>)[url] ?? url;
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro: string;
+  regions: Region[];
+}
+
+const { eyebrow, title, intro, regions } = Astro.props;
+const hasPhotos = regions.some((region) => tiers.some((tier) => region.tiers[tier.id].lodges.some((l) => l.images.length > 0)));
+---
+
+<main class="bg-white">
+  <header class="border-b border-border/60 bg-[#FDFCFB]">
+    <div class="mx-auto w-full max-w-[1400px] px-6 py-16 sm:px-10 md:py-24 lg:px-16">
+      <div class="max-w-3xl">
+        <span class="block font-body text-xs tracking-[0.3em] text-text-muted uppercase">{eyebrow}</span>
+        <h1 class="mt-5 font-display text-[38px] leading-[1.1] text-primary sm:text-[46px] xl:text-[56px]">
+          {title}
+        </h1>
+        <p class="mt-6 font-body text-[15px] leading-[170%] text-text sm:text-base">{intro}</p>
+      </div>
+
+      <nav class="mt-10 flex flex-wrap gap-2" aria-label="Areas">
+        {
+          regions.map((region) => (
+            <a
+              href={`#${region.id}`}
+              class="rounded-full border border-border px-4 py-2 font-body text-xs tracking-[0.12em] text-primary uppercase transition-colors hover:border-accent hover:text-accent-dark"
+            >
+              {region.name.split("–")[0].trim()}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </header>
+
+  <div class="mx-auto w-full max-w-[1400px] space-y-20 px-6 py-16 sm:px-10 md:space-y-28 md:py-24 lg:px-16">
+    {
+      regions.map((region) => (
+        <section id={region.id} class="scroll-mt-8" aria-labelledby={`${region.id}-title`}>
+          <h2 id={`${region.id}-title`} class="mb-10 font-display text-3xl leading-tight text-primary md:text-4xl">
+            {region.name}
+          </h2>
+
+          {/* One even grid per area, cheapest level first; each card carries its level. */}
+          <ul class="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-x-12">
+            {tiers.flatMap((tier) => {
+              const stay = region.tiers[tier.id];
+              return stay.lodges.map((lodge) => (
+                <li>
+                  {lodge.images.length > 0 && (
+                    <button
+                      type="button"
+                      class="group relative mb-4 block w-full cursor-pointer overflow-hidden rounded-xl bg-stone-100"
+                      data-gallery={JSON.stringify(lodge.images)}
+                      data-name={lodge.name}
+                      aria-label={`View photos of ${lodge.name}`}
+                    >
+                      <img
+                        src={thumb(lodge.images[0])}
+                        alt={`${lodge.name}, ${region.name}`}
+                        width="600"
+                        height="400"
+                        loading="lazy"
+                        decoding="async"
+                        class="aspect-[3/2] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      {lodge.images.length > 1 && (
+                        <span class="absolute right-3 bottom-3 flex items-center gap-1.5 rounded-full bg-black/55 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm">
+                          <svg class="size-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+                            <rect x="3" y="4" width="18" height="16" rx="2" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m3 16.5 4.5-4 4 3.5 3.5-3 6 5" />
+                          </svg>
+                          {lodge.images.length}
+                        </span>
+                      )}
+                    </button>
+                  )}
+                  <span class="block font-body text-[11px] font-semibold tracking-[0.2em] text-accent-dark uppercase">
+                    {tier.name}
+                    {stay.note && <span class="font-medium text-text-muted normal-case tracking-normal"> · {stay.note}</span>}
+                  </span>
+                  <span class="mt-1.5 block font-display text-xl leading-snug text-primary">{lodge.name}</span>
+                </li>
+              ));
+            })}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  {hasPhotos && <PhotoLightbox />}
+</main>

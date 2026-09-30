@@ -1,0 +1,23 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import AccommodationDirectory from "../../components/AccommodationDirectory.astro";
+import FinalCTA from "../../components/FinalCTA.astro";
+import Footer from "../../components/Footer.astro";
+import { regions } from "../../data/accommodation";
+---
+
+<Layout
+  title="Safari Accommodations | Atlas Safaris"
+  description="The lodges and tented camps Atlas Safaris works with across Arusha, Karatu, Tarangire, Ngorongoro, the Serengeti and Ndutu — at Comfort, Premium and Luxury levels."
+>
+  <Navbar />
+  <AccommodationDirectory
+    eyebrow="Safari Accommodations"
+    title="Where You Could Stay on Safari."
+    intro="Every safari is quoted at one of three levels — Comfort, Premium or Luxury — and each night is booked at the level you choose. These are the lodges and camps we work with in each area. Tell us your preference and we’ll match the right property to every stop."
+    regions={regions}
+  />
+  <FinalCTA />
+  <Footer />
+</Layout>

@@ -3,9 +3,6 @@ import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
 import RouteMap from "../../components/journey/RouteMap.astro";
-import DayStay from "../../components/journey/DayStay.astro";
-import PhotoLightbox from "../../components/journey/PhotoLightbox.astro";
-import { regionFor } from "../../data/accommodation";
 import { sectionPhoto } from "../../data/zanzibar-photos";
 import {
   catalogue,
@@ -44,9 +41,6 @@ const routeLabel = chain.length > 1 ? `${chain[0].name} → ${chain[chain.length
 // body is the run of sections, filed under the document's own ALL-CAPS headings.
 const isGuide = itinerary.days.length === 0;
 
-// Lodges are only meaningful where the nights are spent in lodges: the treks
-// sleep in the mountain's own huts and camps, which are not a choice.
-const showsLodges = journey.activity === "safari";
 const groupedSections = itinerary.sections.reduce<{ group?: string; sections: Section[] }[]>(
   (groups, section) => {
     const last = groups[groups.length - 1];
@@ -191,12 +185,6 @@ function splitRate(text: string): { label?: string; amount: string } {
                       previousDay != null &&
                       previousDay.overnight != null &&
                       previousDay.overnight === day.overnight;
-                    // Lodges belong to the stay, not the night, so they are
-                    // shown once when the stay opens and not again on "(Cont.)".
-                    const stayRegion =
-                      showsLodges && day.overnight && !isSameStay
-                        ? regionFor(day.overnight)
-                        : null;
 
                     return (
                       <div class="group scroll-mt-24" id={day.id}>
@@ -285,7 +273,6 @@ function splitRate(text: string): { label?: string; amount: string } {
                               </div>
                             )}
 
-                            {stayRegion && <DayStay region={stayRegion} />}
                           </div>
                         </div>
                       </div>
@@ -516,8 +503,6 @@ function splitRate(text: string): { label?: string; amount: string } {
         </aside>
       </div>
     </main>
-
-    {showsLodges && <PhotoLightbox />}
 
     <!-- Related journeys -->
     {

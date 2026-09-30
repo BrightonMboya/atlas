@@ -1,0 +1,452 @@
+[
+  {
+    "group": "safari",
+    "alt": "Two friends with sundowners beside a fire pit, looking out over the plains at dusk",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/hero-01-friends-480.webp",
+    "srcset": "/images/gallery/hero-01-friends-480.webp 480w, /images/gallery/hero-01-friends-960.webp 960w",
+    "full": "/images/gallery/hero-01-friends-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAAAQAgCdASoQAAsAA4BaJQBOgCHhQW4Xzxq4APzmGpnTyfqShk891rdqGrOgNeBsP/93gKkV5DY2VjFan2In0QbHdC0NouoVjVot2/+Fs8LfLkJ1yK/ow07wdQAAAA=="
+  },
+  {
+    "group": "safari",
+    "alt": "A Maasai guide and a young boy coaxing a bundle of tinder into flame",
+    "width": 480,
+    "height": 270,
+    "src": "/images/gallery/hero-02-kido-480.webp",
+    "srcset": "/images/gallery/hero-02-kido-480.webp 480w, /images/gallery/hero-02-kido-960.webp 960w",
+    "full": "/images/gallery/hero-02-kido-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAADQAQCdASoQAAkAA4BaJaACdAC6by4iAAD2v4ozRZJJAu1ZUF7XPNCTVTli9OuHzB3NvWIuUFuaK/ySAtyOFpIZq7wVIelD2wMpPfBwo6WANtnKG2AAAA=="
+  },
+  {
+    "group": "safari",
+    "alt": "A couple at breakfast on a camp deck as the sun rises over the acacias",
+    "width": 480,
+    "height": 384,
+    "src": "/images/gallery/hero-03-couples-480.webp",
+    "srcset": "/images/gallery/hero-03-couples-480.webp 480w, /images/gallery/hero-03-couples-960.webp 960w",
+    "full": "/images/gallery/hero-03-couples-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAQCdASoQAA0AA4BaJQBOgCHiBZOjQ4AA9r/fidPPgIGRNPerqQkezeV3d1e7cHzleGkEkOSo4hdH2UO17wlde+tdLR8uYDwZpkDOirWY4JwVlZwL6B3v66JNgcshqZBrsCWuAAA="
+  },
+  {
+    "group": "safari",
+    "alt": "A family walking the grasslands with their Maasai guides, zebra grazing beyond",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/hero-04-family-480.webp",
+    "srcset": "/images/gallery/hero-04-family-480.webp 480w, /images/gallery/hero-04-family-960.webp 960w",
+    "full": "/images/gallery/hero-04-family-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAACQAgCdASoQAAsAA4BaJbACxC8AtwBOuPRbmEGZAAD+51OA8gHYWTOQTo+HvksKdrm86MNiUeWHjHCT/xIX9RxCbcNoCSVoicAt78COvVVv1gAA"
+  },
+  {
+    "group": "safari",
+    "alt": "Wildebeest herds streaming past a safari vehicle on the migration",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-great-migration-herd-480.webp",
+    "srcset": "/images/gallery/journeys-great-migration-herd-480.webp 480w, /images/gallery/journeys-great-migration-herd-960.webp 960w",
+    "full": "/images/gallery/journeys-great-migration-herd-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAAAwAgCdASoQAAsAA4BaJaACdH8AGBZhEJMmAAD+8hXbgkT6NjRNHP1MukCKzFyhdItU5rvgAZC3aHy7DFUqhGbdH9uYAAAA"
+  },
+  {
+    "group": "safari",
+    "alt": "Cheetah resting in golden grass",
+    "width": 480,
+    "height": 236,
+    "src": "/images/gallery/why-travel-cheetah-480.webp",
+    "srcset": "/images/gallery/why-travel-cheetah-480.webp 480w, /images/gallery/why-travel-cheetah-960.webp 960w",
+    "full": "/images/gallery/why-travel-cheetah-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAAAQAgCdASoQAAgAA4BaJagCdAEWtalE3SzAAP6XJ8gNO3Tpd7fHgUQSpOsP1iY1qUhhHf6v1R2deqXkL4dubkOTMyr1eBsSAAA="
+  },
+  {
+    "group": "safari",
+    "alt": "Guests and Maasai hosts gathered for a bush sundowner at dusk",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-maasai-sundowner-480.webp",
+    "srcset": "/images/gallery/journeys-maasai-sundowner-480.webp 480w, /images/gallery/journeys-maasai-sundowner-960.webp 960w",
+    "full": "/images/gallery/journeys-maasai-sundowner-1280.webp",
+    "placeholder": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADwAQCdASoQAAsAA4BaJZgCdAEMw4xkrwAA/vOsTMJEBdTXELB72PnYRrad70HZ/P0kAFSyHwJF1ri1z8JNlg2t2Bwl2E59+fC41KLr6ORqMTqrJ1Q+KAAA"
+  },
+  {
+    "group": "safari",
+    "alt": "Elephants beneath the baobabs in Tarangire",
+    "width": 480,
+    "height": 270,
+    "src": "/images/gallery/itinerary-tarangire-ngorongoro-480.webp",
+    "srcset": "/images/gallery/itinerary-tarangire-ngorongoro-480.webp 480w, /images/gallery/itinerary-tarangire-ngorongoro-960.webp 960w",
+    "full": "/images/gallery/itinerary-tarangire-ngorongoro-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAkAA4BaJbACdAEWUkrea9qAAOIClIND5im7kDfw2YIMBsW7yqHXYbx33tZpC8qQjTQmqIGOWCMYcWyW69fh1vact+R4AAA="
+  },
+  {
+    "group": "safari",
+    "alt": "A couple raising a glass at a private sundowner beside the water",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-honeymoon-sunset-toast-480.webp",
+    "srcset": "/images/gallery/journeys-honeymoon-sunset-toast-480.webp 480w, /images/gallery/journeys-honeymoon-sunset-toast-960.webp 960w",
+    "full": "/images/gallery/journeys-honeymoon-sunset-toast-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAABQAgCdASoQAAsAA4BaJYgCdAYvXvd+f1yIL4AA/gk9LaNy93JfT+XYd87ONJsEeYKnBKyOveJeaGziT1xKBctyS7YK3EXt9YhQw8HDLD664dUfg4z8RnkRxBlPeC4r0vaj+91SYUFzVyKAAAA="
+  },
+  {
+    "group": "safari",
+    "alt": "Zebras grazing on the Serengeti plains",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/destination-tanzania-480.webp",
+    "srcset": "/images/gallery/destination-tanzania-480.webp 480w, /images/gallery/destination-tanzania-870.webp 870w",
+    "full": "/images/gallery/destination-tanzania-870.webp",
+    "placeholder": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAACwAQCdASoQAAsAA4BaJZACdADcvMhIAP0oxxVX7l7T2IV2u9LERNSQ0jriBYk4xt/VROKeTtCcheSOgWW/tsqIGyhTpZ2ljPwfHg2MKftLP7afjVDHxwoA/zJszZ26Z7Ds4WhI88LIwNwA"
+  },
+  {
+    "group": "safari",
+    "alt": "A family settled into camp chairs at the river's edge below forested hills",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-family-river-lunch-480.webp",
+    "srcset": "/images/gallery/journeys-family-river-lunch-480.webp 480w, /images/gallery/journeys-family-river-lunch-960.webp 960w",
+    "full": "/images/gallery/journeys-family-river-lunch-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAQAgCdASoQAAsAA4BaJZACdAD2Pu+lB9UAAP6F6s4XZHzn0upEFJOG6c7BSeFHFLLYP2aLcLyA7IX0HfU7159mi7Y2pSptfqT0bB/4slHdwD5rwAA="
+  },
+  {
+    "group": "safari",
+    "alt": "Safari vehicle crossing the savanna",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/category-safaris-480.webp",
+    "srcset": "/images/gallery/category-safaris-480.webp 480w, /images/gallery/category-safaris-870.webp 870w",
+    "full": "/images/gallery/category-safaris-870.webp",
+    "placeholder": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAAAwAgCdASoQAAsAA4BaJaACdAEQO8urmR0yAADifbV3WxO6u7cMxEoMvElWoLyWAb5V9GQSFC+3rV0fco0fNm6VH9cJv74IutFLMID5CC4Qi1V2xI9pbVXgT9y4ulAf/2sAAA=="
+  },
+  {
+    "group": "safari",
+    "alt": "Guests gathered for sundowners beneath a baobab as the sun sets",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-baobab-sundowner-480.webp",
+    "srcset": "/images/gallery/journeys-baobab-sundowner-480.webp 480w, /images/gallery/journeys-baobab-sundowner-960.webp 960w",
+    "full": "/images/gallery/journeys-baobab-sundowner-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAADQAQCdASoQAAsAA4BaJZACdAYs26R4gAD+5fTmEQXEjsr9v2x+VTu/804cpp5S9XokYhz9/N7m7s/clSRObpng7ADjt2EVxMKJQ1VgXDpaX2MWztZlWCAA"
+  },
+  {
+    "group": "safari",
+    "alt": "An elephant grazing in tall wetland grass beside a watering hole",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/final-cta-elephant-480.webp",
+    "srcset": "/images/gallery/final-cta-elephant-480.webp 480w, /images/gallery/final-cta-elephant-960.webp 960w",
+    "full": "/images/gallery/final-cta-elephant-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAwAgCdASoQAAsAA4BaJbACdADwgHCsI+hBAAD40oQDBDp64dVgVMTAXNiO/c4ltW8heBOMFnppm0g6L2CEUVKwGFzQ0ZFYV5rI5KjdjTPgAA=="
+  },
+  {
+    "group": "safari",
+    "alt": "A guide carrying bags to a light aircraft waiting on a bush airstrip",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-fly-in-airstrip-480.webp",
+    "srcset": "/images/gallery/journeys-fly-in-airstrip-480.webp 480w, /images/gallery/journeys-fly-in-airstrip-960.webp 960w",
+    "full": "/images/gallery/journeys-fly-in-airstrip-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoQAAsAA4BaJZwCdAEXc0nvwwAA/tfSK5NtgK98VAWktWfAU3ZI1mJ5St7/7d2QRndLjDLJ6NI19KZibBAtd1odq6rllA8yHAA="
+  },
+  {
+    "group": "safari",
+    "alt": "Travellers sitting and talking with a Maasai family outside their homestead",
+    "width": 480,
+    "height": 270,
+    "src": "/images/gallery/about-cultural-visit-480.webp",
+    "srcset": "/images/gallery/about-cultural-visit-480.webp 480w, /images/gallery/about-cultural-visit-960.webp 960w",
+    "full": "/images/gallery/about-cultural-visit-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAADwAQCdASoQAAkAA4BaJYgCdAEDsuWNCIAA+//mSvPx4u/BYqjWP/KDhbsnM13vl8iSfCT3BBy//IJmPn0/A+Ufe0lZjUC3r5ubx53m4Nbb6fAA"
+  },
+  {
+    "group": "safari",
+    "alt": "Comfortable lodge tent interior",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/lodge-siringit-camp-480.webp",
+    "srcset": "/images/gallery/lodge-siringit-camp-480.webp 480w, /images/gallery/lodge-siringit-camp-960.webp 960w",
+    "full": "/images/gallery/lodge-siringit-camp-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAAAwAgCdASoQAAsAA4BaJQBOjXAB5/juRtjAAAD+W+qXwqfnWvyTBM6VDCsjkd9j7L8vOa+RqevKDxlWhjXpyPvabE9Ude7GOUA/+AOYpgui27tG4mU91ShkrjVFGSbMECgYAAAA"
+  },
+  {
+    "group": "safari",
+    "alt": "Two elephants crossing the open grassland on the horizon under a wide pale sky",
+    "width": 480,
+    "height": 270,
+    "src": "/images/gallery/trip-planner-480.webp",
+    "srcset": "/images/gallery/trip-planner-480.webp 480w, /images/gallery/trip-planner-960.webp 960w",
+    "full": "/images/gallery/trip-planner-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRkIAAABXRUJQVlA4IDYAAADQAQCdASoQAAkAA4BaJagCdAEQ/COcAAD+1ujJHm4gxSg+k775ZjHM7ZYX/kyzSGU+fygAAAA="
+  },
+  {
+    "group": "safari",
+    "alt": "Relaxed seating inside a safari vehicle",
+    "width": 480,
+    "height": 270,
+    "src": "/images/gallery/lodge-zuri-zanzibar-480.webp",
+    "srcset": "/images/gallery/lodge-zuri-zanzibar-480.webp 480w, /images/gallery/lodge-zuri-zanzibar-960.webp 960w",
+    "full": "/images/gallery/lodge-zuri-zanzibar-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADQAQCdASoQAAkAA4BaJQBOgCFqvPREAADOEA/L8K9jz1guBFbjV2NPxKw/aCEbbUL5ssJOd+pEvqQjFPJ4I3LcR+5eQ/7pgjI6m8q5BDgAAA=="
+  },
+  {
+    "group": "trekking",
+    "alt": "Two trekkers crossing a snowfield high on Kilimanjaro",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-kilimanjaro-summit-snow-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-kilimanjaro-summit-snow-480.webp 480w, /images/gallery/journeys-trekking-kilimanjaro-summit-snow-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-kilimanjaro-summit-snow-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADQAQCdASoQAAsAA4BaJZwAApFnG5zJAAD+9/FvVoppjviwyHxQW7gP/WSIV910dzksfkL/uaig7dLuIxJX7/M0otcE9JpNAJARHykwPAA="
+  },
+  {
+    "group": "trekking",
+    "alt": "A line of trekkers climbing a heath-covered ridge under a clear sky",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-lemosho-ridge-trail-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-lemosho-ridge-trail-480.webp 480w, /images/gallery/journeys-trekking-lemosho-ridge-trail-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-lemosho-ridge-trail-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAQCdASoQAAsAA4BaJagCdAEK47oXewAA/j7FKMriIFagYs1GDUNhOF30JOtm6ogFsLQZ9Kq+znbrnlVoFOsiwBjAQbLvGzi+ivKrVEQAAA=="
+  },
+  {
+    "group": "trekking",
+    "alt": "Trekkers below the ice cliffs of Kilimanjaro's summit glaciers",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-machame-glacier-summit-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-machame-glacier-summit-480.webp 480w, /images/gallery/journeys-trekking-machame-glacier-summit-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-machame-glacier-summit-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlIAAABXRUJQVlA4IEYAAADwAQCdASoQAAsAA4BaJaACdAEVHn0LTwAA/udYD7LEqoEI8CbbBNyHnbYxfhHGDJfq+ioFaaG4lON1rl7x4x8YTSR2AAAA"
+  },
+  {
+    "group": "trekking",
+    "alt": "Trekkers strung out along a mountain path below cloud-covered slopes",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-lemosho-dawn-ascent-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-lemosho-dawn-ascent-480.webp 480w, /images/gallery/journeys-trekking-lemosho-dawn-ascent-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-lemosho-dawn-ascent-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAACwAQCdASoQAAsAA4BaJQBOgBUHRuLYAPyP+Y2wru5LkqNfuy+ukd+pbCbtRjYmF2FurXw6ptmrfDThO+MYVLUDSmsIAZsvnoBNza5VvrxHtmXYAAA="
+  },
+  {
+    "group": "trekking",
+    "alt": "Three trekkers pausing on a rocky ridge under a clear sky",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-marangu-summit-ridge-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-marangu-summit-ridge-480.webp 480w, /images/gallery/journeys-trekking-marangu-summit-ridge-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-marangu-summit-ridge-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmoAAABXRUJQVlA4IF4AAAAQAgCdASoQAAsAA4BaJbACdAECiDh1eR6AAP5Z5uGSGGj7nNBe4IF4wyg+Ymc3EytOsbhBOG404jyxXoqej7R/sU5+G8ZGqa6vV60w6PCmVQOTPjb2mMEfs4/GwdAA"
+  },
+  {
+    "group": "trekking",
+    "alt": "A group picking its way up a boulder field in the mist",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-machame-rocky-ascent-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-machame-rocky-ascent-480.webp 480w, /images/gallery/journeys-trekking-machame-rocky-ascent-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-machame-rocky-ascent-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAADwAQCdASoQAAsAA4BaJYgCdADLx5VrhqAA/uJqGUm08ZfILaSjAaHgI8JdwAIWurYhRATJlm8zh4q67h9Hm7mWK8+MSVizwzi+Of06oK1bdXwVBgRNsU2Kj2jFJEd6lc4TnLAAAAA="
+  },
+  {
+    "group": "trekking",
+    "alt": "Walkers following a scree ridge through thick mountain mist",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-marangu-misty-ridge-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-marangu-misty-ridge-480.webp 480w, /images/gallery/journeys-trekking-marangu-misty-ridge-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-marangu-misty-ridge-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRkAAAABXRUJQVlA4IDQAAADwAQCdASoQAAsAA4BaJZwAAujbJh1efwAA/vU4vs+oQvt8Ke2bLUAzvkhdgoCKGgYVHAAA"
+  },
+  {
+    "group": "trekking",
+    "alt": "Mount Meru rising above green fields and trees near Arusha",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-mount-meru-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-mount-meru-480.webp 480w, /images/gallery/journeys-trekking-mount-meru-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-mount-meru-1590.webp",
+    "placeholder": "data:image/webp;base64,UklGRkoAAABXRUJQVlA4ID4AAADwAQCdASoQAAsAA4BaJbACdAEO9TS2AgAA/vLZOm37a9yRZQVJw/J6QgKPkCSSInq/qVvtD8rir5vfHhu4AA=="
+  },
+  {
+    "group": "trekking",
+    "alt": "Mount Kilimanjaro rising above highland vegetation under a blue sky",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-trekking-kilimanjaro-landscape-480.webp",
+    "srcset": "/images/gallery/journeys-trekking-kilimanjaro-landscape-480.webp 480w, /images/gallery/journeys-trekking-kilimanjaro-landscape-960.webp 960w",
+    "full": "/images/gallery/journeys-trekking-kilimanjaro-landscape-1519.webp",
+    "placeholder": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAAAQAgCdASoQAAsAA4BaJagCdGuAAr+wXpgAAP6qEwXoMkty6lVPfb4OkuFYiKmTiWB3pF4RTSXdOUt/KehosUjK6vYWzC35C5gAAA=="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A couple on a daybed watching the sun set over the Indian Ocean",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-zanzibar-sunset-daybed-480.webp",
+    "srcset": "/images/gallery/journeys-zanzibar-sunset-daybed-480.webp 480w, /images/gallery/journeys-zanzibar-sunset-daybed-960.webp 960w",
+    "full": "/images/gallery/journeys-zanzibar-sunset-daybed-1200.webp",
+    "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAsAA4BaJYwC7AERHFAlUlAAAP55OZ0s+mDz3EQsvLWs+MQU4nitx9o1fiJIpSaWn/lKe52XOTuX+32kOHTYgBeVQpzVlcAAAA=="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "Guests relaxing with drinks under palms at a Zanzibar beach club",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/journeys-zanzibar-beach-club-480.webp",
+    "srcset": "/images/gallery/journeys-zanzibar-beach-club-480.webp 480w, /images/gallery/journeys-zanzibar-beach-club-960.webp 960w",
+    "full": "/images/gallery/journeys-zanzibar-beach-club-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAAAQAgCdASoQAAsAA4BaJQBOgjgD+iK+kIgwAMyHAISFmd1JMOAdJKgYUFghTsKQH2xuOQdsoUaJSy7QdklHk8lMbFoCGfZodbAP4zoG1MYpZj8QpeSkxQ57o52U4e3wyAA="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A reef fish in the shallow turquoise water off Mnemba Island",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-mnemba-atoll-480.webp",
+    "srcset": "/images/gallery/zanzibar-mnemba-atoll-480.webp 480w, /images/gallery/zanzibar-mnemba-atoll-960.webp 960w",
+    "full": "/images/gallery/zanzibar-mnemba-atoll-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoQAAsAA4BaJbACdAD1cQVOoAAA99xyBe8V4zfSmHjZswV+MxcoGGLjNkKmML5K6RBE1SC9SVb7wu5Y96PcL/4j9s1wAA=="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "The sail and bow of a traditional dhow under way off Zanzibar",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-safari-blue-dhow-480.webp",
+    "srcset": "/images/gallery/zanzibar-safari-blue-dhow-480.webp 480w, /images/gallery/zanzibar-safari-blue-dhow-960.webp 960w",
+    "full": "/images/gallery/zanzibar-safari-blue-dhow-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAsAA4BaJZQCdADdhr0eaT4AAP0AiHG7CoKx7sYU5vingT+AeUQE3a5PogYJ8eOKo42K9jaY7RWqNoBBRQJEtE0KgcSAAAA="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A figure wading the shallow flats off a Zanzibar sandbank",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-nakupenda-sandbank-480.webp",
+    "srcset": "/images/gallery/zanzibar-nakupenda-sandbank-480.webp 480w, /images/gallery/zanzibar-nakupenda-sandbank-960.webp 960w",
+    "full": "/images/gallery/zanzibar-nakupenda-sandbank-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRj4AAABXRUJQVlA4IDIAAADQAQCdASoQAAsAA4BaJYgCdAEOTtCLYAD9UJDS6mYpbEvorR/I/nkcTar1pKueXOMAAA=="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A dhow under sail against an orange Zanzibar sunset",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-sunset-dhow-cruise-480.webp",
+    "srcset": "/images/gallery/zanzibar-sunset-dhow-cruise-480.webp 480w, /images/gallery/zanzibar-sunset-dhow-cruise-960.webp 960w",
+    "full": "/images/gallery/zanzibar-sunset-dhow-cruise-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADQAQCdASoQAAsAA4BaJbACdADbpRM0MAD+q7PnN+T40c2ihZtSBRQ4Opl7Jkf5I7qagSeG6m1BYsKuB2ho2e0nxCr31RLr2vE+COavWe30a/0Nzr6TPHnkiE9FhvC3ZexLgAAA"
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A narrow Stone Town lane between tall coral-rag buildings",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-stone-town-alley-480.webp",
+    "srcset": "/images/gallery/zanzibar-stone-town-alley-480.webp 480w, /images/gallery/zanzibar-stone-town-alley-960.webp 960w",
+    "full": "/images/gallery/zanzibar-stone-town-alley-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAAAwAgCdASoQAAsAA4BaJaQAD48MKv31z3BkAAD+0qTNdrnGfE3tPbdDwQWMCZ8bc5Pq8QGGnz+zoVM78i1JI4mpeAbqmf2aeqIWgAAA"
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A snorkeller swimming through clear blue water",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-blue-lagoon-snorkeling-480.webp",
+    "srcset": "/images/gallery/zanzibar-blue-lagoon-snorkeling-480.webp 480w, /images/gallery/zanzibar-blue-lagoon-snorkeling-960.webp 960w",
+    "full": "/images/gallery/zanzibar-blue-lagoon-snorkeling-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoQAAsAA4BaJbACdLoAAOwbgAD9RwqYGuV8HvWpO+DhGYhFQDxUimDov2Rj/kwFy/H7v8WR5jAbrrQpsAA="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "The silhouette of a dhow's sail as the sun drops into the Indian Ocean",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-romantic-sunset-cruise-480.webp",
+    "srcset": "/images/gallery/zanzibar-romantic-sunset-cruise-480.webp 480w, /images/gallery/zanzibar-romantic-sunset-cruise-960.webp 960w",
+    "full": "/images/gallery/zanzibar-romantic-sunset-cruise-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAADwAQCdASoQAAsAA4BaJagCdAD0RxTL3gAA/jx2jnpwbXV6nCJetxSvs7Z44zcO7iaf17B8Azf4XQHdD4s6MUb71byKO8b6QuCAAA=="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "Dolphins surfacing beside a boat of visitors off the Zanzibar coast",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-dolphin-experience-480.webp",
+    "srcset": "/images/gallery/zanzibar-dolphin-experience-480.webp 480w, /images/gallery/zanzibar-dolphin-experience-960.webp 960w",
+    "full": "/images/gallery/zanzibar-dolphin-experience-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAAAQAgCdASoQAAsAA4BaJaACdAEO4pGVVP6AAP7nE/gDmtCw2JJliZeJxki6FR/cPSNZBz4xIV22CZsdXzK6eZq74AA="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A green sea turtle resting on a shallow coral reef",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-swim-with-turtles-480.webp",
+    "srcset": "/images/gallery/zanzibar-swim-with-turtles-480.webp 480w, /images/gallery/zanzibar-swim-with-turtles-960.webp 960w",
+    "full": "/images/gallery/zanzibar-swim-with-turtles-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAAAQAgCdASoQAAsAA4BaJaACdAD6lbvvynEoAP7N/8vHHH6fpm9z5MjDZj9fQphIaqDGdmQ7E9CgfnpzEtg4h0vp0wtU3iWFzOvVVMoaMAA="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A Zanzibar red colobus monkey in the canopy at Jozani",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-jozani-red-colobus-480.webp",
+    "srcset": "/images/gallery/zanzibar-jozani-red-colobus-480.webp 480w, /images/gallery/zanzibar-jozani-red-colobus-960.webp 960w",
+    "full": "/images/gallery/zanzibar-jozani-red-colobus-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQAQCdASoQAAsAA4BaJQAAW2vCbdeXUAD+rdeeAkyRjnJ4T0tU8nZtXuc2+3kxy8g9D0JYEM/Cr8xKtewDTqmmq7ek0v5Fr26nwaeLxu9Hc3Yf01027XlW9f3Y+p0AAAA="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A farmer holding a freshly opened nutmeg on a Zanzibar spice farm",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-spice-farm-nutmeg-480.webp",
+    "srcset": "/images/gallery/zanzibar-spice-farm-nutmeg-480.webp 480w, /images/gallery/zanzibar-spice-farm-nutmeg-960.webp 960w",
+    "full": "/images/gallery/zanzibar-spice-farm-nutmeg-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmYAAABXRUJQVlA4IFoAAAAwAgCdASoQAAsAA4BaJZgCdAELjolfat8WAAD+rPxd3ZiDBJqBSirBbkweaJU3X9Fbt6uGV3079O+HN2Q5PBSXploUjC7wv7eRk63UR5NifupZNmWTJg0rwAA="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "An Aldabra giant tortoise on Changuu, known as Prison Island",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-prison-island-tortoise-480.webp",
+    "srcset": "/images/gallery/zanzibar-prison-island-tortoise-480.webp 480w, /images/gallery/zanzibar-prison-island-tortoise-960.webp 960w",
+    "full": "/images/gallery/zanzibar-prison-island-tortoise-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAsAA4BaJYwCdAEVa2TbuTRwAPo075ePyuFL9EtzA2GfE2bQLPoGwpNXTdWErSPV72ozZg2QyQqCVsvkz3XczZs4298oCXAAAA=="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "Lit food stalls filling Forodhani Gardens after dark",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-forodhani-night-market-480.webp",
+    "srcset": "/images/gallery/zanzibar-forodhani-night-market-480.webp 480w, /images/gallery/zanzibar-forodhani-night-market-960.webp 960w",
+    "full": "/images/gallery/zanzibar-forodhani-night-market-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRl4AAABXRUJQVlA4IFIAAAAwAgCdASoQAAsAA4BaJYgCdADxGWWgpEOfgAD+8rgbmRw2t4D0kZNONuFUUxNOAdHCfiiNY6vbGJZ4soJUCl9XbZOoPz3/J+QVU7d+TJ9uCAAA"
+  },
+  {
+    "group": "zanzibar",
+    "alt": "Fishing boats drawn up beside a village on the Zanzibar shore",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-fishing-village-480.webp",
+    "srcset": "/images/gallery/zanzibar-fishing-village-480.webp 480w, /images/gallery/zanzibar-fishing-village-960.webp 960w",
+    "full": "/images/gallery/zanzibar-fishing-village-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRmgAAABXRUJQVlA4IFwAAABwAgCdASoQAAsAA4BaJZQCw7Yuvn6tuvhSurLAAP71Nvoq4nTRKE9Hv18OdBAlSwF/DqjvCtpDIJ56FkTvPe/G1+vemBQizVx4LR2QhhgomMLuia0ubLcZHiIgAA=="
+  },
+  {
+    "group": "zanzibar",
+    "alt": "A quiet stretch of Zanzibar beach below a thatched makuti shelter",
+    "width": 480,
+    "height": 320,
+    "src": "/images/gallery/zanzibar-private-beach-480.webp",
+    "srcset": "/images/gallery/zanzibar-private-beach-480.webp 480w, /images/gallery/zanzibar-private-beach-960.webp 960w",
+    "full": "/images/gallery/zanzibar-private-beach-1600.webp",
+    "placeholder": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAAAQAgCdASoQAAsAA4BaJZACdAECj4So9qgAAP7zNNn9rfj5QoAvfHP/4OoLiM1CZ1HFfs6dIFeatAvT2pHSsZDzF2AMhEStI0+lkWtAbsAAAA=="
+  }
+]
