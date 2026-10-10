@@ -392,20 +392,18 @@ export function priceBlocks(entry: DocumentEntry): SourceBlock[] {
   return entry.blocks.slice(start, nextSection === -1 ? undefined : nextSection);
 }
 
-/** Surface an actual source price line, with its season/group context intact. */
+/** One "Price starting from" line built from the cheapest published rate. */
 export function priceSummary(entry: DocumentEntry): string[] {
-  const blocks = priceBlocks(entry);
-  let season = "";
-  const rates: { amount: number; text: string; season: string }[] = [];
-  for (const block of blocks) {
-    if (/^(Low|High) Season$/i.test(block.text.trim())) season = block.text.trim();
-    const amount = block.text.match(/\$([\d,]+)/);
-    if (amount) rates.push({ amount: Number(amount[1].replaceAll(",", "")), text: block.text.trim(), season });
+  const rates: { amount: number; basis: string }[] = [];
+  for (const block of priceBlocks(entry)) {
+    const figure = block.text.match(/\$([\d,]+)/);
+    if (!figure) continue;
+    const basis = block.text.slice(block.text.indexOf(figure[0]) + figure[0].length).trim();
+    rates.push({ amount: Number(figure[1].replaceAll(",", "")), basis });
   }
   const rate = rates.sort((a, b) => a.amount - b.amount)[0];
   if (!rate) return [];
-  const familyBasis = blocks.find((b) => b.text.startsWith("Based on a family"));
-  return [rate.season, rate.text, familyBasis?.text].filter((text): text is string => Boolean(text));
+  return [`Price starting from $${rate.amount.toLocaleString("en-US")} ${rate.basis}`.trim()];
 }
 
 export interface Rate {
