@@ -24,6 +24,8 @@ export interface DocumentEntry {
   slug: string;
   title: string;
   category: string;
+  /** Safaris only: which side of the country the itinerary runs. */
+  circuit?: Circuit;
   activity: string;
   days: number | null;
   region: string;
@@ -36,17 +38,21 @@ export interface DocumentEntry {
   blocks: SourceBlock[];
 }
 
+export type Circuit = "Northern Circuit" | "Southern Circuit";
+export const circuits: Circuit[] = ["Northern Circuit", "Southern Circuit"];
+
 export interface Journey extends DocumentEntry {
   days: number;
   activity: "safari" | "trek";
   priceSummary: string[];
 }
 
-/** Text is transcribed from the 17 DOCX files added on 12 September 2026 at 17:20 EAT.
+/** Text is transcribed from the 17 DOCX files added on 12 September 2026 at 17:20 EAT,
+ * plus Selous.docx and Mikumi.docx (the Southern Circuit) added on 13 October 2026.
  * Keep original spelling, punctuation, price qualifications, and headings intact.
  * Documents with no published prices must never inherit another itinerary's rate.
  */
-export const catalogue: DocumentEntry[] = documents;
+export const catalogue = documents as DocumentEntry[];
 export const journeys: Journey[] = catalogue
   .filter((entry) => entry.activity !== "guide")
   .map((entry) => ({
@@ -56,6 +62,14 @@ export const journeys: Journey[] = catalogue
     priceSummary: priceSummary(entry),
   }));
 export const journeyGuides = catalogue.filter((entry) => entry.activity === "guide");
+
+// A safari without a recognised circuit would build its page but fall out of
+// every band on /journeys, so stop the build instead.
+for (const journey of journeys) {
+  if (journey.activity === "safari" && !circuits.includes(journey.circuit!)) {
+    throw new Error(`Safari "${journey.slug}" has circuit ${JSON.stringify(journey.circuit)}; expected one of ${circuits.join(", ")}.`);
+  }
+}
 
 export function categoryAnchor(category: string): string {
   return category.toLowerCase().replace(/&/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
@@ -100,6 +114,15 @@ const SECTION_HEADING = /^(Prices?|Inclusive|Inclusions|Included|Exclusive|Exclu
 const SEASON_HEADING = /^(Low|High)\s+Season\b\s*[-–—]?\s*(.*)$/i;
 /** Labelled one-liners: the trek stats, and the stay/meals footer on safari days. */
 const FACT = /^(Overnight|Accommodation|Meals included|Meals|Elevation|Distance|Hiking Time|Walking Time|Climbing Time|Habitat|Ascent|Descent|Max\.?\s*Altitude|Down to|Highlight|Perfect for)\b\s*:?\s*(.*)$/i;
+
+/** The figure in a rate line: "$4,467 per person", or the bare amount after
+ *  "2 Pax:" where a document leaves the currency off. */
+function rateFigure(text: string): { match: string; amount: number } | null {
+  const figure = text.match(/\$(\d[\d,]*)/) ?? text.match(/\bPax\s*[:–—-]\s*(?:From\s+)?(\d[\d,]*)/i);
+  if (!figure) return null;
+  const match = figure[0].startsWith("$") ? figure[0] : figure[1];
+  return { match, amount: Number(figure[1].replaceAll(",", "")) };
+}
 
 export interface Fact {
   label: string;
@@ -221,7 +244,7 @@ export function parseItinerary(entry: DocumentEntry): Itinerary {
         if (season[2].trim()) priceGroup.lines.push(season[2].trim());
         continue;
       }
-      if (text.includes("$")) {
+      if (rateFigure(text)) {
         if (!priceGroup) {
           priceGroup = { lines: [] };
           result.prices.push(priceGroup);
@@ -371,7 +394,10 @@ function destinationsFrom(itinerary: Itinerary): string[] {
   for (const day of itinerary.days) {
     const stay = day.overnight;
     if (!stay || /^(hotel|hut)$/i.test(stay)) continue;
-    if (!stays.includes(stay)) stays.push(stay);
+    // "Safari lodge or tented camp near Nyerere National Park." is a sentence,
+    // not a place; headline the place it names.
+    const name = (stay.length > 40 && lookup(stay)?.name) || stay;
+    if (!stays.includes(name)) stays.push(name);
   }
   if (stays.length > 0) return stays;
   const route = routeFor(itinerary);
@@ -396,10 +422,10 @@ export function priceBlocks(entry: DocumentEntry): SourceBlock[] {
 export function priceSummary(entry: DocumentEntry): string[] {
   const rates: { amount: number; basis: string }[] = [];
   for (const block of priceBlocks(entry)) {
-    const figure = block.text.match(/\$([\d,]+)/);
+    const figure = rateFigure(block.text);
     if (!figure) continue;
-    const basis = block.text.slice(block.text.indexOf(figure[0]) + figure[0].length).trim();
-    rates.push({ amount: Number(figure[1].replaceAll(",", "")), basis });
+    const basis = block.text.slice(block.text.lastIndexOf(figure.match) + figure.match.length).trim();
+    rates.push({ amount: figure.amount, basis });
   }
   const rate = rates.sort((a, b) => a.amount - b.amount)[0];
   if (!rate) return [];
@@ -421,11 +447,11 @@ export function lowestRate(itinerary: Itinerary): Rate | null {
   const rates: Rate[] = [];
   for (const group of itinerary.prices) {
     for (const text of group.lines) {
-      const figure = text.match(/\$[\d,]+/);
+      const figure = rateFigure(text);
       if (!figure) continue;
-      const after = text.slice(text.indexOf(figure[0]) + figure[0].length).trim();
+      const after = text.slice(text.lastIndexOf(figure.match) + figure.match.length).trim();
       rates.push({
-        amount: Number(figure[0].slice(1).replaceAll(",", "")),
+        amount: figure.amount,
         text,
         season: group.season,
         basis: after || undefined,
@@ -478,6 +504,9 @@ const GAZETTEER: Record<string, [number, number]> = {
   "Miriakamba Hut": [36.8, -3.2333],
   "Saddle Hut": [36.7833, -3.2417],
   "Socialist Peak": [36.7581, -3.2358],
+  "Dar es Salaam": [39.2083, -6.7924],
+  "Nyerere National Park": [38.0, -7.75],
+  "Mikumi National Park": [37.0, -7.3],
 };
 
 // Longest name first, so "West Kilimanjaro" is never swallowed by "Kilimanjaro

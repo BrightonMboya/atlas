@@ -2,10 +2,10 @@
 import Layout from "../../layouts/Layout.astro";
 import Navbar from "../../components/Navbar.astro";
 import Footer from "../../components/Footer.astro";
-import { journeys, journeyGuides, categoryAnchor } from "../../data/journeys";
+import { journeys, journeyGuides, categoryAnchor, type Journey } from "../../data/journeys";
 
-function group(activity: "safari" | "trek") {
-  const items = journeys.filter((journey) => journey.activity === activity);
+function group(include: (journey: Journey) => boolean) {
+  const items = journeys.filter(include);
   return [...new Set(items.map((journey) => journey.category))].map((category) => ({
     category,
     anchor: categoryAnchor(category),
@@ -15,16 +15,22 @@ function group(activity: "safari" | "trek") {
 
 const bands = [
   {
-    id: "safaris",
-    title: "Safaris",
-    blurb: "Find your pace, from a few days in the bush to a safari with time on the coast.",
-    groups: group("safari"),
+    id: "northern-circuit",
+    title: "Northern Circuit",
+    blurb: "Serengeti, Ngorongoro and Tarangire. Find your pace, from a few days in the bush to a safari with time on the coast.",
+    groups: group((journey) => journey.circuit === "Northern Circuit"),
+  },
+  {
+    id: "southern-circuit",
+    title: "Southern Circuit",
+    blurb: "Wilder, quieter parks within easy reach of Dar es Salaam, or a short flight from Zanzibar.",
+    groups: group((journey) => journey.circuit === "Southern Circuit"),
   },
   {
     id: "trekking",
     title: "Trekking",
     blurb: "Compare Kilimanjaro routes and durations, or explore the quieter trails of Mount Meru.",
-    groups: group("trek"),
+    groups: group((journey) => journey.activity === "trek"),
   },
 ];
 
@@ -34,6 +40,8 @@ const descriptions: Record<string, string> = {
   "Great Migration": "Journeys built around the movement of the herds.",
   "Honeymoon": "Time together in Tanzania’s wild places.",
   "Safari & Zanzibar": "Pair the bush with the Indian Ocean.",
+  "Nyerere National Park": "Game drives, a Rufiji River boat safari and a guided walk in the bush.",
+  "Mikumi National Park": "Open savannah plains, a scenic drive from Dar es Salaam.",
   "Kilimanjaro Trek": "Lemosho, Machame and Marangu routes to Africa’s highest peak.",
   "Mountain Trek": "A Mount Meru climb through forest and volcanic landscapes.",
 };

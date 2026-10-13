@@ -17,11 +17,18 @@ interface NavEntry {
 }
 
 const links: NavEntry[] = [
-  { label: "About Us", href: "/about" },
+  {
+    label: "About Us",
+    items: [
+      { label: "About Us", href: "/about" },
+      { label: "Giving Back", href: "/about#giving-back" },
+    ],
+  },
   {
     label: "Safaris",
     items: [
-      { label: "Safaris", href: "/journeys#safaris" },
+      { label: "Northern Circuit", href: "/journeys#northern-circuit" },
+      { label: "Southern Circuit", href: "/journeys#southern-circuit" },
       { label: "Accommodations", href: "/accommodations" },
     ],
   },

@@ -28,6 +28,8 @@ const route = routeFor(itinerary);
 const rate = lowestRate(itinerary);
 const related = journeys
   .filter((entry) => entry.slug !== journey.slug && entry.activity === journey.activity)
+  // Same circuit first, so a Southern Circuit safari leads with its neighbour.
+  .sort((a, b) => Number(b.circuit === journey.circuit) - Number(a.circuit === journey.circuit))
   .slice(0, 3);
 
 const title = journey.days
@@ -51,10 +53,13 @@ const groupedSections = itinerary.sections.reduce<{ group?: string; sections: Se
   [],
 );
 
-/** "2 Pax – From $4,467 per person" reads better as a row than a sentence. */
+/** "2 Pax – From $4,467 per person" and "2 Pax: 1,916 per person" read better
+ *  as a row than a sentence. */
 function splitRate(text: string): { label?: string; amount: string } {
-  const match = text.match(/^(.*?)\s+[–—]\s+(\$.*)$/);
-  return match ? { label: match[1], amount: match[2] } : { amount: text };
+  const match = text.match(/^(.*?)\s+[–—]\s+(\$.*)$/) ?? text.match(/^(\d+\s*Pax):\s*(\d[\d,]*.*)$/i);
+  if (!match) return { amount: text };
+  const amount = match[2].startsWith("$") ? match[2] : `$${match[2]}`;
+  return { label: match[1], amount };
 }
 ---
 

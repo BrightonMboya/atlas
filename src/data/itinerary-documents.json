@@ -3,11 +3,12 @@
     "slug": "family-friendly-safari",
     "title": "Atlas Family Friendly Safari ( 2 adults  + 2 kids 11 years and under)",
     "category": "Family Safaris",
+    "circuit": "Northern Circuit",
     "activity": "safari",
     "days": 8,
     "region": "Tanzania",
-    "image": "/images/journeys/family-river-lunch.jpg",
-    "alt": "A family settled into camp chairs at the river's edge below forested hills",
+    "image": "/images/journeys/family-maasai-walk.jpg",
+    "alt": "A grandfather and young girl on a walk with their Maasai guides, zebra grazing beyond",
     "featured": true,
     "summary": "Upon arrival at Kilimanjaro International Airport, your private Atlas guide will meet your family and transfer you to your hotel in Arusha.",
     "sourceFile": "Atlas Family Friendly Safari ( 2 adults  + 2 kids 11 years and under) 2.docx",
@@ -379,6 +380,7 @@
     "slug": "honeymoon-escape",
     "title": "Atlas Honeymoon Escape",
     "category": "Honeymoon",
+    "circuit": "Northern Circuit",
     "activity": "safari",
     "days": 15,
     "region": "Tanzania & Zanzibar",
@@ -1019,6 +1021,7 @@
     "slug": "signature-safari",
     "title": "Atlas Signature Safari",
     "category": "Safari & Zanzibar",
+    "circuit": "Northern Circuit",
     "activity": "safari",
     "days": 13,
     "region": "Tanzania & Zanzibar",
@@ -1443,6 +1446,7 @@
     "slug": "northern-circuit-classic-safari",
     "title": "Northern Circuit Classic Safari",
     "category": "Classic Safaris",
+    "circuit": "Northern Circuit",
     "activity": "safari",
     "days": 10,
     "region": "Tanzania",
@@ -1957,6 +1961,7 @@
     "slug": "from-the-wild-to-the-beach",
     "title": "From the Wild to the Beach",
     "category": "Safari & Zanzibar",
+    "circuit": "Northern Circuit",
     "activity": "safari",
     "days": 13,
     "region": "Tanzania & Zanzibar",
@@ -2441,6 +2446,7 @@
     "slug": "fly-in-safari-from-zanzibar",
     "title": "Fly in Safari from Zanzibar",
     "category": "Safari & Zanzibar",
+    "circuit": "Northern Circuit",
     "activity": "safari",
     "days": 5,
     "region": "Tanzania & Zanzibar",
@@ -2817,6 +2823,7 @@
     "slug": "where-life-begins",
     "title": "Where Life Begins",
     "category": "Great Migration",
+    "circuit": "Northern Circuit",
     "activity": "safari",
     "days": 6,
     "region": "Tanzania",
@@ -3210,6 +3217,508 @@
         "style": "List Paragraph",
         "text": "Tips & Gratitude",
         "bold": false
+      }
+    ]
+  },
+  {
+    "slug": "nyerere-national-park-safari",
+    "title": "4-Day Nyerere National Park Safari Adventure",
+    "category": "Nyerere National Park",
+    "circuit": "Southern Circuit",
+    "activity": "safari",
+    "days": 4,
+    "region": "Southern Tanzania",
+    "image": "/images/journeys/elephants-savannah.jpg",
+    "alt": "An elephant and her calf grazing golden grassland under a clear evening sky",
+    "featured": false,
+    "summary": "Embark on an unforgettable 4-day, 3-night safari to Nyerere National Park, one of Tanzania’s most spectacular wilderness destinations. This exciting adventure combines thrilling game drives, a scenic boat safari along the Rufiji River, and an unforgettable guided walking safari, offering you three unique ways to experience Africa’s incredible wildlife and natural beauty.",
+    "sourceFile": "Selous.docx",
+    "sourceSha256": "83ffb1652e0a80a6b0265c3f512657ced30ad7e0fc4633a2bf738b650eb6f2cd",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "4-Day Nyerere National Park Safari Adventure ",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Discover the Untamed Wilderness of Southern Tanzania",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Embark on an unforgettable 4-day, 3-night safari to Nyerere National Park, one of Tanzania’s most spectacular wilderness destinations. This exciting adventure combines thrilling game drives, a scenic boat safari along the Rufiji River, and an unforgettable guided walking safari, offering you three unique ways to experience Africa’s incredible wildlife and natural beauty.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "From elephants roaming across the vast landscapes to hippos and crocodiles resting along the riverbanks, every day brings a new adventure. Whether you are watching wildlife from your safari vehicle, drifting along the river, or exploring the bush on foot with an experienced guide, this safari promises an authentic and memorable African experience.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Day 1: Dar es Salaam to Nyerere National Park – Journey into the Wild",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Your adventure begins with a morning pick-up from your hotel in Dar es Salaam, followed by a scenic transfer to Nyerere National Park. Enjoy the changing landscapes as you travel from the bustling city into the beautiful wilderness of southern Tanzania.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Upon arrival, settle into your safari lodge or camp before heading out for your first exciting game drive. Explore the park’s diverse landscapes in search of elephants, giraffes, zebras, buffaloes, antelopes and other fascinating wildlife. Keep your eyes open for predators such as lions and African wild dogs, which inhabit this remarkable ecosystem.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "As the afternoon unfolds, enjoy the sights and sounds of the African bush before returning to your accommodation for dinner and a relaxing evening surrounded by nature.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Accommodation: Safari lodge or tented camp near Nyerere National Park.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Day 2: Game Drive and Boat Safari – Discover the Rufiji River",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Wake up to the sounds of the African wilderness and prepare for a full day of exciting safari experiences in Nyerere National Park.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "After breakfast, set off on a thrilling morning game drive through the park’s vast landscapes. With your experienced safari guide, explore different areas in search of elephants, giraffes, zebras, buffaloes, lions and other wildlife roaming freely in their natural habitat.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "In the afternoon, enjoy a memorable boat safari along the Rufiji River, one of the highlights of a visit to Nyerere. Cruise along the river and its channels, observing pods of hippos wallowing in the water and crocodiles basking along the riverbanks. Look out for elephants coming down to drink, colourful birdlife along the shores, and other animals gathering near the water.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "The peaceful river scenery offers a wonderful contrast to the excitement of a traditional game drive and provides fantastic opportunities for wildlife photography.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Return to your lodge or camp in the evening for dinner and an overnight stay.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Accommodation: Safari lodge or tented camp near Nyerere National Park.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Day 3: Walking Safari and Game Drive – Experience Africa on Foot",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Today offers a more intimate connection with the African wilderness as you experience Nyerere National Park on foot and by safari vehicle.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Begin the day with an exciting, guided walking safari, accompanied by a qualified and authorised safari guide. Step into the bush and discover the smaller details of the ecosystem that are often missed from a vehicle. Learn to identify animal tracks, discover native plants, observe insects and birds, and understand how wildlife interacts with its environment.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Walking through the natural surroundings provides a completely different perspective on the African wilderness and makes for a truly memorable safari experience.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "After your walking safari, return to your lodge or camp for breakfast or a short rest, depending on the schedule and arrangements.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Later, head out for another exciting game drive through the park. Explore new areas and search for wildlife you may not yet have encountered, while enjoying the beautiful scenery and rich biodiversity of Nyerere.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "As the day draws to a close, return to your accommodation for dinner and your final night in the African bush.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Accommodation: Safari lodge or tented camp near Nyerere National Park.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Day 4: Final Safari Experience and Return to Dar es Salaam",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Enjoy your final morning in the heart of Tanzania’s wilderness. Depending on your departure arrangements, begin the day with an early morning game drive, when the cooler temperatures often provide excellent opportunities to observe wildlife.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Take in the last views of the spectacular landscapes, capture a few final photographs, and enjoy the peaceful atmosphere of the bush before preparing for your journey back.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "After breakfast, transfer back to Dar es Salaam, arriving with unforgettable memories of your Nyerere National Park adventure.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Alternatively, a fly-out option may be arranged from an appropriate airstrip, subject to flight schedules and availability.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "End of safari: Dar es Salaam, or an alternative agreed departure point.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Safari Highlights",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Explore Nyerere National Park on exciting game drives.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Enjoy a scenic boat safari along the Rufiji River.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Experience an unforgettable guided walking safari.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Search for elephants, giraffes, hippos, crocodiles, buffaloes and a variety of bird species.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Discover the beauty and diversity of Tanzania’s southern safari circuit.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Enjoy three nights of accommodation in a safari lodge or tented camp.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Optional Fly-In, Fly-Out Safari from Zanzibar",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "For travellers enjoying a beach holiday in Zanzibar, this safari can also be arranged as a fly-in, fly-out adventure from Zanzibar, subject to flight availability and the selected camp or lodge.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Fly from Zanzibar to an appropriate airstrip serving the Nyerere area and begin your safari adventure without the long overland journey from Dar es Salaam. Enjoy your game drives, boat safari and guided walking safari before flying back to Zanzibar at the end of your trip.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "This option is ideal for travellers looking to combine Zanzibar’s beautiful beaches with an authentic African wildlife experience.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Please note: The final itinerary, game drive timings, boat safari and walking safari arrangements will depend on the lodge location, park regulations, weather conditions and flight schedules. Walking safaris are subject to guide availability and the required safety arrangements.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Prices:",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "2 Pax: 1,916 per person",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "4 Pax: 1,618 per person",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "6 Pax: 1,519 per person",
+        "bold": true
+      }
+    ]
+  },
+  {
+    "slug": "mikumi-national-park-safari",
+    "title": "3-Day Mikumi National Park Safari Adventure",
+    "category": "Mikumi National Park",
+    "circuit": "Southern Circuit",
+    "activity": "safari",
+    "days": 3,
+    "region": "Southern Tanzania",
+    "image": "/images/journeys/giraffes-plains.jpg",
+    "alt": "Three giraffes crossing open savannah beneath a wide, cloud-filled sky",
+    "featured": false,
+    "summary": "Experience the thrill of an unforgettable African safari on this exciting 3-day adventure to Mikumi National Park. From scenic journeys through the Tanzanian countryside to thrilling game drives across open savannahs, this safari offers an incredible opportunity to discover Tanzania’s wildlife and breathtaking natural beauty.",
+    "sourceFile": "Mikumi.docx",
+    "sourceSha256": "ac61d613534077acc84dc05451c454e519743482d3e21ef010c09659d5189d0a",
+    "blocks": [
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "3-Day Mikumi National Park Safari Adventure",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Discover the Wild Heart of Tanzania",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Experience the thrill of an unforgettable African safari on this exciting 3-day adventure to Mikumi National Park. From scenic journeys through the Tanzanian countryside to thrilling game drives across open savannahs, this safari offers an incredible opportunity to discover Tanzania’s wildlife and breathtaking natural beauty.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Keep your camera ready as you search for elephants, lions, giraffes, zebras, wildebeest, buffaloes and many other fascinating wildlife species in their natural habitat.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Day 1: Dar es Salaam to Mikumi National Park – Journey into the Wild",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Your adventure begins with a morning pick-up from your hotel in Dar es Salaam, followed by a scenic transfer to Mikumi National Park. As you travel through the beautiful Tanzanian countryside, enjoy glimpses of local villages, rural landscapes and the changing scenery along the way.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Upon arrival in Mikumi, head out for your first exciting game drive across the park’s vast open plains. Explore the savannah in search of elephants, giraffes, zebras, buffaloes, antelopes and, with some luck, the park’s magnificent lions.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "As the afternoon unfolds, immerse yourself in the sights and sounds of the African wilderness before heading to your hotel for dinner and an overnight stay.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Accommodation: Hotel",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Meals: Lunch & Dinner",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Day 2: Full-Day Safari in Mikumi National Park ",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Wake up to the fresh African morning and prepare for a full day of wildlife exploration in Mikumi National Park.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "After breakfast, set off on an exciting game drive through different areas of the park, where every turn offers a new opportunity to encounter Tanzania’s remarkable wildlife. Watch elephants roam across the plains, giraffes browse among the trees, and herds of zebras and wildebeest graze in the grasslands.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Keep your eyes open for predators, including lions, as your experienced safari guide helps you discover the park’s wildlife and unique ecosystem. Enjoy a picnic lunch in a designated area before continuing your afternoon game drive.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "As the sun begins to set over the savannah, return to your lodge or hotel with wonderful memories and incredible safari photographs.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Accommodation: Hotel",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Meals: Breakfast, Lunch & Dinner",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Day 3: Morning Game Drive – Return to Dar es Salaam",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Rise early for one final safari experience in Mikumi National Park. The cool morning hours offer a wonderful opportunity to spot wildlife as animals become active across the plains.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Enjoy a morning game drive, soaking up the beauty of the African wilderness and searching for any animals you may have missed during the previous days.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "After your safari, transfer to the airstrip for your scheduled flight back to Dar es Salaam. Upon arrival, continue with your onward arrangements or transfer to your hotel, bringing your memorable Mikumi safari adventure to a close.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Meals: Breakfast & Lunch",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "End of safari: Dar es Salaam.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Safari by Air from Zanzibar – Fly In, Fly Out",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Already staying in Zanzibar? You can also enjoy this exciting Mikumi safari with a convenient fly-in, fly-out option from Zanzibar.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Fly from Zanzibar to the Mikumi area, where your safari adventure begins with game drives through the park’s beautiful landscapes. Spend your days exploring the African wilderness, spotting incredible wildlife and enjoying comfortable lodge accommodation before flying back to Zanzibar at the end of your safari.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "This option is ideal for travellers who want to combine Zanzibar’s beautiful beaches with an unforgettable Tanzania wildlife experience, without travelling overland from Dar es Salaam.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Please note: Flight schedules, availability and the final itinerary depend on the operating airstrip and airline timetable. The fly-in, fly-out option should be confirmed when booking.",
+        "bold": false
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "Prices:",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "2 Pax: 1,060 per person",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "4 Pax: 844 per person",
+        "bold": true
+      },
+      {
+        "type": "paragraph",
+        "style": "Normal",
+        "text": "6 Pax: 736 per person",
+        "bold": true
       }
     ]
   },
